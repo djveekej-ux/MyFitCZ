@@ -759,7 +759,7 @@ function renderStrip(){var el=document.getElementById('wstrip');if(!el)return;
   h+='<button type="button" class="sc" data-k="'+k+'" aria-pressed="'+(k===WSEL)+'"><small>'+d.n+'</small><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="22" fill="none" stroke="var(--line)" stroke-width="5"/>'+(m2?'<circle cx="28" cy="28" r="22" fill="none" stroke="'+col+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-fr)).toFixed(1)+'" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle">'+t+'</text>':'')+'</svg><small>'+typeOf(d)+(d.done?' ✓':'')+'</small></button>'});
  el.innerHTML=h+'</div><p class="mute" style="margin:8px 0 0;font-size:12px">Číslo je zátěž dne (TSS), barva podle intenzity, ✓ znamená dojeto.</p>';
  Array.prototype.forEach.call(el.querySelectorAll('.sc'),function(b){b.onclick=function(){WSEL=b.dataset.k;renderStrip()}});
- document.getElementById('sd-open').onclick=function(){if(WSEL==='dnes'){document.querySelector('nav button[data-t="dnes"]').click()}else{document.querySelector('nav button[data-t="tyden"]').click();show(WSEL)}}}
+ document.getElementById('sd-open').onclick=function(){if(WSEL===TK){document.querySelector('nav button[data-t="dnes"]').click()}else{document.querySelector('nav button[data-t="tyden"]').click();show(WSEL)}}}
 function renderLoad(){var el=document.getElementById('loadg');if(!el)return;
  var cur=weekFc(),all=LGD.concat([cur]),n=Math.min(LGN,all.length),pts=all.slice(-n),VW=300,VH=200,pl=26,pr=10,pt=14,pb=22,mx=800,bd=bandOf(cur),
  X=function(i){return pl+i*(VW-pl-pr)/(n-1)},Y=function(v){return pt+(mx-Math.min(v,mx))/mx*(VH-pt-pb)},i,g='',lp='',lb='',xl='',solid='',dash='';
