@@ -230,6 +230,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="whist"></div>
   <div id="days"></div>
   <div class="card" id="detail"></div>
+  <div id="wplan"></div>
 </section>
 
 <section id="p-kouc" class="hide">
@@ -481,7 +482,7 @@ function renderWeek(){var el=document.querySelector('.wkc');if(!el)return;
  var done=0,plan=0,cards='',di=(new Date().getDay()+6)%7+1;
  order.forEach(function(k){var d=W[k],m=mins(d.seg);if(!m)return;var t=tssOf(d);if(d.done)done+=t;else plan+=t;var mm=d.dur?d.dur:mins(d.seg.concat(d.race||[]));});
  if(W.dnes.ex)['wu','cd'].forEach(function(x){var e=W.dnes.ex[x];if(e.done)done+=tssOf(e)});
- var tile=function(i,e,lab){var m=e.dur?e.dur:mins(e.seg),t=tssOf(e),dn=!!e.done,c=dn?'var(--z2)':ZC(ifOf(e).v*100);return '<div class="ac'+(dn?'':' pl')+(i===TDI?' td':'')+'" style="--c:'+c+'"><strong>'+(i===TDI?'Dnes':DNAME[i].slice(0,2))+' '+(dn?'<em>✓</em>':'<small>plán</small>')+'</strong><p>'+esc(lab||String(e.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,''))+'</p><span>'+fmt(m)+' · '+(dn?'':'~')+t+' TSS</span>'+(e.km?'<span>'+String(e.km).replace('.',',')+' km</span>':'')+'</div>'};
+ var tile=function(i,e,lab){var m=e.dur?e.dur:mins(e.seg),t=tssOf(e),dn=!!e.done,c=ZC(ifOf(e).v*100);return '<div class="ac'+(dn?'':' pl')+(i===TDI?' td':'')+'" style="--c:'+c+'"><strong>'+(i===TDI?'Dnes':DNAME[i].slice(0,2))+' '+(dn?'<em>✓</em>':'<small>plán</small>')+'</strong><p>'+esc(lab||String(e.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,''))+'</p><span>'+fmt(m)+' · '+(dn?'':'~')+t+' TSS</span>'+(e.km?'<span>'+String(e.km).replace('.',',')+' km</span>':'')+'</div>'};
  order.forEach(function(k,i){var d=W[k];if(!mins(d.seg))return;if(k==='dnes'&&d.ex){if(d.ex.wu&&mins(d.ex.wu.seg))cards+=tile(i,d.ex.wu,'Rozjezd');cards+=tile(i,d,'Závod');if(d.ex.cd&&mins(d.ex.cd.seg))cards+=tile(i,d.ex.cd,'Vyjetí')}else cards+=tile(i,d)});
  var fc=done+plan,left=Math.max(0,GOAL-done),pct=Math.round(done/GOAL*100),mx=Math.max.apply(null,H.concat([fc,GOAL])),avg=Math.round(H.reduce(function(a,b){return a+b},0)/H.length),bars='';
  H.forEach(function(v,i){var h=Math.max(4,v/mx*60);bars+='<rect x="'+(5+40*i)+'" y="'+(64-h).toFixed(1)+'" width="30" height="'+h.toFixed(1)+'" rx="5"/>'});
@@ -666,7 +667,7 @@ function initKoucWidgets(){var _kr=document.getElementById('krem');if(_kr)_kr.re
  arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function initTydenWidgets(){var P=document.getElementById('p-tyden'),arr=document.getElementById('arr4'),box=document.createElement('div'),sv=[],g=function(i){return document.getElementById(i)},
- defs=[['wk','Přehled týdne',g('wk')],['gen','Plánování týdne',g('wgen')],['hist','Souhrn jízd',g('whist')],['days','Dny týdne',g('days')],['detail','Detail dne',g('detail')]];
+ defs=[['wk','Přehled týdne',g('wk')],['gen','Plánování týdne',g('wgen')],['hist','Souhrn jízd',g('whist')],['days','Dny týdne',g('days')],['detail','Detail dne',g('detail')],['plan','Plán tréninku dne',g('wplan')]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order-t')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  box.id='wgt';arr.insertAdjacentElement('afterend',box);
@@ -754,9 +755,9 @@ function typeFromZ(z){var t=z.reduce(function(a,b){return a+b},0);if(!t)return '
  return s[4]+s[5]+s[6]>=.15?'VO2':s[3]>=.3?'SST':s[2]>=.25?'TEM':s[0]>=.6?'REC':s[0]+s[1]>=.85?'END':'BAL'}
 function renderStrip(){var el=document.getElementById('wstrip');if(!el)return;
  var C=2*Math.PI*22,sel=W[WSEL],tp=typeOf(sel),m=mins(sel.seg),h='<div class="row"><h2 style="margin:0">Týdenní proužek</h2><span class="mute">'+WKLBL+'</span></div><div class="sh"><b>'+sel.n+' '+sel.dt+'. '+sel.mo+'.</b>'+(tp?'<em class="lb lb-b">'+tp+'</em>':'')+(m?'<em class="lb lb-g">'+m+' min</em>':'')+'</div><div class="sdt"><span>'+esc(sel.t)+(sel.km?' · '+String(sel.km).replace('.',',')+' km':'')+(m?' · '+(sel.done?'':'~')+tssOf(sel)+' TSS':'')+'</span><button type="button" id="sd-open">Otevřít</button></div><div class="sd">';
- order.forEach(function(k){var d=W[k],m2=mins(d.seg),t=m2?tssOf(d)+(k==='dnes'?exT():0):0,v=m2?ifAny(d):0,fr=m2?Math.min(t/100,1):0,col=d.done?'var(--z2)':ZC(v*100);
-  h+='<button type="button" class="sc" data-k="'+k+'" aria-pressed="'+(k===WSEL)+'"><small>'+d.n+'</small><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="22" fill="none" stroke="var(--line)" stroke-width="5"/>'+(m2?'<circle cx="28" cy="28" r="22" fill="none" stroke="'+col+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-fr)).toFixed(1)+'" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle">'+t+'</text>':'')+'</svg><small>'+typeOf(d)+'</small></button>'});
- el.innerHTML=h+'</div><p class="mute" style="margin:8px 0 0;font-size:12px">Číslo je zátěž dne (TSS), barva podle intenzity, zelená znamená dojeto.</p>';
+ order.forEach(function(k){var d=W[k],m2=mins(d.seg),t=m2?tssOf(d)+(k==='dnes'?exT():0):0,v=m2?ifAny(d):0,fr=m2?Math.min(t/100,1):0,col=ZC(v*100);
+  h+='<button type="button" class="sc" data-k="'+k+'" aria-pressed="'+(k===WSEL)+'"><small>'+d.n+'</small><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="22" fill="none" stroke="var(--line)" stroke-width="5"/>'+(m2?'<circle cx="28" cy="28" r="22" fill="none" stroke="'+col+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-fr)).toFixed(1)+'" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle">'+t+'</text>':'')+'</svg><small>'+typeOf(d)+(d.done?' ✓':'')+'</small></button>'});
+ el.innerHTML=h+'</div><p class="mute" style="margin:8px 0 0;font-size:12px">Číslo je zátěž dne (TSS), barva podle intenzity, ✓ znamená dojeto.</p>';
  Array.prototype.forEach.call(el.querySelectorAll('.sc'),function(b){b.onclick=function(){WSEL=b.dataset.k;renderStrip()}});
  document.getElementById('sd-open').onclick=function(){if(WSEL==='dnes'){document.querySelector('nav button[data-t="dnes"]').click()}else{document.querySelector('nav button[data-t="tyden"]').click();show(WSEL)}}}
 function renderLoad(){var el=document.getElementById('loadg');if(!el)return;
@@ -850,7 +851,7 @@ var pw=Math.round(f*FTP),kj=Math.round(pw*m*60/1000),rate=m<=45?0:m<=75?30:60,cg
  +'<div class="zt"><small>ČAS V ZÓNĚ</small>'+zt+'</div><ul class="stp">'+st+'</ul>'
  +'<div class="why"><small>PROČ TENTO TRÉNINK</small><p>'+why+'</p></div>'+goal+wkb+(nu?'<div class="why"><small>VÝŽIVA</small><p>'+nu+'</p></div>':'')+'</div>';
  Array.prototype.forEach.call(el.querySelectorAll('.pwt button'),function(b){b.onclick=function(){PWT=b.dataset.v;renderPlanDnes();renderToday();renderWPlan(window.cur||TK)}})}
-function renderWPlan(k){var el=document.getElementById('wplan');if(!el){var dt=document.getElementById('detail');if(!dt)return;el=document.createElement('div');el.id='wplan';dt.insertAdjacentElement('afterend',el)}
+function renderWPlan(k){var el=document.getElementById('wplan');if(!el)return;
  if(!W[k]||!mins(W[k].seg)){el.innerHTML='';return}
  if(k==='dnes'){el.innerHTML='<div id="wp-r"></div><div id="wp-z"></div><div id="wp-v"></div>';planCard('wp-r','r');planCard('wp-z','z');planCard('wp-v','v')}else{el.innerHTML='<div id="wp-t"></div>';planCard('wp-t','t',k)}}
 var _showP=show;show=function(k){_showP(k);try{renderWPlan(k)}catch(e){}};
