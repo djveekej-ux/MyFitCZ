@@ -175,7 +175,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
     <div class="hl"><svg class="ring" viewBox="0 0 132 132" role="img" aria-label="Skóre připravenosti"><circle cx="66" cy="66" r="54" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="arc" cx="66" cy="66" r="54" fill="none" stroke-width="12" stroke-linecap="round" transform="rotate(-90 66 66)"/><text id="sc" x="66" y="79" text-anchor="middle"></text></svg>
     <div class="mute">Připravenost</div><div class="big" id="lbl"></div></div><div class="hm" id="hm"></div><p class="mute" id="adv"></p>
   </div>
-  <div id="rem"></div>
+  
   <div id="ftps"></div>
   <div class="card" id="sug"><div class="mute">Návrh kouče</div><p id="sugt" style="margin:6px 0 10px">HRV z noci je o 8 % pod tvým normálem, i když je forma dobrá (+26 %). Zítřejší intervaly (4× 8 min na 95 % FTP) navrhuji zkrátit na 3× 8 min. Pro celkové zlepšení je lepší kvalitní tvrdý trénink v zregenerovaném stavu než odjetý do únavy.</p><div class="chips" id="sugb"><button id="ok" type="button">Přijmout</button><button id="no" type="button">Nechat původní</button></div></div>
   <div class="card wkc">
@@ -241,7 +241,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div id="kw"><div class="card" id="keftp"></div><div class="card" id="krace"></div><div class="card" id="kapp"></div><div class="card" id="kai"></div><div class="card" id="kprof"><strong>Profil jezdce</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">FTP (W)</span><input id="p-ftp" type="number" min="50" max="600" value="261" disabled style="flex:none;width:110px"></div><label class="rule"><input type="checkbox" id="p-man">Upravit FTP ručně</label><p class="mute" id="p-note" style="margin:8px 0 0">Automaticky z Intervals.icu po napojení. Teď ukázková hodnota.</p></div>
   <div class="card" id="zset"></div>
   <div class="card" id="zhr"></div>
-  <div class="card" id="krem"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
+  <div class="card" id="krem" style="display:none"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Úterní závod nikdy neměním</label></div></div>
   
 </section>
@@ -465,10 +465,13 @@ function renderDnes(){var d=W.dnes,el=document.getElementById('res-dnes'),$=func
  Array.prototype.forEach.call(rc.querySelectorAll('.tg'),function(i){i.onchange=function(){var v=this.value;d.tg[this.dataset.k]=v===''?'':+v;if(+v>0&&/^(min|int|load|km|spd)$/.test(this.dataset.k))syncRaceT(this.dataset.k);renderDnes();refresh();show(window.cur||'st')}});
  Array.prototype.forEach.call(rc.querySelectorAll('.fl button'),function(b){b.onclick=function(){var v=+b.dataset.v,first=!d.fbDone,fm={textContent:''};d.feel=v;d.rpe=[0,9,8,6,5,4][v];d.leg=['','Těžké','Těžké','Normální','Svěží','Svěží'][v];d.fbDone=true;if(first)applyFb(d.rpe,d.leg,fm);d.fbMsg=fm.textContent||d.fbMsg||'Pocit uložen.';sync()}});
  var ab=$('d-an');if(ab)ab.onclick=function(){d.an=!d.an;renderDnes()};renderRgoal()}
-function renderRem(){var rt=(document.getElementById('rt')||{}).value||'21:00',n=new Date(),hm=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2),el=document.getElementById('rem'),miss=order.filter(function(k,i){return W[k].done&&!W[k].fbDone&&!W[k].fbSkip&&(i===TDI||i===TDI-1)}),onlyT=miss.length===1&&order.indexOf(miss[0])===TDI,hdr=onlyT&&hm<rt?'Hodnocení doplníš večer, připomenu v '+rt:'Jak se ti jelo?';
- el.innerHTML=miss.length?'<div class="card rem"><strong>'+hdr+'</strong>'+miss.map(function(k){return '<div class="row remr"><span><b>'+(order.indexOf(k)===TDI?'Dnes':'Včera')+'</b> '+esc(W[k].t)+'</span><span class="chips" style="margin:0;flex:none"><button type="button" data-k="'+k+'">Ohodnotit</button><button type="button" data-s="'+k+'" aria-label="Přeskočit hodnocení">✕</button></span></div>'}).join('')+'</div>':'';
+var REMO='',REMMSG='';
+function renderRem(){var rt=(document.getElementById('rt')||{}).value||'21:00',n=new Date(),hm=('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2),el=document.getElementById('rem'),miss=order.filter(function(k,i){return W[k].done&&!W[k].fbDone&&!W[k].fbSkip&&((i===TDI&&k!=='dnes')||i===TDI-1)}),hdr='Jak se ti jelo?';if(!el)return;if(miss.length===1&&order.indexOf(miss[0])===TDI)REMO=miss[0];
+ el.innerHTML=miss.length?'<div class="card rem"><strong>'+hdr+'</strong>'+miss.map(function(k){return '<div class="row remr"><span><b>'+(order.indexOf(k)===TDI?'Dnes':'Včera')+'</b> '+esc(W[k].t)+'</span><span class="chips" style="margin:0;flex:none"><button type="button" data-k="'+k+'">Ohodnotit</button><button type="button" data-s="'+k+'" aria-label="Přeskočit hodnocení">✕</button></span></div>'+(REMO===k?'<div class="fh" style="margin-top:10px">JAK SE TI JELO?</div><div class="fl">'+[[1,'😵','Slabé'],[2,'🙁','Špatné'],[3,'😐','Normální'],[4,'🙂','Dobré'],[5,'😄','Silné']].map(function(f){return '<button type="button" data-f="'+f[0]+'" data-r="'+k+'"><span>'+f[1]+'</span>'+f[2]+'</button>'}).join('')+'</div>':'')}).join('')+'</div>':'';
  Array.prototype.forEach.call(el.querySelectorAll('button[data-s]'),function(b){b.onclick=function(){W[b.dataset.s].fbSkip=true;renderRem()}});
- Array.prototype.forEach.call(el.querySelectorAll('button[data-k]'),function(b){b.onclick=function(){var k=b.dataset.k;if(k==='dnes'){document.querySelector('nav button[data-t="dnes"]').click();document.getElementById('res-dnes').scrollIntoView({behavior:'smooth'})}else{document.querySelector('nav button[data-t="tyden"]').click();show(k);document.getElementById('detail').scrollIntoView({behavior:'smooth'})}}})}
+ Array.prototype.forEach.call(el.querySelectorAll('button[data-k]'),function(b){b.onclick=function(){REMO=REMO===b.dataset.k?'':b.dataset.k;REMMSG='';renderRem()}});
+ Array.prototype.forEach.call(el.querySelectorAll('button[data-f]'),function(b){b.onclick=function(){var d=W[b.dataset.r],v=+b.dataset.f,first=!d.fbDone,fm={textContent:''};d.feel=v;d.rpe=[0,9,8,6,5,4][v];d.leg=['','Těžké','Těžké','Normální','Svěží','Svěží'][v];d.fbDone=true;if(first)applyFb(d.rpe,d.leg,fm);d.fbMsg=fm.textContent||d.fbMsg||'Pocit uložen.';REMO='';REMMSG='Uloženo ✓ '+d.fbMsg;refresh();try{renderCoachMsg();renderDnes()}catch(e){}renderRem()}});
+ if(!miss.length&&REMMSG)el.innerHTML='<div class="card rem"><strong>Hodnocení uloženo ✓</strong><p class="mute" style="margin:6px 0 0">'+esc(REMMSG.replace('Uloženo ✓ ',''))+'</p></div>';var wg=el.closest('.wg');if(wg)wg.style.display=el.innerHTML?'':'none'}
 W.dnes.race=[[45,100]];var GOAL=260,H=[544,800,352,608,312,424];
 function tssOf(d){var v,m,s=0,g;if(d.np||d.pw){v=(d.np||d.pw)/FTP;m=d.dur||mins(d.seg)}else{g=d.seg.concat(d.race||[]);m=mins(g);if(!m)return 0;g.forEach(function(x){s+=x[0]*Math.pow(x[1]/100,4)});v=Math.pow(s/m,.25)}return Math.round(v*v*m/60*100)}
 function fmt(m){m=Math.round(m);return Math.floor(m/60)+':'+('0'+m%60).slice(-2)}
@@ -511,7 +514,7 @@ function initWidgets(){var P=document.getElementById('p-prehled'),sub=document.g
  var defs=[['ready','Připravenost',[P.querySelector('.hero')]],['sug','Návrh kouče',[document.getElementById('sug')]],['week','Tento týden',[P.querySelector('.wkc')]],['curve','Křivka výkonnosti',[document.getElementById('curve')]],['zones','Intenzita tréninku',[document.getElementById('zchart')]],['load','Týdenní zátěž',[document.getElementById('loadg')]],['trtype','Týdenní zóny',[document.getElementById('trtype')]],['types','Typy tréninků',[document.getElementById('trlist')]],['facs','Co ovlivňuje skóre',[document.getElementById('facs').previousElementSibling,document.getElementById('facs')]],['day','Denní přehled',[document.getElementById('tl').closest('.card').previousElementSibling,document.getElementById('tl').closest('.card')]]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order')||'[]')}catch(e){sv=[]}
  defs.sort(function(a,b){var x=sv.indexOf(a[0]),y=sv.indexOf(b[0]);return (x<0?99:x)-(y<0?99:y)});
- box.id='wgs';sub.insertAdjacentElement('afterend',box);sub.insertAdjacentElement('afterend',document.getElementById('ftps'));sub.insertAdjacentElement('afterend',document.getElementById('rem'));
+ box.id='wgs';sub.insertAdjacentElement('afterend',box);sub.insertAdjacentElement('afterend',document.getElementById('ftps'));
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
   w.innerHTML='<div class="wgc"><span>'+d[1]+'</span><button type="button" data-d="-1" aria-label="Posunout nahoru">▲</button><button type="button" data-d="1" aria-label="Posunout dolů">▼</button></div>';
   d[2].forEach(function(e){w.appendChild(e)});box.appendChild(w)});
@@ -644,8 +647,8 @@ function renderRgoal(){var d=W.dnes,T=d.tg||{},el=document.getElementById('rgoal
  el.innerHTML='<div class="cs"><span>Název závodu</span><input id="rg-n" type="text" value="'+esc(d.nm||'závod')+'" style="width:140px;flex:none"></div><div class="cs"><span>Start závodu</span><input id="rg-t" type="time" value="'+d.tm+'"></div>';
  q('rg-n').onchange=function(){d.nm=this.value.trim()||'závod';d.t=raceTitle();renderDnes();refresh()};
  q('rg-t').onchange=function(){if(this.value)applyRace(this.value)}}
-function initKoucWidgets(){renderApps();renderEftp();renderRaceSet();var P=document.getElementById('p-nast'),box=document.getElementById('kw'),arr=document.getElementById('arr3'),sv=[],g=function(i){return document.getElementById(i)};
- var defs=[['prof','Profil jezdce',g('kprof')],['eftp','eFTP',g('keftp')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['ai','AI kouč',g('kai')],['rem','Připomínka hodnocení',g('krem')],['rul','Kdy navrhnu změnu',g('krul')]];
+function initKoucWidgets(){var _kr=document.getElementById('krem');if(_kr)_kr.remove();renderApps();renderEftp();renderRaceSet();var P=document.getElementById('p-nast'),box=document.getElementById('kw'),arr=document.getElementById('arr3'),sv=[],g=function(i){return document.getElementById(i)};
+ var defs=[['prof','Profil jezdce',g('kprof')],['eftp','eFTP',g('keftp')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order-k')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
@@ -689,8 +692,8 @@ function initKoucPage(){var P=document.getElementById('p-kouc'),arr=document.get
  arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function initDnesWidgets(){var P=document.getElementById('p-dnes'),sub=document.getElementById('arr2'),box=document.createElement('div'),arr=document.getElementById('arr2'),sv=[],cc=document.getElementById('chart-dnes').closest('.card');cc.previousElementSibling.style.display='none';cc.style.display='none';
- var tc=document.createElement('div');tc.className='card';tc.id='today-dnes';P.appendChild(tc);var ac=document.createElement('div');ac.className='card';ac.id='ask-dnes';P.appendChild(ac);
- var defs=[['today','Dnes',[tc]],['ask','Zeptej se kouče',[ac]],['goal',PAST?'Cíl závodu (úterý)':'Cíl dnešního závodu',[P.querySelector('.card')]],['coach','Zpráva kouče',[document.getElementById('coach-dnes')]],['fit','Cíl a kondice',[document.getElementById('goalfit')]],['plan','Plán rozjetí',[document.getElementById('plan-dnes')]],['planr','Plán závodu',[document.getElementById('planr-dnes')]],['planv','Plán vyjetí',[document.getElementById('planv-dnes')]],['ex','Rozjezd a vyjetí',[document.getElementById('ex-dnes')]],['res','Výsledek',[document.getElementById('res-dnes')]],['race','Závod: cíl a výsledek',[document.getElementById('race-dnes')]]];
+ var tc=document.createElement('div');tc.className='card';tc.id='today-dnes';P.appendChild(tc);var ac=document.createElement('div');ac.className='card';ac.id='ask-dnes';P.appendChild(ac);var rcd=document.createElement('div');rcd.id='rem';P.appendChild(rcd);
+ var defs=[['today','Dnes',[tc]],['rate','Hodnocení jízdy',[rcd]],['ask','Zeptej se kouče',[ac]],['goal',PAST?'Cíl závodu (úterý)':'Cíl dnešního závodu',[P.querySelector('.card')]],['coach','Zpráva kouče',[document.getElementById('coach-dnes')]],['fit','Cíl a kondice',[document.getElementById('goalfit')]],['plan','Plán rozjetí',[document.getElementById('plan-dnes')]],['planr','Plán závodu',[document.getElementById('planr-dnes')]],['planv','Plán vyjetí',[document.getElementById('planv-dnes')]],['ex','Rozjezd a vyjetí',[document.getElementById('ex-dnes')]],['res','Výsledek',[document.getElementById('res-dnes')]],['race','Závod: cíl a výsledek',[document.getElementById('race-dnes')]]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order-d')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=d[0]==='today'?-1:x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});
  defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
@@ -872,7 +875,7 @@ show=function(k){_show(k);var d=W[k],el=document.getElementById('detail');el.cla
  if(d.done&&k!=='dnes'&&!d.fbDone){var r=d.rpe,l=d.leg;chipRow('rpe',[1,2,3,4,5,6,7,8,9,10],r,function(v){r=v});chipRow('leg',['Svěží','Normální','Těžké'],l,function(v){l=v});
   document.getElementById('fbs').onclick=function(){var m=document.getElementById('fbm');if(!r||!l){m.textContent='Vyber RPE i stav nohou.';return}
    var first=!d.fbDone;d.rpe=r;d.leg=l;d.fbDone=true;if(first)applyFb(r,l,m);else m.textContent='Hodnocení aktualizováno.'}}};
-refresh();show(window.cur||'st');renderDnes();document.getElementById('rt').onchange=renderRem;initWidgets();initProfile();initDnesWidgets();initKoucWidgets();initTydenWidgets();initKoucPage();
+refresh();show(window.cur||'st');renderDnes();initWidgets();initProfile();initDnesWidgets();initKoucWidgets();initTydenWidgets();initKoucPage();
 (function(){var g=document.getElementById('arrG'),M={prehled:'arr',dnes:'arr2',tyden:'arr4',kouc:'arr5',nast:'arr3'};
  function cur(){return document.querySelector('nav button[aria-selected=true]').dataset.t}
  function sync(){var m=M[cur()];g.style.visibility=m?'visible':'hidden';if(m){var on=document.getElementById(m).textContent==='Hotovo';g.textContent=on?'Hotovo':'Uspořádat';g.setAttribute('aria-pressed',String(on))}}
@@ -934,7 +937,7 @@ function renderToday(){var el=document.getElementById('today-dnes');if(!el)retur
 function renderLabels(){if(!PAST)return;var sp=document.querySelector('#p-dnes .card .row .mute');
  var g=document.querySelector('#p-dnes #rt-start');if(g&&g.previousElementSibling)g.previousElementSibling.textContent='Cíl závodu · úterý';
  var m=document.querySelector('#chat .msg.ai');if(m&&!m.dataset.pd){m.dataset.pd=1;m.textContent='Ahoj! Včerejší závod máš za sebou. Dnes ('+DNAME[TDI].toLowerCase()+') je na řadě: '+W[TK].t+'. Můžu ho upravit podle toho, jak se cítíš.'}}
-var _rf=refresh;refresh=function(){_rf();renderToday();renderLabels();renderSug();renderAsk()};
+var _rf=refresh;refresh=function(){_rf();renderToday();renderLabels();renderSug();renderAsk();renderRem()};
 renderAi();
 Array.prototype.forEach.call(document.querySelectorAll('#krul input[type=checkbox]'),function(x){x.addEventListener('change',function(){SGMSG='';renderSug()})});
 refresh();
