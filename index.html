@@ -88,7 +88,7 @@ nav button{padding:12px 0;border-radius:18px}nav button[aria-selected=true]{box-
 .chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px;font-weight:700}.chk.on{background:var(--z2);border-color:var(--z2);color:#fff}
 .done{margin-top:18px}.done button{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 15px "Plus Jakarta Sans",system-ui,sans-serif;cursor:pointer}.done button[aria-pressed=true]{background:var(--z2);border-color:var(--z2);color:#fff}
 .fbk{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
-.lb{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;color:#fff;white-space:nowrap;vertical-align:1px}.lb-r{background:var(--z5)}.lb-h{background:var(--z4)}.lb-l{background:var(--z2)}
+.lb{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;color:#fff;white-space:nowrap;vertical-align:1px}.lb-r{background:var(--z5)}.lb-e{background:var(--z1)}.lb-h{background:var(--z4)}.lb-l{background:var(--z2)}
 #detail:not(.editing) .grid,#detail:not(.editing) .grid+.chips{display:none}
 .acts{display:flex;gap:8px;margin:0 0 14px}.acts button{flex:1;padding:11px 8px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:700 14px "Plus Jakarta Sans",system-ui,sans-serif;cursor:pointer}.acts .danger{color:var(--z5)}.acts .pri{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--accink);border:0}
 #a-sub{margin:-4px 0 14px}
@@ -404,7 +404,7 @@ function mini(seg){if(!seg.length)return '';var t=mins(seg),x=0,o='<svg viewBox=
 function buildDays(){dayEl.innerHTML='';var tp=0,dn=0,ses=0;
  order.forEach(function(k){var d=W[k],m=mins(d.seg);if(m){ses++;tp+=m;if(d.done)dn++}
   var b=document.createElement('button');b.className='day'+(k===TK?' today':'');b.setAttribute('aria-pressed','false');b.dataset.k=k;
-  b.innerHTML='<span class="dt"><small>'+d.n+'</small><b>'+d.dt+'</b></span><span class="mid"><span class="t">'+esc(d.t)+'</span><span class="mini">'+mini(d.seg)+'</span></span><span class="rt">'+(d.lb?'<em class="lb '+d.lc+'">'+d.lb+'</em>':'')+'<span class="tag">'+(m?m+' min':'')+'</span></span><span class="chk'+(d.done?' on':'')+'">'+(d.done?'✓':'')+'</span>';
+  b.innerHTML='<span class="dt"><small>'+d.n+'</small><b>'+d.dt+'</b></span><span class="mid"><span class="t">'+esc(d.t)+'</span><span class="mini">'+mini(d.seg)+'</span></span><span class="rt">'+(function(L){return L?'<em class="lb '+L[1]+'">'+L[0]+'</em>':''})(autoLb(d))+'<span class="tag">'+(m?m+' min':'')+'</span></span><span class="chk'+(d.done?' on':'')+'">'+(d.done?'✓':'')+'</span>';
   b.onclick=function(){show(k)};dayEl.appendChild(b)});
  var v=7-ses;document.getElementById('wk').innerHTML=[['Plán',Math.floor(tp/60)+' h '+('0'+tp%60).slice(-2)],['Hotovo',dn+' / '+ses],['Volno',v+(v===1?' den':v<5?' dny':' dní')]].map(function(s){return '<div class="stat"><span class="mute">'+s[0]+'</span><b>'+s[1]+'</b></div>'}).join('')}
 function refresh(){buildDays();try{updAdv()}catch(e){}document.getElementById('chart-dnes').innerHTML=chart(W.dnes.ex?W.dnes.ex.wu.seg:W.dnes.seg);renderRem();renderWeek();drawCurve();renderMetr();renderFtp();renderEx();renderGoal();renderZones();renderPrehledX();renderCoachMsg();renderPlanDnes();renderRgoal();renderTl();syncLoad()}
@@ -762,6 +762,8 @@ var WSEL=TK,LGN=12,TRN=6;
 var LGD=[667,338,299,396,396,461,694,278,508,246,349];
 var BND=[[0,'Nízká zátěž','😐'],[300,'Udržování','🙂'],[400,'Postupné zlepšování','🙂'],[470,'Nejlepší tréninkový stav','😄'],[560,'Mírné přetrénování','😬'],[640,'Varování před přetrénováním','⚠️']];
 function bandOf(v){var b=BND[0],i;for(i=0;i<BND.length;i++)if(v>=BND[i][0])b=BND[i];return b}
+function autoLb(d){if(d.lb)return [d.lb,d.lc||'lb-l'];var m=mins(d.seg);if(!m)return null;var mx=segMax(d.seg);
+ if(mx>=88)return ['Tvrdý','lb-h'];if(m>=90)return ['Dlouhý','lb-l'];if(/voln/i.test(d.t||''))return ['Volná','lb-l'];var v=ifAny(d);return v<.56?['Lehký','lb-e']:['Z2','lb-l']}
 function typeOf(d){if(d.lb==='Závod')return 'ZÁV';if(!mins(d.seg))return '';var v=ifAny(d);return v<.6?'REG':v<.75?'VYT':v<.85?'TEM':v<.95?'SST':v<1.05?'PRÁH':'VO2'}
 function weekFc(){var t=0;order.forEach(function(k){var d=W[k];if(mins(d.seg))t+=tssOf(d)});return t+exT()}
 function zoneOf(p){var i;for(i=0;i<6;i++)if(p<=ZPhi[i])return i;return 6}
@@ -878,7 +880,7 @@ function swapDays(a,b){['t','d','seg','tm','km','el','done','fit','rpe','leg','f
 function typePick(k,d,sub,q,btn){var op=sub.querySelector('.addk');if(op){sub.innerHTML='';if(btn)btn.setAttribute('aria-expanded','false');return}if(btn)btn.setAttribute('aria-expanded','true');
   sub.innerHTML='<p class="mute" style="margin:10px 0 6px">'+q+'</p><div class="addk"><button type="button" data-a="free" style="--c:var(--z2)"><b>Volná jízda</b><span>60 min v Z2, tempo podle pocitu</span></button><button type="button" data-a="iv" style="--c:var(--z4)"><b>Intervaly</b><span>'+esc(TPL[recIv(window.SC)].n)+'</span></button><button type="button" data-a="race" style="--c:var(--z5)"><b>Závod</b><span>Rozjetí, závod 30 min, vyjetí</span></button></div>';
   Array.prototype.forEach.call(sub.querySelectorAll('[data-a]'),function(b){b.onclick=function(){var a=b.dataset.a;if(!d.tm)d.tm=TM[k]||'16:00';
-   if(a==='free'){d.seg=[[10,55],[40,65],[10,50]];d.t='Volná jízda';d.d='Volná jízda v Z2, tempo podle pocitu.';d.iv='';d.lb='';d.lc=''}
+   if(a==='free'){d.seg=[[10,55],[40,65],[10,50]];d.t='Volná jízda';d.d='Volná jízda v Z2, tempo podle pocitu.';d.iv='';d.lb='Volná';d.lc='lb-l'}
    else if(a==='iv'){var rc=recIv(window.SC),t=TPL[rc];d.iv=rc;d.seg=t.seg.map(function(s){return s.slice()});d.t='Intervaly';d.d=t.d;d.lb='Tvrdý';d.lc='lb-h'}
    else{d.seg=[[15,55],[1,100],[2,55],[1,100],[3,55],[30,100],[10,50]];d.t='Závod';d.d='Rozjetí 15 min s otevíračkami, závod 30 min, vyjetí 10 min.';d.iv='';d.lb='Závod';d.lc='lb-r'}
    refresh();show(k);document.getElementById('detail').classList.add('editing')}})}
