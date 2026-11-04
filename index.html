@@ -99,7 +99,7 @@ nav button{padding:12px 0;border-radius:18px}nav button[aria-selected=true]{box-
 #rt{flex:none;width:130px}
 .pg{position:relative;height:10px;border-radius:6px;background:color-mix(in srgb,var(--z4) 25%,var(--line));margin-top:14px}.pg i{display:block;height:100%;border-radius:6px;background:var(--z4)}.pg s{position:absolute;top:-3px;width:2px;height:16px;background:var(--ink);opacity:.55}
 .ok{color:var(--z2);font-weight:800}
-.acs{display:flex;gap:10px;overflow-x:auto;margin:14px -6px 0;padding:4px 6px}.ac{flex:none;width:148px;border:2px solid color-mix(in srgb,var(--acc) 55%,transparent);border-radius:18px;padding:12px;background:var(--bg)}.ac strong{color:var(--acc);font-size:15px}.ac em{font-style:normal;color:var(--z2)}.ac p{margin:6px 0 0;font-size:14px;font-weight:600;line-height:1.3;min-height:36px}.ac span{display:block;margin-top:6px;font-size:13px;color:var(--mute)}
+.acs{display:flex;gap:10px;overflow-x:auto;margin:14px -6px 0;padding:4px 6px}.ac{flex:none;width:118px;border:2px solid var(--c,color-mix(in srgb,var(--acc) 55%,transparent));border-radius:16px;padding:10px;background:var(--bg)}.ac.pl{border-style:dashed;opacity:.85}.ac.td{box-shadow:0 0 0 2px var(--acc)}.ac small{font-weight:600;color:var(--mute);font-size:11px}.ac strong{color:var(--acc);font-size:15px}.ac em{font-style:normal;color:var(--z2)}.ac p{margin:5px 0 0;font-size:13px;font-weight:600;line-height:1.3;min-height:34px}.ac span{display:block;margin-top:4px;font-size:12px;color:var(--mute)}
 .wst{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;background:var(--bg);border-radius:16px;padding:12px 2px;text-align:center}.wst div+div{border-left:1px solid var(--line)}.wst span{display:block;font-size:12px;font-weight:600;color:var(--mute)}.wst b{font-size:22px;font-weight:800;letter-spacing:-.02em}.wst .g{color:var(--z2)}
 .wst .o{color:var(--z4)}.ac.pl{border-style:dashed}.wst input{width:76px;flex:none;text-align:center;border:0;background:none;padding:0;font:800 22px "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);letter-spacing:-.02em}
 nav{bottom:auto;top:calc(8px + env(safe-area-inset-top,0px));z-index:20}main{padding-top:80px;padding-bottom:40px}html{scroll-padding-top:84px}
@@ -163,7 +163,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .bl{display:flex;flex-direction:column;gap:3px;align-items:flex-start}.bl .tg{font-size:12px}
 .ap .rk{display:block;font-weight:700;color:var(--acc);font-size:12px;margin:2px 0}.ap .mv{display:flex;flex-direction:column;gap:3px;flex:none}.ap .mv button{padding:1px 8px;font-size:10px;line-height:1.3}.ap .mv button:disabled{opacity:.35}
 .ilf{padding:4px 0 12px}.ilf label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute);font-weight:600;margin-top:10px}.ilf label.rule{flex-direction:row;align-items:center;gap:8px;font-size:13px}.ilf input[type=text],.ilf input[type=password]{width:100%;flex:none}
-.ilok{display:flex;align-items:center;gap:8px;margin:0;font-weight:600;color:var(--z2)}.ilok span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--z2);color:#fff;font-size:13px}</style>
+.hs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.hs div{background:var(--bg);border-radius:12px;padding:8px 10px}.hs small{display:block;font-size:11px;color:var(--mute)}.hs b{font-size:18px}.hxl{list-style:none;margin:12px 0 0;padding:0;display:block}.hxl li{display:flex;width:auto;align-items:center;gap:10px;padding:9px 0 9px 10px;border-top:1px solid var(--line);border-left:3px solid var(--c)}.hxl .hxd{width:62px;flex:none;font-size:12px;color:var(--mute)}.hxl .hxn{flex:1;min-width:0}.hxl .hxn b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hxl .hxn small,.hxl .hxt small{display:block;font-size:11px;color:var(--mute);font-weight:500}.hxl .hxt{text-align:right;font-weight:700}.avr{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.avr b{width:24px;flex:none}.avr .avt{flex:1;display:flex;align-items:center;gap:6px;font-size:14px}.avr input[type=time],.avr select{width:auto;flex:none;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 14px inherit}.ilf p,#kai p{overflow-wrap:anywhere}.ilok{display:flex;align-items:center;gap:8px;margin:0;font-weight:600;color:var(--z2)}.ilok span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--z2);color:#fff;font-size:13px}</style>
 </head>
 <body>
 <main>
@@ -226,6 +226,8 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 <section id="p-tyden" class="hide">
   <button type="button" id="arr4" hidden>Uspořádat</button>
   <div class="wk" id="wk"></div>
+  <div class="card" id="wgen"></div>
+  <div class="card" id="whist"></div>
   <div id="days"></div>
   <div class="card" id="detail"></div>
 </section>
@@ -238,7 +240,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 </section>
 <section id="p-nast" class="hide">
   <button type="button" id="arr3" hidden>Uspořádat</button>
-  <div id="kw"><div class="card" id="keftp"></div><div class="card" id="krace"></div><div class="card" id="kapp"></div><div class="card" id="kai"></div><div class="card" id="kprof"><strong>Profil jezdce</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">FTP (W)</span><input id="p-ftp" type="number" min="50" max="600" value="261" disabled style="flex:none;width:110px"></div><label class="rule"><input type="checkbox" id="p-man">Upravit FTP ručně</label><p class="mute" id="p-note" style="margin:8px 0 0">Automaticky z Intervals.icu po napojení. Teď ukázková hodnota.</p></div>
+  <div id="kw"><div class="card" id="keftp"></div><div class="card" id="krace"></div><div class="card" id="kav"></div><div class="card" id="kapp"></div><div class="card" id="kai"></div><div class="card" id="kprof"><strong>Profil jezdce</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">FTP (W)</span><input id="p-ftp" type="number" min="50" max="600" value="261" disabled style="flex:none;width:110px"></div><label class="rule"><input type="checkbox" id="p-man">Upravit FTP ručně</label><p class="mute" id="p-note" style="margin:8px 0 0">Automaticky z Intervals.icu po napojení. Teď ukázková hodnota.</p></div>
   <div class="card" id="zset"></div>
   <div class="card" id="zhr"></div>
   <div class="card" id="krem" style="display:none"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
@@ -478,7 +480,9 @@ function fmt(m){m=Math.round(m);return Math.floor(m/60)+':'+('0'+m%60).slice(-2)
 function renderWeek(){var el=document.querySelector('.wkc');if(!el)return;
  var done=0,plan=0,cards='',di=(new Date().getDay()+6)%7+1;
  order.forEach(function(k){var d=W[k],m=mins(d.seg);if(!m)return;var t=tssOf(d);if(d.done)done+=t;else plan+=t;var mm=d.dur?d.dur:mins(d.seg.concat(d.race||[]));});
- if(W.dnes.ex)['wu','cd'].forEach(function(x){var e=W.dnes.ex[x];if(!e.done)return;var t=tssOf(e),mm=e.dur?e.dur:mins(e.seg);done+=t;cards+='<div class="ac"><strong>'+(PAST?'Út':'Dnes')+' <em>✓</em></strong><p>'+esc(e.t)+'</p><span>'+fmt(mm)+' · '+t+' TSS</span><span>'+(e.km?String(e.km).replace('.',',')+' km':'&nbsp;')+'</span></div>'});
+ if(W.dnes.ex)['wu','cd'].forEach(function(x){var e=W.dnes.ex[x];if(e.done)done+=tssOf(e)});
+ var tile=function(i,e,lab){var m=e.dur?e.dur:mins(e.seg),t=tssOf(e),dn=!!e.done,c=dn?'var(--z2)':ZC(ifOf(e).v*100);return '<div class="ac'+(dn?'':' pl')+(i===TDI?' td':'')+'" style="--c:'+c+'"><strong>'+(i===TDI?'Dnes':DNAME[i].slice(0,2))+' '+(dn?'<em>✓</em>':'<small>plán</small>')+'</strong><p>'+esc(lab||String(e.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,''))+'</p><span>'+fmt(m)+' · '+(dn?'':'~')+t+' TSS</span>'+(e.km?'<span>'+String(e.km).replace('.',',')+' km</span>':'')+'</div>'};
+ order.forEach(function(k,i){var d=W[k];if(!mins(d.seg))return;if(k==='dnes'&&d.ex){if(d.ex.wu&&mins(d.ex.wu.seg))cards+=tile(i,d.ex.wu,'Rozjezd');cards+=tile(i,d,'Závod');if(d.ex.cd&&mins(d.ex.cd.seg))cards+=tile(i,d.ex.cd,'Vyjetí')}else cards+=tile(i,d)});
  var fc=done+plan,left=Math.max(0,GOAL-done),pct=Math.round(done/GOAL*100),mx=Math.max.apply(null,H.concat([fc,GOAL])),avg=Math.round(H.reduce(function(a,b){return a+b},0)/H.length),bars='';
  H.forEach(function(v,i){var h=Math.max(4,v/mx*60);bars+='<rect x="'+(5+40*i)+'" y="'+(64-h).toFixed(1)+'" width="30" height="'+h.toFixed(1)+'" rx="5"/>'});
  var hf=Math.max(8,fc/mx*60),hd=Math.max(3,done/mx*60);
@@ -622,8 +626,8 @@ function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x
  return n}
 function ilConnect(){if(IL.busy)return;IL.busy=true;IL.msg='Načítám data z Intervals.icu…';renderApps();
  var t=new Date(),o=new Date(t.getTime()-35*864e5);
- Promise.all([ilGet('/wellness?oldest='+ilD(o)+'&newest='+ilD(t)),ilGet('/activities?oldest='+ilD(MON)+'&newest='+ilD(SUN)),ilGet('').catch(function(){return null})]).then(function(r){
-  var n=ilApply(r[0],r[1],r[2]);IL.on=true;IL.edit=false;IL.busy=false;IL.at=new Date();APPS.forEach(function(a){if(a[0]==='int')a[3]=1});
+ Promise.all([ilGet('/wellness?oldest='+ilD(o)+'&newest='+ilD(t)),ilGet('/activities?oldest='+ilD(new Date(Math.min(MON.getTime(),t.getTime()-13*864e5)))+'&newest='+ilD(SUN)),ilGet('').catch(function(){return null})]).then(function(r){
+  ILH=(r[1]||[]).filter(function(a){return a&&/Ride/.test(a.type||'')&&(a.moving_time||0)>=180});var n=ilApply(r[0],r[1],r[2]);IL.on=true;IL.edit=false;IL.busy=false;IL.at=new Date();APPS.forEach(function(a){if(a[0]==='int')a[3]=1});
   IL.msg=n.length?'Připojeno. Načteno: '+n.join(', ')+'.':'Připojeno, ale Intervals.icu nevrátilo žádná použitelná data za poslední týdny.';
   try{localStorage.setItem('mfc-il',JSON.stringify({id:IL.id,key:IL.key}))}catch(e){}
   refresh();renderDnes();draw();show(window.cur||'st');renderApps()}).catch(function(e){IL.busy=false;IL.on=false;
@@ -648,7 +652,7 @@ function renderRgoal(){var d=W.dnes,T=d.tg||{},el=document.getElementById('rgoal
  q('rg-n').onchange=function(){d.nm=this.value.trim()||'závod';d.t=raceTitle();renderDnes();refresh()};
  q('rg-t').onchange=function(){if(this.value)applyRace(this.value)}}
 function initKoucWidgets(){var _kr=document.getElementById('krem');if(_kr)_kr.remove();renderApps();renderEftp();renderRaceSet();var P=document.getElementById('p-nast'),box=document.getElementById('kw'),arr=document.getElementById('arr3'),sv=[],g=function(i){return document.getElementById(i)};
- var defs=[['prof','Profil jezdce',g('kprof')],['eftp','eFTP',g('keftp')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')]];
+ var defs=[['prof','Profil jezdce',g('kprof')],['av','Moje dostupnost',g('kav')],['eftp','eFTP',g('keftp')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order-k')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
@@ -662,7 +666,7 @@ function initKoucWidgets(){var _kr=document.getElementById('krem');if(_kr)_kr.re
  arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function initTydenWidgets(){var P=document.getElementById('p-tyden'),arr=document.getElementById('arr4'),box=document.createElement('div'),sv=[],g=function(i){return document.getElementById(i)},
- defs=[['wk','Přehled týdne',g('wk')],['days','Dny týdne',g('days')],['detail','Detail dne',g('detail')]];
+ defs=[['wk','Přehled týdne',g('wk')],['gen','Plánování týdne',g('wgen')],['hist','Souhrn jízd',g('whist')],['days','Dny týdne',g('days')],['detail','Detail dne',g('detail')]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order-t')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  box.id='wgt';arr.insertAdjacentElement('afterend',box);
@@ -881,6 +885,74 @@ refresh();show(window.cur||'st');renderDnes();initWidgets();initProfile();initDn
  function sync(){var m=M[cur()];g.style.visibility=m?'visible':'hidden';if(m){var on=document.getElementById(m).textContent==='Hotovo';g.textContent=on?'Hotovo':'Uspořádat';g.setAttribute('aria-pressed',String(on))}}
  g.onclick=function(){var m=M[cur()];if(m){document.getElementById(m).click();sync()}};
  Array.prototype.forEach.call(document.querySelectorAll('nav button'),function(b){b.addEventListener('click',sync)});sync()})();
+/* ===== Historie jízd (7 / 14 dní) ===== */
+var HIST={},HRNG=7,ILH=null;
+function archWeek(){order.forEach(function(k,i){var d=W[k];if(!d.done||!mins(d.seg))return;var dt=ilD(DT[k]),o=ifOf(d);HIST[dt]={dt:dt,t:k==='dnes'?'Závod'+(d.nm&&d.nm!=='závod'?': '+d.nm:''):String(d.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,''),min:Math.round(d.dur||mins(d.seg)),km:+d.km||0,el:+d.el||0,tss:tssOf(d)+(k==='dnes'?exT():0),iff:+o.v.toFixed(2),w:Math.round(d.np||d.pw||0),rpe:d.fbDone?d.rpe:0}});
+ var ks=Object.keys(HIST).sort();while(ks.length>90){delete HIST[ks.shift()]}}
+function histRows(){var t0=new Date(),o=new Date(t0.getFullYear(),t0.getMonth(),t0.getDate()-(HRNG-1)),lo=ilD(o),hi=ilD(t0),rows=[];
+ if(ILH&&ILH.length){ILH.forEach(function(a){var dt=(a.start_date_local||'').slice(0,10);if(dt<lo||dt>hi)return;rows.push({dt:dt,t:a.name||'Jízda',min:Math.round((a.moving_time||0)/60),km:+((a.distance||0)/1000).toFixed(1),el:Math.round(a.total_elevation_gain||0),tss:Math.round(a.icu_training_load||0),iff:a.icu_intensity?+(a.icu_intensity/100).toFixed(2):0,w:Math.round(a.icu_weighted_avg_watts||a.icu_average_watts||a.average_watts||0),rpe:a.icu_rpe||0,src:1})})}
+ else Object.keys(HIST).forEach(function(k){if(k>=lo&&k<=hi)rows.push(HIST[k])});
+ return rows.sort(function(a,b){return a.dt<b.dt?1:-1})}
+function renderHist(){var el=document.getElementById('whist');if(!el)return;var rows=histRows(),S={n:rows.length,min:0,km:0,el:0,tss:0};rows.forEach(function(r){S.min+=r.min;S.km+=r.km;S.el+=r.el;S.tss+=r.tss});
+ var dl=function(s){var p=s.split('-'),d=new Date(+p[0],+p[1]-1,+p[2]);return ['Ne','Po','Út','St','Čt','Pá','So'][d.getDay()]+' '+d.getDate()+'. '+(d.getMonth()+1)+'.'};
+ el.innerHTML='<div class="row"><h2 style="margin:0">Souhrn jízd</h2><div class="chips pwt" style="margin:0"><button type="button" data-r="7" aria-pressed="'+(HRNG===7)+'">7 dní</button><button type="button" data-r="14" aria-pressed="'+(HRNG===14)+'">14 dní</button></div></div>'
+  +'<div class="hs"><div><small>Jízdy</small><b>'+S.n+'</b></div><div><small>Čas</small><b>'+fmt(S.min)+'</b></div><div><small>Km</small><b>'+Math.round(S.km)+'</b></div><div><small>TSS</small><b>'+S.tss+'</b></div></div>'
+  +(S.el?'<p class="mute" style="margin:6px 0 0;font-size:13px">Převýšení celkem '+S.el+' m'+(S.n?' · průměr '+Math.round(S.tss/HRNG)+' TSS na den':'')+'</p>':'')
+  +(rows.length?'<ul class="hxl">'+rows.map(function(r){return '<li style="--c:'+(r.iff?ZC(r.iff*100):'var(--z2)')+'"><span class="hxd">'+dl(r.dt)+'</span><span class="hxn"><b>'+esc(r.t)+'</b><small>'+fmt(r.min)+(r.km?' · '+String(r.km).replace('.',',')+' km':'')+(r.w?' · '+r.w+' W':'')+(r.rpe?' · RPE '+r.rpe:'')+'</small></span><span class="hxt">'+r.tss+'<small>TSS</small></span></li>'}).join('')+'</ul>':'<p class="mute" style="margin:12px 0 0">Zatím žádné dojeté jízdy v tomto období.</p>')
+  +'<p class="mute" style="margin:10px 0 0;font-size:12px">'+(ILH?'Data z Intervals.icu.':'Dojeté jízdy uložené v aplikaci. Po připojení Intervals.icu se ukáže i historie z předchozích týdnů.')+'</p>';
+ Array.prototype.forEach.call(el.querySelectorAll('button[data-r]'),function(b){b.onclick=function(){HRNG=+b.dataset.r;renderHist()}})}
+/* ===== Dostupnost a sestavení týdne ===== */
+var AVD=[{on:1,f:'16:00',m:60},{on:1,f:'17:30',m:90,race:1},{on:1,f:'16:00',m:90},{on:1,f:'16:00',m:120},{on:1,f:'16:00',m:45},{on:0,f:'',m:0,n:'Práce'},{on:1,f:'15:00',m:90}];
+var AV=AVD.map(function(x){return Object.assign({},x)}),GW='',GBK=null,GMSG='',WNOTE='';
+function hhmm(t,add){var p=(t||'16:00').split(':'),v=(+p[0]*60+(+p[1])+(add||0)+1440)%1440;return ('0'+Math.floor(v/60)).slice(-2)+':'+('0'+v%60).slice(-2)}
+function sess(type,max,rdy){var m,s,t,d,iv='',lb='',lc='';
+ if(type==='hard'){var id=recIv(rdy),T=TPL[id];if(mins(T.seg)>max&&id!=='thr3'&&mins(TPL.thr3.seg)<=max){id='thr3';T=TPL.thr3}
+  s=T.seg.map(function(x){return x.slice()});while(mins(s)>max){var c=shortSeg(s);if(!c)break;s=c}
+  if(mins(s)>max)return sess('end',max,rdy);iv=id;t={ss:'Sweet spot',thr4:'Intervaly',thr3:'Intervaly',vo2:'VO2max',ou:'Over-under'}[id]||'Intervaly';d='Tvrdý trénink: '+T.d;lb='Tvrdý';lc='lb-h'}
+ else if(type==='long'){m=Math.min(max,150);s=[[10,55],[m-20,68],[10,50]];t='Delší Z2';d='Vytrvalost, '+(m>=60?Math.floor(m/60)+' h'+(m%60?' '+m%60+' min':''):m+' min')+' na 65–70 % FTP';lb='Dlouhý';lc='lb-l'}
+ else if(type==='open'){m=Math.min(max,40);s=[[Math.max(10,m-13),55],[1,100],[2,55],[1,100],[2,55],[1,100],[6,50]];t='Rozjetí s otevíračkami';d='Den před závodem: lehce '+mins(s)+' min, 3× 1 min na 100 % FTP'}
+ else if(type==='rec'){m=Math.min(max,45);s=[[m,52]];t='Regenerace';d=m+' min v Z1, lehké točení'}
+ else{m=Math.min(max,75);s=[[10,55],[Math.max(10,m-15),65],[5,50]];t='Lehká Z2';d=mins(s)+' min v Z2 na 60–68 % FTP'}
+ return{seg:s,t:t,d:d,iv:iv,lb:lb,lc:lc}}
+function genWeek(force){var rdy=rdyS(),ri=order.indexOf('dnes'),plan=[],i,k,hard=[],cnt=rdy<45?1:2,ok=function(j){return AV[j].on&&!AV[j].race&&AV[j].m>=30},free=function(j){var k2=order[j];return j>=(force?TDI:0)&&ok(j)&&!W[k2].done&&!(j===TDI&&force&&W[k2].done)};
+ for(i=0;i<7;i++)plan.push(null);
+ var lg=-1,lsc=function(j){return AV[j].m+(j>=5?30:0)-(j===ri+1?60:0)};for(i=0;i<7;i++)if(free(i)&&!plan[i]&&i!==ri-1&&AV[i].m>=90&&(lg<0||lsc(i)>lsc(lg)))lg=i;if(lg>=0)plan[lg]='long';
+ var cand=[];for(i=0;i<7;i++)if(free(i)&&!plan[i]&&i!==ri-1&&AV[i].m>=50)cand.push(i);
+ var pen=function(j){return (j===ri+1?1000:0)+(j>=5?20:0)-AV[j].m};cand.sort(function(a,b){return pen(a)-pen(b)});
+ cand.forEach(function(j){if(hard.length>=cnt)return;if(j===ri+1&&rdy<75)return;if(hard.some(function(h){return Math.abs(h-j)<2}))return;hard.push(j)});
+ hard.forEach(function(j){plan[j]='hard'});
+ for(i=0;i<7;i++){if(!free(i)||plan[i])continue;plan[i]=i===ri-1?'open':(plan[i-1]==='hard'||plan[i-1]==='long'||i===ri+1)?'rec':'end'}
+ var bk=JSON.stringify(W),ch=[];
+ for(i=0;i<7;i++){k=order[i];if(k==='dnes')continue;var j=i;if(force&&(j<TDI||W[k].done))continue;
+  var a=AV[j];if(!plan[j]){if(!W[k].done){W[k].seg=[];W[k].t='Volno';W[k].d=a.n?a.n+', žádný trénink.':'Bez tréninku.';W[k].iv='';W[k].lb='';W[k].lc='';ch.push(DNAME[j]+': volno')}continue}
+  var s=sess(plan[j],a.m,rdy);W[k].seg=s.seg;W[k].t=s.t+' od '+a.f;W[k].d=s.d;W[k].iv=s.iv;W[k].lb=s.lb;W[k].lc=s.lc;W[k].tm=a.f;TM[k]=a.f;ch.push(DNAME[j]+' '+a.f+': '+s.t+' '+mins(s.seg)+' min')}
+ GBK=bk;GW=WKID;return ch}
+function parseNote(t){var dn=[/pondě|pondel|\bpo\b/i,/úter|uter|\but\b/i,/střed|stred|\bst\b/i,/čtvrt|ctvrt|\bčt\b/i,/pát|pat(?:ek|ku)|\bpá\b/i,/sobot|\bso\b/i,/neděl|nedel|\bne\b/i],out=[];
+ t.split(/[,.;\n]+| a /).forEach(function(p){var neg=/nemůž|nemuz|nejedu|nestih|nemám čas|volno|práce|prace/i.test(p),tm=p.match(/(\d{1,2})[:.](\d{2})|od (\d{1,2})/),mx=p.match(/(\d{2,3})\s*min|(\d(?:[.,]5)?)\s*h(?:od)?/);
+  dn.forEach(function(r,i){if(!r.test(p))return;var o={d:i};if(neg)o.on=0;else{o.on=1;if(tm)o.f=hhmm((tm[1]||tm[3])+':'+(tm[2]||'00'));if(mx)o.m=mx[1]?+mx[1]:Math.round(parseFloat(mx[2].replace(',','.'))*60)}out.push(o)})});return out}
+function applyNote(list){list.forEach(function(o){var a=AV[o.d];if(a.race)return;if(o.on===0){a.on=0}else{a.on=1;if(o.f)a.f=o.f;if(o.m)a.m=Math.max(20,Math.min(300,o.m));if(!a.f)a.f='16:00';if(!a.m)a.m=60}})}
+function doGen(note){var base=AV.map(function(x){return Object.assign({},x)}),fin=function(lst,src){if(lst&&lst.length)applyNote(lst);var ch=genWeek(true);AV=base;
+  GMSG=(lst&&lst.length?'Upraveno podle poznámky'+(src?' ('+src+')':'')+'. ':'')+(ch.length?'Sestaveno: '+ch.join(' · ')+'.':'Není co plánovat, zbývající dny jsou dojeté nebo volné.');refresh();show(window.cur||TK);renderGen();renderAv();
+  if(GM.on&&ch.length){GMSG+=' Kouč píše…';renderGen();aiAsk('Právě jsem si nechal sestavit zbytek týdne podle své dostupnosti'+(note?' a poznámky „'+note+'“':'')+'. Ve 2–3 větách vysvětli, proč je týden rozložený takhle, a upozorni, pokud něco nesedí.',function(r){GMSG=GMSG.replace(' Kouč píše…','')+(r?' Kouč: '+r:'');renderGen()})}};
+ if(!note){fin(null);return}
+ if(GM.on){GMSG='Kouč čte poznámku…';renderGen();var old=CH;CH=[];aiAsk('Převeď poznámku jezdce o dostupnosti na tento týden do JSON. Odpověz POUZE JSON polem bez dalšího textu, např. [{"d":3,"on":0},{"d":4,"on":1,"f":"18:00","m":60}]. d je den 0=pondělí … 6=neděle, on 0/1, f začátek HH:MM, m max minut. Uveď jen dny, kterých se poznámka týká. Poznámka: '+note,function(r){CH=old;var lst=null;try{lst=JSON.parse((r||'').replace(/```json|```/g,'').match(/\[[\s\S]*\]/)[0])}catch(e){}if(!Array.isArray(lst))lst=parseNote(note);fin(lst,'AI')});return}
+ fin(parseNote(note))}
+function renderAv(){var el=document.getElementById('kav');if(!el)return;
+ var h='<strong>Moje dostupnost</strong><p class="mute" style="margin:6px 0 10px">Kdy můžeš jet a kolik máš času. Podle toho kouč sestavuje týden, každé pondělí sám.</p>';
+ AV.forEach(function(a,i){h+='<div class="avr"><b>'+DNAME[i].slice(0,2)+'</b>'+(a.race?'<span class="mute" style="flex:1">Závod · start '+esc(W.dnes.tm||'18:00')+'</span>':'<label class="avt"><input type="checkbox" data-i="'+i+'" data-k="on"'+(a.on?' checked':'')+'> '+(a.on?'jedu':'nejedu')+'</label>'+(a.on?'<input type="time" data-i="'+i+'" data-k="f" value="'+esc(a.f||'16:00')+'"><select data-i="'+i+'" data-k="m">'+[30,45,60,75,90,120,150,180].map(function(v){return '<option value="'+v+'"'+(+a.m===v?' selected':'')+'>'+(v<60?v+' min':v%60?Math.floor(v/60)+' h '+v%60:v/60+' h')+'</option>'}).join('')+'</select>':'<span class="mute" style="flex:1">'+esc(a.n||'volno')+'</span>'))+'</div>'});
+ h+='<div class="chips" style="margin-top:12px"><button type="button" id="av-go">Sestavit týden</button><button type="button" id="av-rs">Výchozí</button></div>';
+ el.innerHTML=h;
+ Array.prototype.forEach.call(el.querySelectorAll('[data-k]'),function(x){x.onchange=function(){var a=AV[+x.dataset.i],k=x.dataset.k;a[k]=k==='on'?(x.checked?1:0):k==='m'?+x.value:x.value;if(k==='on'&&a.on){if(!a.f)a.f='16:00';if(!a.m)a.m=60}renderAv()}});
+ document.getElementById('av-go').onclick=function(){doGen('');document.querySelector('nav button[data-t="tyden"]').click()};
+ document.getElementById('av-rs').onclick=function(){AV=AVD.map(function(x){return Object.assign({},x)});renderAv()}}
+function renderGen(){var el=document.getElementById('wgen');if(!el)return;
+ el.innerHTML='<div class="row"><h2 style="margin:0">Plánování týdne</h2><span class="mute">'+WKLBL+'</span></div><p class="mute" style="margin:6px 0 10px">Kouč rozloží zbytek týdne podle tvé dostupnosti, připravenosti a cíle. Dojeté dny a závod nemění.</p>'
+  +'<form id="gen-f" style="display:flex;gap:8px"><input id="gen-n" placeholder="Např. ve čtvrtek nemůžu, v pátek od 18:00 90 min" style="flex:1;min-width:0" value="'+esc(WNOTE)+'"><span class="chips" style="margin:0;flex:none"><button type="submit">Přeplánovat</button></span></form>'
+  +'<div class="chips" style="margin-top:10px">'+(GBK?'<button type="button" id="gen-un">Vrátit předchozí plán</button>':'')+'<button type="button" id="gen-av">Upravit dostupnost</button></div>'
+  +(GMSG?'<div class="why" style="margin-top:12px"><small>KOUČ</small><p>'+esc(GMSG)+'</p></div>':'');
+ document.getElementById('gen-f').onsubmit=function(e){e.preventDefault();WNOTE=document.getElementById('gen-n').value.trim();doGen(WNOTE)};
+ var u=document.getElementById('gen-un');if(u)u.onclick=function(){try{var o=JSON.parse(GBK);Object.keys(o).forEach(function(k){W[k]=o[k]})}catch(e){}GBK=null;GMSG='Vráceno na předchozí plán.';refresh();show(window.cur||TK);renderGen()};
+ document.getElementById('gen-av').onclick=function(){document.querySelector('nav button[data-t="nast"]').click();var k=document.getElementById('kav');if(k)k.scrollIntoView({behavior:'smooth'})}}
 /* ===== AI kouč přes Gemini ===== */
 var GM={key:'',model:'gemini-3.8-flash',on:false,busy:false,msg:'',edit:false},CH=[];
 try{var _gm=JSON.parse(localStorage.getItem('mfc-gm')||'{}');if(_gm.key){GM.key=_gm.key;GM.on=true}if(_gm.model)GM.model=_gm.model}catch(e){}
@@ -893,8 +965,16 @@ function aiAsk(q,cb){var sys='Jsi AI cyklistický trenér v aplikaci MyFiTCZ. Od
  var call=function(model,retry){fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':GM.key},body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:CH,generationConfig:{maxOutputTokens:800,temperature:.6}})})
   .then(function(r){return r.json().then(function(j){if(!r.ok){var e=new Error((j.error&&j.error.message)||'http');e.code=r.status;throw e}return j})})
   .then(function(j){var t=((j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts)||[]).map(function(p){return p.text||''}).join('').trim();if(!t)throw new Error('prázdná odpověď');CH.push({role:'model',parts:[{text:t}]});if(model!==GM.model){GM.model=model;gmSave()}cb(t,null)})
-  .catch(function(e){var nx=retry.shift();if(nx&&(e.code===404||e.code===429||e.code>=500)){call(nx,retry);return}CH.pop();cb(null,e.code===400||e.code===403?'Gemini odmítlo API klíč.':e.code===429?'Vyčerpaný bezplatný limit Gemini, zkus to za chvíli.':e.code>=500?'Gemini je teď přetížené, zkus to za chvíli.':'AI kouč teď neodpovídá ('+(e.message||'chyba')+').')})};
- call(GM.model,['gemini-3.8-flash','gemini-2.5-flash','gemini-2.5-flash-lite'].filter(function(m){return m!==GM.model}))}
+  .catch(function(e){var nx=retry.shift();if(nx&&e.code!==401&&e.code!==403&&!(e.code===400&&/API key/i.test(e.message||''))){call(nx,retry);return}CH.pop();cb(null,e.code===401||e.code===403||(e.code===400&&/API key/i.test(e.message||''))?'Gemini odmítlo API klíč.':e.code===429?'Vyčerpaný bezplatný limit Gemini, zkus to za chvíli.':e.code>=500?'Gemini je teď přetížené, zkus to za chvíli.':'AI kouč teď neodpovídá, žádný z dostupných modelů Gemini nereagoval. Zkus to za chvíli.')})};
+ gmModels(function(list){call(GM.model,list.filter(function(m){return m!==GM.model}))})}
+var GML=null;
+function gmModels(cb){if(GML){cb(GML.slice());return}
+ fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200',{headers:{'x-goog-api-key':GM.key}}).then(function(r){return r.json()}).then(function(j){
+  var v=function(n){var m=n.match(/gemini-(\d+(?:\.\d+)?)/);return m?parseFloat(m[1]):0};
+  var L=(j.models||[]).filter(function(m){var n=m.name||'';return /gemini-[\d.]+-flash/.test(n)&&(m.supportedGenerationMethods||[]).indexOf('generateContent')>=0&&!/image|tts|audio|live|embed|thinking-exp|robotics|computer/.test(n)})
+   .map(function(m){return m.name.replace(/^models\//,'')})
+   .sort(function(a,b){var pa=/preview|exp/.test(a)?1:0,pb=/preview|exp/.test(b)?1:0,la=/lite/.test(a)?1:0,lb=/lite/.test(b)?1:0;return pa-pb||la-lb||v(b)-v(a)});
+  GML=L.length?L.slice(0,6):['gemini-2.5-flash'];cb(GML.slice())}).catch(function(){GML=['gemini-2.5-flash'];cb(GML.slice())})}
 function renderAi(){var el=document.getElementById('kai');if(!el)return;
  var h='<strong>AI kouč (Google Gemini)</strong><p class="mute" style="margin:6px 0 8px">S klíčem odpovídá kouč pomocí AI podle tvých dat. Bez klíče jede na pevných pravidlech.</p>';
  if(GM.on&&!GM.edit)h+='<p class="ilok"><span>✓</span>Připojeno · '+esc(GM.model)+'</p>'+(GM.msg?'<p class="mute" style="margin:6px 0 0;font-size:13px">'+esc(GM.msg)+'</p>':'')+'<div class="chips" style="margin-top:10px"><button type="button" id="gm-test">'+(GM.busy?'Testuji…':'Otestovat')+'</button><button type="button" id="gm-ed">Změnit klíč</button><button type="button" id="gm-off">Odpojit</button></div>';
@@ -937,8 +1017,8 @@ function renderToday(){var el=document.getElementById('today-dnes');if(!el)retur
 function renderLabels(){if(!PAST)return;var sp=document.querySelector('#p-dnes .card .row .mute');
  var g=document.querySelector('#p-dnes #rt-start');if(g&&g.previousElementSibling)g.previousElementSibling.textContent='Cíl závodu · úterý';
  var m=document.querySelector('#chat .msg.ai');if(m&&!m.dataset.pd){m.dataset.pd=1;m.textContent='Ahoj! Včerejší závod máš za sebou. Dnes ('+DNAME[TDI].toLowerCase()+') je na řadě: '+W[TK].t+'. Můžu ho upravit podle toho, jak se cítíš.'}}
-var _rf=refresh;refresh=function(){_rf();renderToday();renderLabels();renderSug();renderAsk();renderRem()};
-renderAi();
+var _rf=refresh;refresh=function(){_rf();renderToday();renderLabels();renderSug();renderAsk();renderRem();archWeek();renderHist()};
+renderAi();renderAv();renderGen();
 Array.prototype.forEach.call(document.querySelectorAll('#krul input[type=checkbox]'),function(x){x.addEventListener('change',function(){SGMSG='';renderSug()})});
 refresh();
 /* ===== Ukládání v tomto zařízení ===== */
@@ -948,12 +1028,12 @@ refresh();
  function keep(o,src){Object.keys(src).forEach(function(k){o[k]=src[k]})}
  function fill(a,b){a.length=0;b.forEach(function(x){a.push(x)})}
  function snap(){var rt=document.getElementById('rt');
-  return JSON.stringify({WK:WKID,SG:SGD,RL:rulesOn(),W:W,FTP:FTP,FTPAUTO:FTPAUTO,MAXHR:MAXHR,MAP:MAP,LTHR:LTHR,LT1:LT1,LT2W:LT2W,ZPhi:ZPhi,ZHhi:ZHhi,RDEF:RDEF,GOAL:GOAL,H:H,GL:GL,FTPS:FTPS,TM:TM,rt:rt?rt.value:'',a:APPS.map(function(x){return x[0]})})}
+  return JSON.stringify({WK:WKID,HI:HIST,AV:AV,GW:GW,SG:SGD,RL:rulesOn(),W:W,FTP:FTP,FTPAUTO:FTPAUTO,MAXHR:MAXHR,MAP:MAP,LTHR:LTHR,LT1:LT1,LT2W:LT2W,ZPhi:ZPhi,ZHhi:ZHhi,RDEF:RDEF,GOAL:GOAL,H:H,GL:GL,FTPS:FTPS,TM:TM,rt:rt?rt.value:'',a:APPS.map(function(x){return x[0]})})}
  function put(s){var d;try{d=JSON.parse(s)}catch(e){return}
   if(d.W&&(d.WK||'2026-11-02')===WKID)Object.keys(d.W).forEach(function(k){if(W[k]&&d.W[k])W[k]=d.W[k]});
   if(typeof d.FTP==='number')FTP=d.FTP;if(typeof d.FTPAUTO==='number')FTPAUTO=d.FTPAUTO;if(typeof d.MAXHR==='number')MAXHR=d.MAXHR;
   if(typeof d.MAP==='number')MAP=d.MAP;if(typeof d.LTHR==='number')LTHR=d.LTHR;if(typeof d.LT2W==='number')LT2W=d.LT2W;if(typeof d.GOAL==='number')GOAL=d.GOAL;
-  if(d.LT1)keep(LT1,d.LT1);if(d.RDEF)keep(RDEF,d.RDEF);if(d.FTPS)keep(FTPS,d.FTPS);if(d.GL)keep(GL,d.GL);if(d.SG&&d.SG.length)SGD=d.SG.filter(function(x){return x.indexOf(WKID)===0});if(d.RL)Array.prototype.forEach.call(document.querySelectorAll('#krul input[type=checkbox]'),function(x,i){if(typeof d.RL[i]==='boolean')x.checked=d.RL[i]});if(d.TM)keep(TM,d.TM);
+  if(d.LT1)keep(LT1,d.LT1);if(d.RDEF)keep(RDEF,d.RDEF);if(d.FTPS)keep(FTPS,d.FTPS);if(d.GL)keep(GL,d.GL);if(Array.isArray(d.AV)&&d.AV.length===7)AV=d.AV;if(d.HI&&typeof d.HI==='object')HIST=d.HI;if(d.GW)GW=d.GW;if(d.SG&&d.SG.length)SGD=d.SG.filter(function(x){return x.indexOf(WKID)===0});if(d.RL)Array.prototype.forEach.call(document.querySelectorAll('#krul input[type=checkbox]'),function(x,i){if(typeof d.RL[i]==='boolean')x.checked=d.RL[i]});if(d.TM)keep(TM,d.TM);
   if(d.ZPhi&&d.ZPhi.length===ZPhi.length)fill(ZPhi,d.ZPhi);if(d.ZHhi&&d.ZHhi.length===ZHhi.length)fill(ZHhi,d.ZHhi);if(d.H&&d.H.length)fill(H,d.H);
   if(d.a&&d.a.length===APPS.length)APPS.sort(function(x,y){return d.a.indexOf(x[0])-d.a.indexOf(y[0])});
   var rt=document.getElementById('rt');if(rt&&d.rt)rt.value=d.rt;
@@ -962,6 +1042,7 @@ refresh();
  function tick(){var s=snap();if(s===last)return;try{localStorage.setItem('mfc-state',s);last=s;say('Uloženo ✓')}catch(e){say('Ukládání je zablokované')}}
  var s0=null;try{s0=localStorage.getItem('mfc-state')}catch(e){}
  if(s0){last=s0;put(s0);say('Načteno ✓')}else say('Ukládáno v tomto zařízení');
+ if(s0&&GW!==WKID&&WKID!=='2026-11-02'){var _gc=genWeek(false);GMSG='Nový týden sestaven podle dostupnosti: '+_gc.join(' · ')+'.';GBK=null;refresh();try{show(TK)}catch(e){}renderGen();renderAv()}
  setInterval(tick,3000);document.addEventListener('visibilitychange',function(){if(document.hidden)tick()});window.addEventListener('pagehide',tick);
  /* živá data z Intervals.icu: po otevření, po návratu do aplikace a každých 5 minut */
  function auto(){if(!(IL.id&&IL.key)||IL.busy)return;var a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return;if(IL.at&&Date.now()-IL.at.getTime()<60000)return;ilConnect()}
