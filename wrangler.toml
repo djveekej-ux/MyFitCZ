@@ -1,3 +1,4 @@
 name = "myfitcz-coach"
 main = "garmin-worker.js"
 compatibility_date = "2026-11-01"
+
