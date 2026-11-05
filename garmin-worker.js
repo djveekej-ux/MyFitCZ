@@ -42,8 +42,13 @@ export default {
     if (!PATHS.some((r) => r.test(url.pathname))) {
       return new Response('Not allowed', { status: 404, headers: cors });
     }
-    if (req.method !== 'GET' && req.method !== 'POST') {
+    // Klíč se vyměňuje za token metodou POST, všechno ostatní se jen čte (GET).
+    const isToken = PATHS[0].test(url.pathname);
+    if (req.method !== (isToken ? 'POST' : 'GET')) {
       return new Response('Method not allowed', { status: 405, headers: cors });
+    }
+    if (!(req.headers.get('Authorization') || '').trim()) {
+      return new Response('Unauthorized', { status: 401, headers: cors });
     }
 
     const headers = new Headers();

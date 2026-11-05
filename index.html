@@ -2,6 +2,8 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://intervals.icu https://personal.connectapi.garmin.com https://*.workers.dev https://generativelanguage.googleapis.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyFiTCZ</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -516,7 +518,7 @@ var HBX=[],HBY=[];function renderHealth(){var el=document.getElementById('hsb');
  if(HD.gtr!=null){var trc=hState(HD.gtr<33,HD.gtr<60);HBX.push(hTile({n:'Readiness',ic:'reg',c:trc,v:hNum(HD.gtr),u:'/100',s:'z Garminu',bar:hRange(HD.gtr,0,100,60,100,trc)}))}
  HBY=[];
 
- if(HD.gts!=null)HBY.push(hTile({n:'Training Status',ic:'load',c:/^(PRODUCTIVE|PEAKING|MAINTAINING|RECOVERY)/i.test(HD.gts)?'var(--z2)':'var(--z4)',v:'<span style="font-size:17px">'+gaTs(HD.gts)+'</span>',s:'z Garminu'}));
+ if(HD.gts!=null)HBY.push(hTile({n:'Training Status',ic:'load',c:/^(PRODUCTIVE|PEAKING|MAINTAINING|RECOVERY)/i.test(HD.gts)?'var(--z2)':'var(--z4)',v:'<span style="font-size:17px">'+esc(gaTs(HD.gts))+'</span>',s:'z Garminu'}));
 
  var rg=[dh!=null&&dh<-3,dr!=null&&dr>1,sh<7,dp!=null&&dp<=-2],rgn=rg.filter(Boolean).length,ld=[tsb!=null&&tsb<-30,HD.ramp!=null&&HD.ramp>8,ac!=null&&ac>1.3],ldn=ld.filter(Boolean).length,all=rgn+ldn,rgl=[dh!=null?'HRV '+hSgn(dh)+' %':'',dr!=null?'klidový tep '+hSgn(dr):'',HD.slp?'spánek '+hHM(HD.slp):'',dp!=null?'SpO₂ '+hSgn(dp,1):''].filter(function(x,i){return rg[i]}),ldl=[tsb!=null?'forma '+hSgn(tsb):'',HD.ramp!=null?'ramp '+hSgn(HD.ramp,1)+'/týden':'','vysoká únava'].filter(function(x,i){return ld[i]}),cap=function(s){return s.charAt(0).toUpperCase()+s.slice(1)},sigl=function(a){return '<span class="hsl"><em>'+a.map(function(x,i){return '<i>'+(i?x:cap(x))+'</i>'}).join('')+'</em></span>'};
  var grp=function(n,ic,cnt,bad,lab){var c=bad?'var(--z4)':'var(--z2)';return '<div class="hgi" style="--k:'+c+'"><span class="hti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+HIC[ic]+'</svg></span><div><b>'+n+'</b><span>'+lab+'</span></div><span class="hpl"><i></i>'+(bad?'Pozor':'OK')+'</span></div>'};
@@ -581,7 +583,7 @@ var TM={po:'16:00',dnes:'17:30',st:'16:00',ct:'16:00',pa:'16:00',ne:'15:00'};
 Object.keys(TM).forEach(function(k){W[k].tm=TM[k]});
 function mins(s){return s.reduce(function(a,x){return a+x[0]},0)}
 function eta(tm,m){var p=tm.split(':'),t=(+p[0]*60+(+p[1])+m)%1440;return ('0'+Math.floor(t/60)).slice(-2)+':'+('0'+t%60).slice(-2)}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function refresh(){Array.prototype.forEach.call(dayEl.children,function(e){if(!e.dataset.k)return;var d=W[e.dataset.k],m=mins(d.seg);e.querySelector('.t').textContent=d.t;e.querySelector('.tag').textContent=m?m+' min':''});document.getElementById('chart-dnes').innerHTML=chart(W.dnes.seg)}
 function parseFit(buf){var v=new DataView(buf),hs=v.getUint8(0),end=hs+v.getUint32(4,true),p=hs,defs={},out={},h,def,i,j;
  while(p<end){h=v.getUint8(p++);
