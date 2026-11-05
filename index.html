@@ -332,7 +332,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.57 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.58 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div class="hsc">Jak se počítá připravenost</div><div class="hfx"><div class="hfh" id="hfh"></div><div id="facs"></div></div><div id="hsb"></div></div></div>
@@ -1351,10 +1351,14 @@ function setRace(on,d,tm,after){on=on?1:0;d=+d;if(tm)RDEF.tm=tm;
  if(on===RACE.on&&(!on||d===RACE.d)){if(on&&tm&&tm!==W.dnes.tm)applyRace(tm);[function(){refresh()},renderRaceSet,renderAv].forEach(function(f){try{f()}catch(e){}});return false}
  var kb=on?order[d]:null;
  if(kb&&kb!=='dnes'&&W[kb].done)return 'V '+DNAME[d].toLowerCase()+' už máš tento týden dojetý trénink, závod tam teď přesunout nejde. Zkus jiný den, nebo to změň v pondělí.';
- if(RACE.on&&W.dnes.done)return 'Závod máš tento týden už dojetý. Den závodu změň v pondělí, až začne nový týden.';
- mfcSaveNow(function(o){o.RACE={on:on,d:on?d:RACE.d};o.REGEN=1;o.RDEF=RDEF;var fr={seg:[],t:'Volno',d:'Bez tréninku.',lb:'',lc:'',iv:'',done:false};
-  if(kb&&kb!=='dnes'&&o.W&&o.W[kb])Object.assign(o.W[kb],fr);
-  if(o.W){if(on&&!RACE.on)delete o.W.dnes;else if(!on&&o.W.dnes)Object.assign(o.W.dnes,fr)}});
+ mfcSaveNow(function(o){o.RACE={on:on,d:on?d:RACE.d};o.REGEN=1;o.RDEF=RDEF;if(!o.W)return;
+  var fr=function(){return {seg:[],t:'Volno',d:'Bez tréninku.',lb:'',lc:'',iv:'',done:false}},nw=['po','dnes','st','ct','pa','so','ne'];
+  if(on){if(d!==1){nw[1]=nw[d];nw[d]='dnes'}}else nw=order.slice();
+  var ro=RACE.on?order.indexOf('dnes'):-1,rn=on?d:-1,W2={},T2={},dn=RACE.on&&o.W.dnes&&o.W.dnes.done;
+  for(var i=0;i<7;i++){W2[nw[i]]=o.W[order[i]];if(o.TM&&o.TM[order[i]]!=null)T2[nw[i]]=o.TM[order[i]]}
+  if(ro>=0&&ro!==rn){var k=nw[ro];if(dn){var x=JSON.parse(JSON.stringify(o.W.dnes));delete x.ex;delete x.tg;delete x.race;x.lb='Závod';x.lc='lb-r';x.wasRace=1;if(!/závod/i.test(x.t||''))x.t='Závod';W2[k]=x}else W2[k]=Object.assign(W2[k]||{},fr())}
+  if(rn>=0&&rn!==ro){delete W2.dnes;delete T2.dnes}
+  o.W=W2;if(o.TM)o.TM=T2});
  try{if(after)sessionStorage.setItem('mfc-after',after)}catch(e){}
  location.reload();return true}
 function raceSel(id,on,d){return '<select id="'+id+'"><option value="-1"'+(on?'':' selected')+'>Žádný</option>'+DNAME.map(function(n,i){return '<option value="'+i+'"'+(on&&i===d?' selected':'')+'>'+n+'</option>'}).join('')+'</select>'}
