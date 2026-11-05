@@ -190,6 +190,17 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .advb{position:relative;display:flex;align-items:center;gap:12px;width:100%;margin-top:10px;padding:12px 14px 12px 18px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;color:var(--ink);font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}.advb:active{transform:scale(.98)}
 .advb:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--k,var(--z2))}.advi{width:34px;height:22px;flex:none;color:var(--k,var(--z2))}.advi svg{width:100%;height:100%}
 .advt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.advt b{font-size:14px;font-weight:700;line-height:1.3}.advt small{font-size:12px;color:var(--mute);font-weight:600}.advc{font-size:26px;color:var(--mute);line-height:1}
+.ksr{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:11px;padding-top:9px;border-top:1px dashed var(--line);font-size:12px}.ksr span{color:var(--mute);font-weight:600}.ksr b{font-weight:700;white-space:nowrap}.ksr em{font-style:normal;color:var(--z2);margin-left:2px}.ksr.bad em{color:var(--z4)}
+.ksx{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}.ksx .row .mute{font-size:12px}
+.ksg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.kst{background:var(--bg);border-radius:16px;padding:12px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--k) 35%,transparent)}
+.ksh{display:flex;align-items:center;gap:8px}.ksc{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 16%,transparent);flex:none}.ksc svg{width:18px;height:18px}
+.ksn{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--mute);flex:1}.ksd{width:8px;height:8px;border-radius:50%;background:var(--k)}
+.ksv{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:10px;line-height:1}.ksv small{font-size:13px;font-weight:600;color:var(--mute)}.kss{font-size:12px;color:var(--mute);margin-top:6px;font-weight:600}.kss b{color:var(--k)}.kst{min-width:0}.kst:last-child:nth-child(odd){grid-column:1/-1}.ksw{font-size:22px}.ksn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ksdots{display:inline-flex;gap:3px;margin-right:7px;vertical-align:1px}.ksdots i{width:7px;height:7px;border-radius:50%}
+.ksg{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+.kst{display:flex;flex-direction:column;align-items:center;text-align:center;padding:10px 2px 9px!important;border-radius:14px!important;grid-column:auto!important}
+.kst .ksc{width:28px;height:28px;border-radius:9px}.kst .ksc svg{width:16px;height:16px}
+.kst .ksv{font-size:17px!important;margin-top:8px!important;white-space:nowrap}.kst .ksv small{font-size:11px}.kst .ksw{font-size:12px!important;font-weight:800}
+.kst .ksn{font-size:10px!important;letter-spacing:.02em;margin-top:3px;flex:none!important;max-width:100%}.kst .kss{font-size:11px!important;margin-top:2px!important;color:var(--k)!important;font-weight:700}
 </style>
 </head>
 <body>
@@ -275,7 +286,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="zset"></div>
   <div class="card" id="zhr"></div>
   <div class="card" id="krem" style="display:none"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
-  <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label></div></div>
+  <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
   
 </section>
 </main>
@@ -351,28 +362,54 @@ function add(t,c){var m=document.createElement('div');m.className='msg '+c;m.tex
 function ask(t){if(!t.trim())return;add(t,'me');if(typeof GM!=='undefined'&&GM.on){var w=document.createElement('div');w.className='msg ai';w.textContent='Kouč přemýšlí…';chat.appendChild(w);aiAsk(t,function(r,err){var f=R.find(function(x){return x[0].test(t)});w.textContent=r||((f?f[1]:'Zapíšu si to a upravím plán.')+(err?' ('+err+')':''));w.scrollIntoView({block:'nearest'})});return}var r=R.find(function(x){return x[0].test(t)});setTimeout(function(){add(r?r[1]:'Zapíšu si to a upravím plán. V ostré verzi tady odpoví AI kouč s tvými daty.','ai')},350)}
 ['Uprav trénink podle metrik','Proč dnes odpočinek?','Přesuň intervaly na sobotu','Jak je to s mým FTP?','Co ten zrušený test?'].forEach(function(t){var b=document.createElement('button');b.textContent=t;b.type='button';b.onclick=function(){ask(t)};document.getElementById('chips').appendChild(b)});
 document.getElementById('f').onsubmit=function(e){e.preventDefault();var i=document.getElementById('q');ask(i.value);i.value=''};
+var KS=[{k:'dech',n:'Dech',v:15.4,b:15.0,u:' /min',dir:1,t:[1,2],ic:'<path d="M3 8.5h10.5a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 12.5h15a2.5 2.5 0 1 1-2.5 2.5"/><path d="M3 16.5h7"/>'},
+ {k:'spo2',n:'SpO₂',v:93,b:94,u:' %',dir:-1,t:[2,4],fl:90,ic:'<path d="M12 3.5c3.2 4.1 5.5 7.3 5.5 10.2a5.5 5.5 0 0 1-11 0c0-2.9 2.3-6.1 5.5-10.2z"/>'},
+ {k:'shr',n:'Tep v noci',v:50,b:49,u:' bpm',dir:1,t:[3,6],ic:'<path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 12 8a4 4 0 0 1 7 2.4C19 15.6 12 20 12 20z"/><path d="M8.5 13h2l1-2 1.5 4 1-2h1.5"/>'},
+ {k:'ssc',n:'Skóre noci',v:78,b:80,u:'',dir:-1,t:[10,20],fl:60,ic:'<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/>'}];
+var FEELN=['','Těžké','Spíš těžké','Normální','Dobré','Svěží'];
+function ksFeel(){try{var i=order.indexOf(TK);for(;i>=0;i--){var d=W[order[i]];if(d&&d.feel)return d.feel}}catch(e){}return null}
+function ksEval(g){if(g.feel){var f=ksFeel();if(!f)return{t:'Bez hodnocení',p:0,c:'var(--mute)',x:'',has:false};var pf=f===1?10:f===2?5:0;return{t:pf?'Odchylka':'V normě',p:pf,c:pf>=10?'var(--z5)':pf?'var(--z4)':'var(--z2)',x:'z večerního hodnocení',val:FEELN[f],has:true}}
+ if(g.v==null)return{t:'Bez dat',p:0,c:'var(--mute)',x:'',has:false};var dv=Math.round((g.v-(g.b==null?g.v:g.b))*10)/10,bad=dv*g.dir,p=bad>=g.t[1]?10:bad>=g.t[0]?5:0;
+ if(g.fl!=null&&g.v<g.fl)p=10;
+ return{t:p?(p>=10?'Výrazná odchylka':'Mírná odchylka'):'V normě',p:p,c:p>=10?'var(--z5)':p?'var(--z4)':'var(--z2)',x:(dv>0?'+':'')+String(dv).replace('.',',').replace('-','−')+' vs průměr',has:true}}
+function ksPen(){return (KS||[]).reduce(function(a,g){return a+ksEval(g).p},0)}
+function ksF(v){return v==null?'—':String(v).replace('.',',')}
+function rScore(){return Math.max(0,Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},0))-ksPen())}
 function hmx(){var el=document.getElementById('hm');if(!el)return;var fc=function(v){return v<45?'var(--z5)':v<65?'var(--z3)':'var(--z2)'};
- el.innerHTML=F.map(function(f){return '<div class="rf"><div class="rfr"><span>'+esc(f[0])+'</span><b>'+esc(f[1].split(',')[0].replace(/ min$/,''))+'</b></div><div class="rfb"><i style="width:'+Math.max(6,Math.min(100,f[3]))+'%;background:'+fc(f[3])+'"></i></div></div>'}).join('');
- var s=Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},0)),c=fc(s),rc=document.getElementById('rcl');if(rc)rc.style.setProperty('--k',c);var dt=document.getElementById('rdot');if(dt)dt.style.color=c;
+ el.innerHTML=F.map(function(f){return '<div class="rf"><div class="rfr"><span>'+esc(f[0])+'</span><b>'+esc(f[1].split(',')[0].replace(/ min$/,''))+'</b></div><div class="rfb"><i style="width:'+Math.max(6,Math.min(100,f[3]))+'%;background:'+fc(f[3])+'"></i></div></div>'}).join('')+(function(){var pen=ksPen(),ev=KS.map(ksEval),has=ev.filter(function(e){return e.has}),off=has.filter(function(e){return e.p}).length;return '<div class="ksr'+(pen?' bad':'')+'"><span>Signály</span><b><span class="ksdots">'+ev.map(function(e){return '<i style="background:'+e.c+'"></i>'}).join('')+'</span>'+(pen?'<em>−'+pen+'</em>':'<em>✓</em>')+'</b></div>'})();
+ var s=rScore(),c=fc(s),rc=document.getElementById('rcl');if(rc)rc.style.setProperty('--k',c);var dt=document.getElementById('rdot');if(dt)dt.style.color=c;
  var n=new Date(),rd=document.getElementById('rdt');if(rd)rd.textContent='Dnes '+n.getDate()+'. '+(n.getMonth()+1)+'.';
  var rb=document.getElementById('rbr');if(rb)rb.innerHTML=F.map(function(f){return '<i style="background:'+fc(f[3])+'"></i>'}).join('');
  try{advSub()}catch(e){}}
 function advSub(){var el=document.getElementById('advs'),b=document.getElementById('advb');if(!el||typeof TM==='undefined'||!W[TK])return;var q=W[TK],m=Math.round(q.dur||mins(q.seg)),hard=q.seg.some(function(x){return x[1]>=88}),race=isR(TK)&&q.ex,c=race?'var(--z5)':!m?'var(--z1)':hard?'var(--z4)':'var(--z2)';
  b.style.setProperty('--k',c);
  el.textContent=race?('Rozjetí '+(q.ex.wu.tm||'')+' · závod '+(q.tm||'')+(q.done?' · dojeto ✓':'')):!m?'Volno · regenerace':(String(q.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,'')+' · '+(q.tm||TM[TK]?(q.tm||TM[TK])+' · ':'')+fmt(m)+' · '+(q.done?'':'~')+tssOf(q)+' TSS'+(q.done?' ✓':''))}
-function draw(){var s=Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},0)),C=2*Math.PI*54,a=document.getElementById('arc');
+function draw(){var s0=Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},0)),s=rScore(),C=2*Math.PI*54,a=document.getElementById('arc');
  a.setAttribute('stroke',s<45?'var(--z5)':s<65?'var(--z3)':'var(--z2)');a.setAttribute('stroke-dashoffset',(C*(1-s/100)).toFixed(1));
  window.SC=s;hmx();document.getElementById('sc').textContent=s;document.getElementById('lbl').textContent=s<45?'Nízká':s<65?'Střední':'Vysoká';
- document.getElementById('facs').innerHTML=F.map(function(f,i){return '<div class="fac"><div class="row"><span>'+f[0]+' <span class="mute">('+Math.round(WT[i]*100)+' %)</span></span><span class="mute">'+f[1]+' · '+f[2]+'</span></div><div class="bar"><i style="width:'+f[3]+'%;background:'+(f[3]<45?'var(--z5)':f[3]<65?'var(--z3)':'var(--z2)')+'"></i></div></div>'}).join('')}
+ document.getElementById('facs').innerHTML=F.map(function(f,i){return '<div class="fac"><div class="row"><span>'+f[0]+' <span class="mute">('+Math.round(WT[i]*100)+' %)</span></span><span class="mute">'+f[1]+' · '+f[2]+'</span></div><div class="bar"><i style="width:'+f[3]+'%;background:'+(f[3]<45?'var(--z5)':f[3]<65?'var(--z3)':'var(--z2)')+'"></i></div></div>'}).join('')+'<div class="ksx"><div class="row"><b>Kontrolní signály</b><span class="mute">ubírají jen při odchylce</span></div><div class="ksg">'+KS.map(function(g){var e=ksEval(g),sh={dech:'Dech',spo2:'SpO₂',shr:'Tep noc',ssc:'Spánek',feel:'Pocit'}[g.k],fv=['','Těžké','Těžší','Normál','Dobré','Svěží'],val=g.feel?(e.has?'<span class="ksw">'+fv[ksFeel()]+'</span>':'—'):ksF(g.v)+(g.u===' %'?'<small>%</small>':''),sub=!e.has?'bez dat':e.p?'<b>−'+e.p+'</b>':'✓';return '<div class="kst" style="--k:'+e.c+'" title="'+g.n+': '+e.t+'"><span class="ksc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+g.ic+'</svg></span><div class="ksv">'+val+'</div><div class="ksn">'+sh+'</div><div class="kss">'+sub+'</div></div>'}).join('')+'</div>'+(s0!==s?'<p class="mute" style="margin:10px 0 0;font-size:13px">Skóre '+s0+' − signály '+(s0-s)+' = <b style="color:var(--ink)">'+s+'</b></p>':'')+'</div>'}
 draw();
 function sug(t){document.getElementById('sugt').textContent=t;document.getElementById('sugb').className='hide'}
 /* ===== Návrh kouče podle dat a pravidel ===== */
-var SGD=[],SGC=null,SGMSG='';
-function rulesOn(){var r=document.querySelectorAll('#krul input[type=checkbox]');return [0,1,2,3,4,5].map(function(i){return !r[i]||r[i].checked})}
+var SGD=[],SGC=null,SGMSG='',RAMP=9.2;
+function rampTxt(){return (RAMP>0?'+':'')+String(Math.round(RAMP*10)/10).replace('.',',').replace('-','−')}
+function rmH(m){m=Math.round(m);return Math.floor(m/60)+':'+('0'+m%60).slice(-2)}
+function rampSug(R0,s){if(RAMP==null)return null;var i,k,d,best=null,bm=0,nm,cur;
+ var ok=function(k){var d=W[k];return !(isR(k))&&!d.done&&d.seg&&d.seg.length};
+ if(R0[7]&&RAMP>10){for(i=TDI;i<7;i++){k=order[i];d=W[k];if(ok(k)&&segMax(d.seg)>=88)break}if(i>=7)return null;nm=dayWord(k);cur=d.iv&&TPL[d.iv]?TPL[d.iv].n:d.t;
+  return{id:'ramp-deload',k:k,txt:'Ramp je '+rampTxt()+' CTL za týden, fitness roste příliš rychle. '+nm+' „'+cur+'“ navrhuji nahradit lehkou jízdou 60 min v Z2, ať tělo stihne zátěž vstřebat.',ap:function(){d.seg=[[60,62]];d.iv='';d.d='Upraveno koučem (ramp '+rampTxt()+'): lehká jízda 60 min v Z2';d.lb=''}}}
+ if(R0[6]&&RAMP>8){for(i=TDI;i<7;i++){k=order[i];d=W[k];if(ok(k)&&mins(d.seg)>bm){bm=mins(d.seg);best=k}}if(!best||bm<45)return null;k=best;d=W[k];
+  var li=0;d.seg.forEach(function(x,j){if(x[0]>d.seg[li][0])li=j});var cut=Math.max(5,Math.round(bm*.15/5)*5),nw=bm-cut;nm=dayWord(k);
+  return{id:'ramp-cut',k:k,txt:'Ramp je '+rampTxt()+' CTL za týden, nad hranicí 8. '+nm+' „'+String(d.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,'')+'“ navrhuji zkrátit z '+rmH(bm)+' na '+rmH(nw)+'.',ap:function(){d.seg[li][0]=Math.max(5,d.seg[li][0]-cut);d.d='Upraveno koučem (ramp '+rampTxt()+'): zkráceno na '+rmH(nw)}}}
+ if(R0[8]&&RAMP<0&&s>=65){for(i=TDI;i<7;i++){k=order[i];d=W[k];if(ok(k)&&segMax(d.seg)<80&&mins(d.seg)>=40)break}if(i>=7)return null;var m0=mins(d.seg),li2=0;d.seg.forEach(function(x,j){if(x[0]>d.seg[li2][0])li2=j});nm=dayWord(k);
+  return{id:'ramp-add',k:k,txt:'Ramp je '+rampTxt()+' CTL za týden, fitness klesá, a připravenost je '+s+'. '+nm+' „'+String(d.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,'')+'“ navrhuji prodloužit z '+rmH(m0)+' na '+rmH(m0+15)+'.',ap:function(){d.seg[li2][0]+=15;d.d='Upraveno koučem (ramp '+rampTxt()+'): prodlouženo o 15 min'}}}
+ return null}
+function rulesOn(){var r=document.querySelectorAll('#krul input[type=checkbox]');return [0,1,2,3,4,5,6,7,8].map(function(i){return !r[i]||r[i].checked})}
 function segMax(seg){var m=0;seg.forEach(function(x){if(x[1]>m)m=x[1]});return m}
 function dayWord(k){var i=order.indexOf(k);return i===TDI?'Dnešní trénink':i===TDI+1?'Zítřejší trénink':'Trénink '+['v pondělí','v úterý','ve středu','ve čtvrtek','v pátek','v sobotu','v neděli'][i]}
 function shortSeg(seg){var s=seg.map(function(x){return x.slice()}),w=[],i;for(i=0;i<s.length;i++)if(s[i][1]>=88)w.push(i);if(w.length<2)return null;i=w[w.length-1];s.splice(s[i-1]&&s[i-1][1]<88?i-1:i,s[i-1]&&s[i-1][1]<88?2:1);return s}
 function buildSug(){var R0=rulesOn(),s=rdyS(),fp=parseInt(String(F[0][1]).replace('−','-'),10)||0,hrvLow=F[1][3]<45,i,k,d,c=null;
+ if(!(R0[1]&&fp<=-20)){var rs=rampSug(R0,s);if(rs){rs.key=WKID+':'+rs.k+':'+rs.id;if(SGD.indexOf(rs.key)<0)return rs}}
  for(i=TDI;i<7;i++){k=order[i];d=W[k];if(isR(k)&&R0[5])continue;if(d.done||!d.seg.length||segMax(d.seg)<88)continue;break}
  if(i>=7)return null;var nm=dayWord(k),cur=d.iv&&TPL[d.iv]?TPL[d.iv].n:d.t,why=[];
  if(R0[1]&&fp<=-20){why.push('Forma je '+F[0][1]+', tělo je unavené.');c={id:'easy',txt:nm+' „'+cur+'“ navrhuji změnit na lehkou jízdu 45 min v Z2.',ap:function(){d.seg=[[45,60]];d.iv='';d.d='Upraveno koučem: lehká jízda 45 min v Z2 místo tvrdého tréninku';d.lb='';}}}
@@ -683,7 +720,7 @@ function ilGet(path){return fetch('https://intervals.icu/api/v1/athlete/'+encode
 function ilD(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function ilAvg(a){a=a.filter(function(x){return x!=null&&!isNaN(x)});return a.length?a.reduce(function(s,x){return s+x},0)/a.length:null}
 function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x&&x.ctl!=null}).sort(function(a,b){return a.id<b.id?-1:1}),last=rows[rows.length-1];
- if(last){ILIVE={c:last.ctl,a:last.atl};var tsb=last.ctl-last.atl,fp=Math.round(tsb/Math.max(last.ctl,1)*100);
+ if(last){ILIVE={c:last.ctl,a:last.atl};RAMP=last.rampRate!=null?Math.round(last.rampRate*10)/10:null;if(RAMP!=null)n.push('ramp');var tsb=last.ctl-last.atl,fp=Math.round(tsb/Math.max(last.ctl,1)*100);
   F[0]=['Forma',(fp>0?'+':'')+fp+' %',fp>=15?'Svěží':fp>=5?'Dobrá':fp>=-10?'Neutrální':fp>=-20?'Unavený':'Velmi unavený',fp>=15?85:fp>=5?75:fp>=-10?60:fp>=-20?40:25];n.push('kondice')}
  var all=(wl||[]).slice().sort(function(a,b){return a.id<b.id?-1:1}),lh=null,i;
  for(i=all.length-1;i>=0;i--){if(all[i].hrv!=null){lh=all[i];break}}
@@ -694,6 +731,8 @@ function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x
  var lr=null;for(i=all.length-1;i>=0;i--){if(all[i].restingHR!=null){lr=all[i];break}}
  if(lr){var rb=ilAvg(all.filter(function(x){return x!==lr&&x.restingHR!=null}).map(function(x){return x.restingHR})),dr=rb?Math.round(lr.restingHR-rb):0;
   F[4]=['Klidový tep',(dr>0?'+':'')+dr+' bpm',dr<=1?'V normě':dr<=4?'Mírně zvýšený':'Zvýšený',dr<=0?85:dr<=2?70:dr<=4?55:35];n.push('klidový tep')}
+ [['respiration',0],['spO2',1],['avgSleepingHR',2],['sleepScore',3]].forEach(function(q){var l=null,j;for(j=all.length-1;j>=0;j--){if(all[j][q[0]]!=null){l=all[j];break}}
+  if(l){KS[q[1]].v=Math.round(l[q[0]]*10)/10;var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));KS[q[1]].b=bb==null?null:Math.round(bb*10)/10;n.push(KS[q[1]].n.toLowerCase())}else{KS[q[1]].v=null;KS[q[1]].b=null}});
  if(ath&&ath.sportSettings){var ss=ath.sportSettings.filter(function(x){return x&&x.ftp&&(x.types||[]).some(function(t){return /Ride/.test(t)})})[0];if(ss&&ss.ftp){FTPS={val:Math.round(ss.ftp),dis:false};n.push('FTP')}}
  var DK={},by={};order.forEach(function(k){DK[ilD(DT[k])]=k});var _u,cnt=0;
  (acts||[]).forEach(function(a){if(!a||!/Ride/.test(a.type||'')||!a.start_date_local)return;var k=DK[a.start_date_local.slice(0,10)];if(!k)return;(by[k]=by[k]||[]).push(a)});
@@ -876,7 +915,7 @@ function renderTList(){var el=document.getElementById('trlist');if(!el)return;va
  el.innerHTML='<h2 style="margin:0">Typy tréninků</h2><table class="tlist"><tbody>'+TLS.map(function(r){return '<tr'+(r[0]===cur?' class="cur"':'')+'><td>'+r[1]+'</td><td>'+r[2]+(r[0]===cur?' <em class="lb lb-b">tento týden</em>':'')+'</td><td>'+r[3]+'</td></tr>'}).join('')+'</tbody></table><p class="mute" style="margin:8px 0 0;font-size:12px">Počty jednotek jsou ukázka z ROUVY.</p>'}
 function renderPrehledX(){renderStrip();renderLoad();renderTRT();renderTList()}
 var PWT='W';
-function rdyS(){return Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},0))}
+function rdyS(){return rScore()}
 function addMin(t,m){var p=t.split(':'),x=(+p[0])*60+(+p[1])+Math.round(m);return ('0'+Math.floor(x/60)%24).slice(-2)+':'+('0'+x%60).slice(-2)}
 function renderTl(){var el=document.getElementById('tl');if(!el||typeof TM==='undefined'||!TM||!W[TK])return;var q=W[TK],now=new Date(),hm=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2),rows=[],cap=function(t){return t?t.charAt(0).toUpperCase()+t.slice(1):t};
  var hh=el.closest('.card');hh=hh&&hh.previousElementSibling;if(hh&&hh.tagName==='H2')hh.textContent='Denní přehled · '+DNAME[TDI]+' '+now.getDate()+'. '+(now.getMonth()+1)+'.';
