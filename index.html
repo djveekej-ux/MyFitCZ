@@ -815,7 +815,7 @@ function ilForm(){if(IL.on&&!IL.edit)return '<div class="ilf"><p class="ilok"><s
 function renderApps(){try{renderSync()}catch(e){}var el=document.getElementById('kapp');if(!el)return;
  var on=APPS.filter(function(a){return a[3]}),rk=['Hlavní zdroj','Záložní 1','Záložní 2','Záložní 3'];
  var sum=on.length?'Data se berou z <b>'+on[0][1]+'</b>'+(on.length>1?', když chybí, z dalších v pořadí: '+on.slice(1).map(function(a){return a[1]}).join(' → ')+'.':'.'):'Žádný zdroj není připojen, používají se ukázková data a nahrané soubory .FIT.';
- el.innerHTML='<strong>Připojené aplikace</strong><p class="mute" style="margin:6px 0 4px">Pořadí určuje prioritu zdrojů. Intervals.icu načítá živá data, ostatní aplikace zatím jen ukázková.</p>'
+ el.innerHTML='<strong>Připojené aplikace</strong><p class="mute" style="margin:6px 0 4px">Pořadí určuje prioritu zdrojů. Intervals.icu a Garmin načítají živá data, Strava a ROUVY zatím jen ukázková.</p>'
  +APPS.map(function(a,i){return (a[0]==='int'&&IL.open?'':'')+'<div class="ap"><i class="'+(a[3]?'on':'')+'"></i><div><b>'+a[1]+'</b><span class="rk">'+rk[i]+(a[3]?((a[0]==='int'&&IL.on)||(a[0]==='gar'&&GA.on)?' · živá data':' · ukázková data'):'')+'</span><span>'+a[2]+'</span></div><span class="mv"><button type="button" data-m="-1" data-i="'+i+'" aria-label="Posunout výš"'+(i?'':' disabled')+'>▲</button><button type="button" data-m="1" data-i="'+i+'" aria-label="Posunout níž"'+(i<APPS.length-1?'':' disabled')+'>▼</button></span><button type="button" data-c="'+i+'" class="'+(a[3]?'on':'')+'">'+(a[3]?'Připojeno ✓':'Připojit')+'</button></div>'+(a[0]==='int'&&IL.open?ilForm():'')+(a[0]==='gar'&&GA.open?gaForm():'')}).join('')
  +'<p class="mute" style="margin:12px 0 0;font-size:13px;line-height:1.45">'+sum+'</p>';
  Array.prototype.forEach.call(el.querySelectorAll('button[data-c]'),function(b){b.onclick=function(){var a=APPS[+b.dataset.c];if(a[0]==='int'){IL.open=!IL.open;renderApps();return}if(a[0]==='gar'){GA.open=!GA.open;renderApps();return}a[3]=a[3]?0:1;renderApps()}});
@@ -852,9 +852,9 @@ function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x
  var lr=null;for(i=all.length-1;i>=0;i--){if(all[i].restingHR!=null){lr=all[i];break}}
  if(lr){var rb=ilAvg(all.filter(function(x){return x!==lr&&x.restingHR!=null}).map(function(x){return x.restingHR})),dr=rb?Math.round(lr.restingHR-rb):0;
   F[4]=['Klidový tep',(dr>0?'+':'')+dr+' bpm',dr<=1?'V normě':dr<=4?'Mírně zvýšený':'Zvýšený',dr<=0?85:dr<=2?70:dr<=4?55:35];n.push('klidový tep')}
- [['restingHR','rhr'],['hrv','hrv'],['sleepSecs','slp'],['sleepScore','ssc'],['spO2','spo2'],['vo2max','vo2'],['weight','kg'],['steps','steps']].forEach(function(q){var l=null,j;for(j=all.length-1;j>=0;j--){if(all[j][q[0]]!=null){l=all[j];break}}HD[q[1]]=l?l[q[0]]:null;var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));HD[q[1]+'B']=bb==null?null:(q[1]==='kg'||q[1]==='spo2'?Math.round(bb*10)/10:Math.round(bb))});
+ [['restingHR','rhr'],['hrv','hrv'],['sleepSecs','slp'],['sleepScore','ssc'],['spO2','spo2'],['vo2max','vo2'],['weight','kg'],['steps','steps']].forEach(function(q){var l=null,j;for(j=all.length-1;j>=0;j--){if(all[j][q[0]]!=null){l=all[j];break}}if(!l)return;HD[q[1]]=l[q[0]];var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));HD[q[1]+'B']=bb==null?null:(q[1]==='kg'||q[1]==='spo2'?Math.round(bb*10)/10:Math.round(bb))});
  [['respiration',0],['spO2',1],['avgSleepingHR',2],['sleepScore',3]].forEach(function(q){var l=null,j;for(j=all.length-1;j>=0;j--){if(all[j][q[0]]!=null){l=all[j];break}}
-  if(l){KS[q[1]].v=Math.round(l[q[0]]*10)/10;var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));KS[q[1]].b=bb==null?null:Math.round(bb*10)/10;n.push(KS[q[1]].n.toLowerCase())}else{KS[q[1]].v=null;KS[q[1]].b=null}});
+  if(l){KS[q[1]].v=Math.round(l[q[0]]*10)/10;var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));KS[q[1]].b=bb==null?null:Math.round(bb*10)/10;n.push(KS[q[1]].n.toLowerCase())}});
  if(ath&&ath.sportSettings){var ss=ath.sportSettings.filter(function(x){return x&&x.ftp&&(x.types||[]).some(function(t){return /Ride/.test(t)})})[0];if(ss&&ss.ftp){FTPS={val:Math.round(ss.ftp),dis:false};n.push('FTP')}}
  var DK={},by={};order.forEach(function(k){DK[ilD(DT[k])]=k});var _u,cnt=0;
  (acts||[]).forEach(function(a){if(!a||!/Ride/.test(a.type||'')||!a.start_date_local)return;var k=DK[a.start_date_local.slice(0,10)];if(!k)return;(by[k]=by[k]||[]).push(a)});
@@ -868,6 +868,7 @@ function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x
   else if(W[k].lb==='Závod'&&by[k].length>1){var o=mergeO(by[k].map(mk));if(o.t>0){fitApply(o,W[k]);cnt+=by[k].length}}
   else{var big=by[k].sort(function(x,y){return (y.moving_time||0)-(x.moving_time||0)})[0],o=mk(big);if(o.t>0){fitApply(o,W[k]);cnt++}}});
  if(cnt)n.push('aktivity ('+cnt+')');
+ try{if(GA.on&&GA.raw)gaApply(GA.raw[0],GA.raw[1],GA.raw[2],GA.raw[3])}catch(e){}
  return n}
 function ilConnect(){if(IL.busy)return;IL.busy=true;IL.msg='Načítám data z Intervals.icu…';renderApps();
  var t=new Date(),o=new Date(t.getTime()-35*864e5);
