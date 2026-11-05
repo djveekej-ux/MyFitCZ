@@ -324,8 +324,8 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="zhr"></div>
   <div class="card" id="krem" style="display:none"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
-  <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.44 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
+  <p class="appver">MyFiTCZ · verze 1.45 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div class="hsc">Jak se počítá připravenost</div><div class="hfx"><div class="hfh" id="hfh"></div><div id="facs"></div></div><div id="hsb"></div></div></div>
@@ -1526,10 +1526,10 @@ refresh();
   say('Kód obsahuje všechno nastavení včetně klíčů (položek: '+n+').');
  };
  document.getElementById('xf-imp').onclick=function(){
-  box.hidden=false;act.innerHTML='';t.readOnly=false;t.value='';t.placeholder='Sem vlož kód začínající MFC1:';say('');t.focus();
+  box.hidden=false;act.innerHTML='';t.readOnly=false;t.setAttribute("autocapitalize","off");t.setAttribute("autocorrect","off");t.value='';t.placeholder='Sem vlož kód začínající MFC1:';say('');t.focus();
   btn('Načíst',function(){
    var raw=(t.value||'').replace(/\s+/g,''),o;
-   if(raw.indexOf(P)!==0){say('Tohle není kód z MyFiTCZ. Musí začínat MFC1:');return}
+   if(raw.slice(0,P.length).toUpperCase()!==P){say('Tohle není kód z MyFiTCZ. Musí začínat MFC1:');return}
    try{o=JSON.parse(b64d(raw.slice(P.length)))}catch(e){say('Kód je poškozený nebo neúplný. Zkopíruj ho znovu celý.');return}
    if(!o||o.v!==1||!o.d||typeof o.d!=='object'){say('Kód je poškozený nebo neúplný.');return}
    var keys=Object.keys(o.d).filter(function(k){return /^mfc-[a-z0-9-]{1,40}$/.test(k)&&typeof o.d[k]==='string'&&o.d[k].length<2e6});
