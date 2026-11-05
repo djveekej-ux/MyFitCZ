@@ -201,6 +201,29 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .kst .ksc{width:28px;height:28px;border-radius:9px}.kst .ksc svg{width:16px;height:16px}
 .kst .ksv{font-size:17px!important;margin-top:8px!important;white-space:nowrap}.kst .ksv small{font-size:11px}.kst .ksw{font-size:12px!important;font-weight:800}
 .kst .ksn{font-size:10px!important;letter-spacing:.02em;margin-top:3px;flex:none!important;max-width:100%}.kst .kss{font-size:11px!important;margin-top:2px!important;color:var(--k)!important;font-weight:700}
+
+.rcr{cursor:pointer}
+.hsh{position:fixed;inset:0;z-index:200;background:rgba(5,8,16,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center}
+.hsh[hidden]{display:none!important}
+.hsi{width:100%;max-width:520px;height:calc(100% - 40px);overflow:auto;background:var(--bg);border-radius:26px 26px 0 0;padding:0 16px calc(24px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.35)}
+.hst{position:sticky;top:0;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px 0 12px;margin:0 -16px;padding-left:16px;padding-right:16px;background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 22%,var(--bg)),var(--bg))}
+.hst b{font-size:18px;font-weight:800;letter-spacing:-.02em}.hst button{justify-self:end;border:1.5px solid color-mix(in srgb,var(--acc) 60%,transparent);background:var(--card);color:var(--acc);border-radius:99px;padding:7px 14px;font:700 14px "Plus Jakarta Sans",system-ui,sans-serif;cursor:pointer}
+.hsc{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--mute);margin:18px 2px 10px;text-transform:uppercase}
+.hgr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ht{background:var(--card);border-radius:18px;padding:13px 13px 12px;min-width:0;box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06);display:flex;flex-direction:column}
+.hth{display:flex;align-items:center;gap:8px}.hti{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;flex:none;color:var(--k);background:color-mix(in srgb,var(--k) 16%,transparent)}.hti svg{width:16px;height:16px}
+.htn{flex:1;min-width:0;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.htd{width:8px;height:8px;border-radius:50%;background:var(--k);flex:none}
+.htv{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-top:12px;white-space:nowrap}.htv small{font-size:13px;font-weight:600;color:var(--mute);margin-left:3px;letter-spacing:0}.htv.c{color:var(--k)}
+.hts{font-size:12px;color:var(--mute);font-weight:600;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hts b{color:var(--k)}
+.htz{position:relative;display:flex;gap:2px;height:7px;margin-top:auto;padding-top:0}.htz-w{margin-top:12px;position:relative}.htz i{flex:1;border-radius:3px;opacity:.55}.htz i.on{opacity:1}
+.htm{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--card);border:3px solid var(--k);transform:translate(-50%,-50%);box-shadow:0 0 0 3px color-mix(in srgb,var(--k) 25%,transparent)}
+.hrb{position:relative;height:7px;border-radius:4px;background:var(--line);margin-top:12px}.hrb i{position:absolute;top:0;bottom:0;border-radius:4px;background:color-mix(in srgb,var(--z2) 55%,transparent)}
+.hsg2{display:flex;justify-content:space-between;align-items:center;margin:22px 2px 10px}.hsg2 b{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--mute);text-transform:uppercase}
+.hpl{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;font-size:13px;font-weight:700;color:var(--k);background:color-mix(in srgb,var(--k) 15%,transparent)}.hpl i{width:8px;height:8px;border-radius:50%;background:var(--k)}
+.hgp{background:var(--card);border-radius:18px;padding:4px 14px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06)}
+.hgi{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}.hgi:first-child{border-top:0}.hgi .hti{width:36px;height:36px;border-radius:12px}.hgi .hti svg{width:19px;height:19px}
+.hgi>div{flex:1;min-width:0}.hgi b{display:block;font-size:15px}.hgi span{font-size:12.5px;color:var(--mute)}
+.hnote{font-size:12px;color:var(--mute);margin:14px 2px 0;line-height:1.45}
 </style>
 </head>
 <body>
@@ -211,7 +234,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="rdy">
     <div class="rg2">
       <div class="rc rcl" id="rcl"><div class="rch"><b id="rdt">Dnes</b><span class="rdot" id="rdot">●</span></div><div class="hl"><svg class="ring" viewBox="0 0 132 132" role="img" aria-label="Skóre připravenosti"><circle cx="66" cy="66" r="54" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="arc" cx="66" cy="66" r="54" fill="none" stroke-width="12" stroke-linecap="round" transform="rotate(-90 66 66)"/><text id="sc" x="66" y="80" text-anchor="middle"></text></svg><div class="mute">Připravenost</div><div class="big" id="lbl"></div><div class="rbr" id="rbr" aria-hidden="true"></div></div></div>
-      <div class="rc rcr"><div class="rch"><b>Co ji tvoří</b><span class="mute">5 faktorů</span></div><div class="hm" id="hm"></div></div>
+      <div class="rc rcr" id="rcr" role="button" tabindex="0" aria-label="Otevřít Zdraví"><div class="rch"><b>Co ji tvoří</b><span class="mute">Zdraví ›</span></div><div class="hm" id="hm"></div></div>
     </div>
     <button type="button" class="advb" id="advb"><span class="advi" aria-hidden="true"><svg viewBox="0 0 48 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="21" r="7"/><circle cx="38" cy="21" r="7"/><path d="M10 21L22 21L18 10L32 10L38 21M22 21L32 10"/></svg></span><span class="advt"><b id="adv"></b><small id="advs"></small></span><span class="advc" aria-hidden="true">›</span></button>
   </div>
@@ -290,6 +313,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   
 </section>
 </main>
+<div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div id="hsb"></div></div></div>
 <nav role="tablist">
   <button role="tab" aria-selected="true" data-t="prehled">Přehled</button>
   <button role="tab" aria-selected="false" data-t="dnes" hidden>Dnes</button>
@@ -390,6 +414,40 @@ function draw(){var s0=Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},
  document.getElementById('facs').innerHTML=F.map(function(f,i){return '<div class="fac"><div class="row"><span>'+f[0]+' <span class="mute">('+Math.round(WT[i]*100)+' %)</span></span><span class="mute">'+f[1]+' · '+f[2]+'</span></div><div class="bar"><i style="width:'+f[3]+'%;background:'+(f[3]<45?'var(--z5)':f[3]<65?'var(--z3)':'var(--z2)')+'"></i></div></div>'}).join('')+'<div class="ksx"><div class="row"><b>Kontrolní signály</b><span class="mute">ubírají jen při odchylce</span></div><div class="ksg">'+KS.map(function(g){var e=ksEval(g),sh={dech:'Dech',spo2:'SpO₂',shr:'Tep noc',ssc:'Spánek',feel:'Pocit'}[g.k],fv=['','Těžké','Těžší','Normál','Dobré','Svěží'],val=g.feel?(e.has?'<span class="ksw">'+fv[ksFeel()]+'</span>':'—'):ksF(g.v)+(g.u===' %'?'<small>%</small>':''),sub=!e.has?'bez dat':e.p?'<b>−'+e.p+'</b>':'✓';return '<div class="kst" style="--k:'+e.c+'" title="'+g.n+': '+e.t+'"><span class="ksc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+g.ic+'</svg></span><div class="ksv">'+val+'</div><div class="ksn">'+sh+'</div><div class="kss">'+sub+'</div></div>'}).join('')+'</div>'+(s0!==s?'<p class="mute" style="margin:10px 0 0;font-size:13px">Skóre '+s0+' − signály '+(s0-s)+' = <b style="color:var(--ink)">'+s+'</b></p>':'')+'</div>'}
 draw();
 function sug(t){document.getElementById('sugt').textContent=t;document.getElementById('sugb').className='hide'}
+
+/* ===== Zdraví ===== */
+var HD={ctl:71,atl:47,ramp:9.2,rhr:54,rhrB:53,hrv:39,hrvB:35,slp:25500,slpB:28500,ssc:78,sscB:80,spo2:93,spo2B:94,vo2:48,kg:84,kgB:84.4,steps:6420,stepsB:8100,live:false};
+var HIC={form:'<path d="M3 17l5-6 4 3 6-8"/><path d="M15 6h3v3"/>',ctl:'<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',atl:'<path d="M12 21a7 7 0 0 0 7-7c0-4-3-6-4-9-1 2-2 3-3.5 3.5C10 7 9.5 5.5 9.5 4 7 6.5 5 9.5 5 14a7 7 0 0 0 7 7z"/>',ramp:'<path d="M4 19h16"/><path d="M5 15l4-4 3 3 7-7"/>',rhr:'<path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 12 8a4 4 0 0 1 7 2.4C19 15.6 12 20 12 20z"/>',hrv:'<path d="M3 12h4l2-5 3 10 2-5h7"/>',slp:'<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/>',ssc:'<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/><path d="M15 4h4l-4 4h4"/>',spo2:'<path d="M12 3.5c3.2 4.1 5.5 7.3 5.5 10.2a5.5 5.5 0 0 1-11 0c0-2.9 2.3-6.1 5.5-10.2z"/>',vo2:'<circle cx="12" cy="13" r="8"/><path d="M12 13l3.5-3.5"/><path d="M12 5V3"/>',kg:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9.5a4 4 0 0 1 6 0l-2 2.5h-2z"/>',steps:'<path d="M8 14c-1.7 0-3-1.8-3-4.5S6 4 8 4s2.5 2.8 2.5 5S9.7 14 8 14z"/><path d="M6 17.5c0 1.4.9 2.5 2 2.5s2-1.1 2-2.5"/><path d="M16 11c1.7 0 3-1.8 3-4.5S18 2 16 2s-2.5 2.8-2.5 5 .8 4 2.5 4z"/>',reg:'<path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 12 8a4 4 0 0 1 7 2.4C19 15.6 12 20 12 20z"/>',load:'<path d="M3 17l5-6 4 3 6-8"/>'};
+var FZ=[{n:'Vysoké riziko',to:-30,c:'var(--z5)'},{n:'Optimální trénink',to:-10,c:'var(--z2)'},{n:'Šedá zóna',to:5,c:'var(--mute)'},{n:'Svěží',to:25,c:'var(--acc)'},{n:'Přechodová',to:99,c:'var(--z3)'}];
+function hNum(v,d){if(v==null||isNaN(v))return '—';var r=d?Math.round(v*Math.pow(10,d))/Math.pow(10,d):Math.round(v);return String(r).replace('.',',').replace('-','−')}
+function hSgn(v,d){return v==null?'':(v>0?'+':'')+hNum(v,d)}
+function hHM(sec){if(sec==null)return '—';var m=Math.round(sec/60);return Math.floor(m/60)+'h '+m%60+'m'}
+function hTile(o){var dot=o.dot===false?'':'<i class="htd"></i>';return '<div class="ht" style="--k:'+o.c+'"><div class="hth"><span class="hti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+HIC[o.ic]+'</svg></span><span class="htn">'+o.n+'</span>'+dot+'</div><div class="htv'+(o.cv?' c':'')+'">'+o.v+(o.u?'<small>'+o.u+'</small>':'')+'</div><div class="hts">'+(o.s||'&nbsp;')+'</div>'+(o.bar||'')+'</div>'}
+function hRange(v,lo,hi,a,b,c){if(v==null)return '';var p=Math.max(3,Math.min(97,(v-lo)/(hi-lo)*100)),l=(a-lo)/(hi-lo)*100,r=(b-lo)/(hi-lo)*100;return '<div class="hrb"><i style="left:'+l+'%;right:'+(100-r)+'%"></i><span class="htm" style="left:'+p+'%;--k:'+c+'"></span></div>'}
+function hState(bad,warn){return bad?'var(--z5)':warn?'var(--z4)':'var(--z2)'}
+function renderHealth(){var el=document.getElementById('hsb');if(!el)return;var t=[],tsb=HD.ctl!=null&&HD.atl!=null?HD.ctl-HD.atl:null,z=FZ[0],zi=0;
+ if(tsb!=null){for(zi=0;zi<FZ.length;zi++){if(tsb<FZ[zi].to){z=FZ[zi];break}}}
+ var lo=-40,hi=35,zb='<div class="htz-w"><div class="htz">'+FZ.map(function(f,i){var a=i?FZ[i-1].to:lo,b=Math.min(f.to,hi);return '<i class="'+(i===zi?'on':'')+'" style="background:'+f.c+';flex:'+(b-a)+'"></i>'}).join('')+'</div>'+(tsb!=null?'<span class="htm" style="left:'+Math.max(3,Math.min(97,(tsb-lo)/(hi-lo)*100))+'%;--k:'+z.c+'"></span>':'')+'</div>';
+ t.push(hTile({n:'Forma',ic:'form',c:z.c,v:hSgn(tsb),s:z.n+(HD.ctl?' · '+hSgn(Math.round(tsb/HD.ctl*100))+' %':''),bar:zb}));
+ t.push(hTile({n:'Kondice',ic:'ctl',c:'var(--acc)',v:hNum(HD.ctl),u:'CTL',s:'Fitness, průměr 42 dní'}));
+ var ac=HD.ctl&&HD.atl?HD.atl/HD.ctl:null;t.push(hTile({n:'Únava',ic:'atl',c:ac==null?'var(--mute)':ac>1.3?'var(--z5)':ac>1.1?'var(--z4)':'var(--z2)',v:hNum(HD.atl),u:'ATL',s:'Zátěž za posledních 7 dní'}));
+ var rc=HD.ramp==null?'var(--mute)':HD.ramp>10?'var(--z5)':HD.ramp>8?'var(--z4)':HD.ramp<0?'var(--z3)':'var(--z2)';t.push(hTile({n:'Ramp',ic:'ramp',c:rc,v:hSgn(HD.ramp,1),u:'/týden',s:HD.ramp==null?'Bez dat':HD.ramp>10?'Příliš rychlý nárůst':HD.ramp>8?'Rychlý nárůst':HD.ramp<0?'Fitness klesá':'Bezpečný nárůst',bar:hRange(HD.ramp,-4,14,0,8,rc)}));
+ var dr=HD.rhr!=null&&HD.rhrB!=null?HD.rhr-HD.rhrB:null,rcc=hState(dr>4,dr>1);t.push(hTile({n:'Klidový tep',ic:'rhr',c:rcc,cv:dr>1,v:hNum(HD.rhr),u:'bpm',s:dr==null?'':hSgn(dr)+' vs průměr',bar:hRange(HD.rhr,(HD.rhrB||50)-8,(HD.rhrB||50)+8,(HD.rhrB||50)-3,(HD.rhrB||50)+1,rcc)}));
+ var dh=HD.hrv!=null&&HD.hrvB?Math.round((HD.hrv-HD.hrvB)/HD.hrvB*100):null,hc=hState(dh<-10,dh<-3);t.push(hTile({n:'HRV z noci',ic:'hrv',c:hc,v:hNum(HD.hrv),u:'ms',s:dh==null?'':hSgn(dh)+' % vs průměr',bar:hRange(HD.hrv,(HD.hrvB||40)*.7,(HD.hrvB||40)*1.3,(HD.hrvB||40)*.97,(HD.hrvB||40)*1.3,hc)}));
+ var ds=HD.slp!=null&&HD.slpB!=null?Math.round((HD.slp-HD.slpB)/60):null,sh=HD.slp/3600,scc=hState(sh<6,sh<7);t.push(hTile({n:'Spánek',ic:'slp',c:scc,v:hHM(HD.slp),s:ds==null?'':(ds>0?'+':'−')+Math.abs(ds)+'m vs průměr',bar:hRange(sh,5,10,7,9,scc)}));
+ var dq=HD.ssc!=null&&HD.sscB!=null?Math.round(HD.ssc-HD.sscB):null,qc=HD.ssc==null?'var(--mute)':hState(HD.ssc<60||dq<=-20,dq<=-10);t.push(hTile({n:'Skóre spánku',ic:'ssc',c:qc,v:hNum(HD.ssc),u:'/100',s:HD.ssc==null?'Bez dat':hSgn(dq)+' vs průměr'}));
+ var dp=HD.spo2!=null&&HD.spo2B!=null?Math.round((HD.spo2-HD.spo2B)*10)/10:null,pc=HD.spo2==null?'var(--mute)':hState(HD.spo2<90||dp<=-4,dp<=-2);t.push(hTile({n:'SpO₂',ic:'spo2',c:pc,v:hNum(HD.spo2),u:'%',s:HD.spo2==null?'Zapni Pulse Ox ve spánku':hSgn(dp)+' vs průměr'}));
+ t.push(hTile({n:'VO₂max',ic:'vo2',c:'var(--acc2)',dot:false,v:hNum(HD.vo2),u:'ml/kg/min',s:HD.vo2==null?'Bez dat':'Odhad z Garminu'}));
+ var dk=HD.kg!=null&&HD.kgB!=null?Math.round((HD.kg-HD.kgB)*10)/10:null;t.push(hTile({n:'Váha',ic:'kg',c:'var(--acc)',dot:false,v:hNum(HD.kg,1),u:'kg',s:dk==null?'':hSgn(dk,1)+' kg vs průměr'}));
+ t.push(hTile({n:'Kroky',ic:'steps',c:'var(--acc)',dot:false,v:HD.steps==null?'—':String(HD.steps).replace(/\B(?=(\d{3})+(?!\d))/g,' '),s:HD.stepsB?'průměr '+String(HD.stepsB).replace(/\B(?=(\d{3})+(?!\d))/g,' '):''}));
+ var rg=[dh!=null&&dh<-3,dr!=null&&dr>1,sh<7,dp!=null&&dp<=-2],rgn=rg.filter(Boolean).length,ld=[tsb!=null&&tsb<-30,HD.ramp!=null&&HD.ramp>8,ac!=null&&ac>1.3],ldn=ld.filter(Boolean).length,all=rgn+ldn;
+ var grp=function(n,ic,cnt,bad,lab){var c=bad?'var(--z4)':'var(--z2)';return '<div class="hgi" style="--k:'+c+'"><span class="hti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+HIC[ic]+'</svg></span><div><b>'+n+'</b><span>'+lab+'</span></div><span class="hpl"><i></i>'+(bad?'Pozor':'OK')+'</span></div>'};
+ el.innerHTML='<div class="hsc">Zátěž z Intervals.icu</div><div class="hgr">'+t.slice(0,4).join('')+'</div><div class="hsc">Regenerace</div><div class="hgr">'+t.slice(4,8).join('')+'</div><div class="hsc">Tělo a kyslík</div><div class="hgr">'+t.slice(8).join('')+'</div>'
+  +'<div class="hsg2"><b>Signály</b><span class="hpl" style="--k:'+(all?'var(--z4)':'var(--z2)')+'"><i></i>'+(all?all+' k pozornosti':'Vše v pořádku')+'</span></div><div class="hgp">'+grp('Regenerace','reg',4,rgn,rgn?rgn+' ze 4 signálů mimo normu':'HRV, klidový tep, spánek, SpO₂')+grp('Zátěž','load',3,ldn,ldn?(HD.ramp>8?'Ramp '+hSgn(HD.ramp,1)+' za týden':'Forma nebo únava mimo normu'):'Forma, ramp, únava')+'</div>'
+  +'<p class="hnote">'+(HD.live?'Data z Intervals.icu (Garmin). ':'Ukázková data, po napojení Intervals.icu se doplní tvoje. ')+'Hluboký spánek a dechovou frekvenci Garmin do Intervals.icu neposílá.</p>'}
+function openHealth(){renderHealth();var h=document.getElementById('hsh');h.hidden=false;document.body.style.overflow='hidden'}
+function closeHealth(){document.getElementById('hsh').hidden=true;document.body.style.overflow=''}
+(function(){var r=document.getElementById('rcr'),x=document.getElementById('hsx'),h=document.getElementById('hsh');if(r){r.onclick=openHealth;r.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openHealth()}}}if(x)x.onclick=closeHealth;if(h)h.onclick=function(e){if(e.target===h)closeHealth()}})();
 /* ===== Návrh kouče podle dat a pravidel ===== */
 var SGD=[],SGC=null,SGMSG='',RAMP=9.2;
 function rampTxt(){return (RAMP>0?'+':'')+String(Math.round(RAMP*10)/10).replace('.',',').replace('-','−')}
@@ -720,7 +778,7 @@ function ilGet(path){return fetch('https://intervals.icu/api/v1/athlete/'+encode
 function ilD(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function ilAvg(a){a=a.filter(function(x){return x!=null&&!isNaN(x)});return a.length?a.reduce(function(s,x){return s+x},0)/a.length:null}
 function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x&&x.ctl!=null}).sort(function(a,b){return a.id<b.id?-1:1}),last=rows[rows.length-1];
- if(last){ILIVE={c:last.ctl,a:last.atl};RAMP=last.rampRate!=null?Math.round(last.rampRate*10)/10:null;if(RAMP!=null)n.push('ramp');var tsb=last.ctl-last.atl,fp=Math.round(tsb/Math.max(last.ctl,1)*100);
+ if(last){ILIVE={c:last.ctl,a:last.atl};HD.ctl=last.ctl;HD.atl=last.atl;HD.ramp=last.rampRate!=null?last.rampRate:null;HD.live=true;RAMP=last.rampRate!=null?Math.round(last.rampRate*10)/10:null;if(RAMP!=null)n.push('ramp');var tsb=last.ctl-last.atl,fp=Math.round(tsb/Math.max(last.ctl,1)*100);
   F[0]=['Forma',(fp>0?'+':'')+fp+' %',fp>=15?'Svěží':fp>=5?'Dobrá':fp>=-10?'Neutrální':fp>=-20?'Unavený':'Velmi unavený',fp>=15?85:fp>=5?75:fp>=-10?60:fp>=-20?40:25];n.push('kondice')}
  var all=(wl||[]).slice().sort(function(a,b){return a.id<b.id?-1:1}),lh=null,i;
  for(i=all.length-1;i>=0;i--){if(all[i].hrv!=null){lh=all[i];break}}
@@ -731,6 +789,7 @@ function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x
  var lr=null;for(i=all.length-1;i>=0;i--){if(all[i].restingHR!=null){lr=all[i];break}}
  if(lr){var rb=ilAvg(all.filter(function(x){return x!==lr&&x.restingHR!=null}).map(function(x){return x.restingHR})),dr=rb?Math.round(lr.restingHR-rb):0;
   F[4]=['Klidový tep',(dr>0?'+':'')+dr+' bpm',dr<=1?'V normě':dr<=4?'Mírně zvýšený':'Zvýšený',dr<=0?85:dr<=2?70:dr<=4?55:35];n.push('klidový tep')}
+ [['restingHR','rhr'],['hrv','hrv'],['sleepSecs','slp'],['sleepScore','ssc'],['spO2','spo2'],['vo2max','vo2'],['weight','kg'],['steps','steps']].forEach(function(q){var l=null,j;for(j=all.length-1;j>=0;j--){if(all[j][q[0]]!=null){l=all[j];break}}HD[q[1]]=l?l[q[0]]:null;var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));HD[q[1]+'B']=bb==null?null:(q[1]==='kg'||q[1]==='spo2'?Math.round(bb*10)/10:Math.round(bb))});
  [['respiration',0],['spO2',1],['avgSleepingHR',2],['sleepScore',3]].forEach(function(q){var l=null,j;for(j=all.length-1;j>=0;j--){if(all[j][q[0]]!=null){l=all[j];break}}
   if(l){KS[q[1]].v=Math.round(l[q[0]]*10)/10;var bb=ilAvg(all.filter(function(x){return x!==l&&x[q[0]]!=null}).map(function(x){return x[q[0]]}));KS[q[1]].b=bb==null?null:Math.round(bb*10)/10;n.push(KS[q[1]].n.toLowerCase())}else{KS[q[1]].v=null;KS[q[1]].b=null}});
  if(ath&&ath.sportSettings){var ss=ath.sportSettings.filter(function(x){return x&&x.ftp&&(x.types||[]).some(function(t){return /Ride/.test(t)})})[0];if(ss&&ss.ftp){FTPS={val:Math.round(ss.ftp),dis:false};n.push('FTP')}}
