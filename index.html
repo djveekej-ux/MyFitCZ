@@ -6,6 +6,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyFiTCZ</title>
+<script>try{var _t=localStorage.getItem('mfc-theme');if(_t==="light"||_t==="dark")document.documentElement.setAttribute("data-theme",_t)}catch(e){}</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -32,6 +33,8 @@ h1{font-size:34px;line-height:1.05}h2{font-size:22px;margin:22px 0 8px}
 .big{font:700 40px/1 "Barlow Condensed",Barlow,sans-serif}
 .xft{display:block;width:100%;box-sizing:border-box;margin-top:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px;font:12px/1.4 ui-monospace,Menlo,monospace;resize:vertical;word-break:break-all}
 #chat .msg{font-size:18px;line-height:1.5;padding:11px 14px}#f input{font-size:18px;padding:12px}#f .send{font-size:16px}#p-kouc #chips button{font-size:15px}
+.dexp.wpc #wplan .pc>:not(h2):not(.mute):not(.pt3){display:none}.dexp.wpc #wplan .pc{padding-bottom:14px}.dxb{margin:10px 0 4px}
+:root[data-theme="dark"]{color-scheme:dark}:root[data-theme="light"]{color-scheme:light}
 .appver{margin:22px 0 6px;text-align:center;font-size:12px;line-height:1.6;color:var(--mute);opacity:.85}.appver b{font-weight:600}
 .mute{color:var(--mute);font-size:14px}
 svg{display:block;width:100%;height:auto}
@@ -325,8 +328,9 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="zhr"></div>
   <div class="card" id="krem" style="display:none"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
+  <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.47 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.49 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div class="hsc">Jak se počítá připravenost</div><div class="hfx"><div class="hfh" id="hfh"></div><div id="facs"></div></div><div id="hsb"></div></div></div>
@@ -635,13 +639,13 @@ function show(k){var d=W[k],tot=mins(d.seg);window.cur=k;WOPEN=k;try{dPlace(k)}c
    show(k)};r.readAsArrayBuffer(f)}}
 var DT={};function dayMeta(){order.forEach(function(k,i){var x=new Date(MON.getFullYear(),MON.getMonth(),MON.getDate()+i);DT[k]=x;W[k].dt=x.getDate();W[k].mo=x.getMonth()+1;W[k].n=DNAME[i].slice(0,2)})}dayMeta();if(WKID==='2026-11-02'&&RACE.on&&RACE.d===1)W.po.done=true;if(RACE.on){W.dnes.lb='Závod';W.dnes.lc='lb-r'}else{W.dnes.t='Volno';W.dnes.d='Bez tréninku.';W.dnes.seg=[];W.dnes.lb='';W.dnes.lc=''}W.st.lb='Tvrdý';W.st.iv='thr4';W.st.lc='lb-h';W.ct.lb='Dlouhý';W.ct.lc='lb-l';
 function mini(seg){if(!seg.length)return '';var t=mins(seg),x=0,o='<svg viewBox="0 0 120 22" aria-hidden="true">';seg.forEach(function(s){var w=Math.max(1.5,s[0]/t*120),h=Math.max(3,s[1]/130*22);o+='<rect x="'+x.toFixed(1)+'" y="'+(22-h).toFixed(1)+'" width="'+(w-.8).toFixed(1)+'" height="'+h.toFixed(1)+'" rx="1.5" fill="'+ZC(s[1])+'"/>';x+=w});return o+'</svg>'}
-var WOPEN=null;
+var WOPEN=null,WPX=false;function dxLab(x,k0){var b=x.querySelector('.dx-pl'),has=false;try{var kk=k0||WOPEN;has=!!kk&&(isR(kk)||mins(W[kk].seg)>0)}catch(e){};if(!b)return;b.hidden=!has;b.textContent=WPX?'Sbalit plán tréninku':'Celý plán tréninku';b.setAttribute('aria-expanded',String(WPX))}
 function dPark(){var p=document.getElementById('dpark');['detail','wplan'].forEach(function(i){var e=document.getElementById(i);if(e&&e.parentNode!==p)p.appendChild(e)})}
-function dPlace(k){var row=dayEl.querySelector('.day[data-k="'+k+'"]');var x=dayEl.querySelector('.dexp');if(!row){dPark();if(x)x.remove();return}if(!x){x=document.createElement('div');x.className='dexp'}row.insertAdjacentElement('afterend',x);['detail','wplan'].forEach(function(i){var e=document.getElementById(i);if(e)x.appendChild(e)});
+function dPlace(k){var row=dayEl.querySelector('.day[data-k="'+k+'"]');var x=dayEl.querySelector('.dexp');if(!row){dPark();if(x)x.remove();return}if(!x){x=document.createElement('div');x.className='dexp'}row.insertAdjacentElement('afterend',x);['detail','wplan'].forEach(function(i){var e=document.getElementById(i);if(e)x.appendChild(e)});x.classList.toggle('wpc',!WPX);var wpb=x.querySelector('.dxb');if(!wpb){wpb=document.createElement('div');wpb.className='dxb chips';wpb.innerHTML='<button type="button" class="dx-pl"></button><button type="button" class="dx-cl">Zavřít</button>';wpb.querySelector('.dx-pl').onclick=function(){WPX=!WPX;x.classList.toggle('wpc',!WPX);dxLab(x);if(!WPX){var r=dayEl.querySelector('.day.open');if(r)r.scrollIntoView({block:'start',behavior:'smooth'})}};wpb.querySelector('.dx-cl').onclick=function(){var kk=WOPEN;dClose();var r=kk&&dayEl.querySelector('.day[data-k="'+kk+'"]');if(r)r.scrollIntoView({block:'center',behavior:'smooth'})}}x.appendChild(wpb);dxLab(x,k);
  Array.prototype.forEach.call(dayEl.querySelectorAll('.day'),function(e){var o=e.dataset.k===k;e.classList.toggle('open',o);e.setAttribute('aria-expanded',String(o))});Array.prototype.forEach.call(document.querySelectorAll('#dstrip button'),function(e){e.setAttribute('aria-pressed',String(e.dataset.k===k))})}
 function dClose(){WOPEN=null;dPark();var x=dayEl.querySelector('.dexp');if(x)x.remove();Array.prototype.forEach.call(dayEl.querySelectorAll('.day'),function(e){e.classList.remove('open');e.setAttribute('aria-expanded','false');e.setAttribute('aria-pressed','false')});Array.prototype.forEach.call(document.querySelectorAll('#dstrip button'),function(e){e.setAttribute('aria-pressed','false')})}
 function buildDays(){dPark();dayEl.innerHTML='';var tp=0,dn=0,ses=0,stp='';
- order.forEach(function(k){var d=W[k],m=mins(d.seg);if(m){ses++;tp+=m;if(d.done)dn++}
+ order.forEach(function(k){if(!W[k]||typeof W[k]!=='object')W[k]={t:'Volno',d:'Bez tréninku.',seg:[]};if(!Array.isArray(W[k].seg))W[k].seg=[];if(typeof W[k].t!=='string')W[k].t=W[k].seg.length?'Trénink':'Volno';var d=W[k],m=mins(d.seg);if(m){ses++;tp+=m;if(d.done)dn++}
   var b=document.createElement('button');b.className='day'+(k===TK?' today':'');b.setAttribute('aria-pressed','false');b.dataset.k=k;
   var L=autoLb(d);stp+='<button type="button" role="tab" data-k="'+k+'" class="'+(k===TK?'td':'')+'" aria-pressed="false">'+d.n+'<i class="'+(L?L[1]:'')+'"'+(L?'':' style="background:transparent"')+'></i></button>';b.setAttribute('aria-expanded','false');
   b.innerHTML='<span class="dn"><small>'+d.n+'</small><b>'+d.dt+'</b></span><span class="vl '+(L?L[1]:'')+'"'+(L?'':' style="background:var(--line)"')+'></span><span class="mid"><span class="t">'+esc(d.t)+'</span><span class="mini">'+mini(d.seg)+'</span></span><span class="rt">'+(function(L){return L?'<em class="lb '+L[1]+'">'+L[0]+'</em>':''})(autoLb(d))+'<span class="tag">'+(m?m+' min':'')+'</span></span><span class="chk'+(d.done?' on':'')+'">'+(d.done?'✓':'')+'</span><span class="dar" aria-hidden="true">›</span>';
@@ -1544,6 +1548,14 @@ refresh();
   btn('Zrušit',function(){box.hidden=true;t.value=''});
  };
 })();
+</script>
+<script>
+(function(){var el=document.getElementById('thm');if(!el)return;
+ function cur(){var t='auto';try{t=localStorage.getItem('mfc-theme')||'auto'}catch(e){}return t}
+ function mark(){var t=cur();Array.prototype.forEach.call(el.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',String(b.dataset.v===t))})}
+ Array.prototype.forEach.call(el.querySelectorAll('button'),function(b){b.onclick=function(){var v=b.dataset.v;try{if(v==='auto')localStorage.removeItem('mfc-theme');else localStorage.setItem('mfc-theme',v)}catch(e){}
+  if(v==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',v);mark();try{refresh()}catch(e){}}});
+ mark()})();
 </script>
 </body>
 </html>
