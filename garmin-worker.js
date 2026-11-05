@@ -2,8 +2,8 @@
 // Jen přeposílá vybrané dotazy z tvé stránky na Garmin a přidá CORS hlavičky.
 // Klíč ani data nikam neukládá.
 
-// Adresa, ze které běží MyFitCZ (bez lomítka na konci).
-const ALLOW_ORIGIN = 'https://djveekej-ux.github.io';
+// Adresy, ze kterých běží MyFitCZ (bez lomítka na konci): GitHub Pages a Cloudflare Pages.
+const ALLOW_ORIGINS = ['https://djveekej-ux.github.io', 'https://myfitcz.pages.dev'];
 
 const UPSTREAM = 'https://personal.connectapi.garmin.com';
 
@@ -24,8 +24,10 @@ const PATHS = [
 
 export default {
   async fetch(req) {
+    const origin = req.headers.get('Origin') || '';
+    const allowed = ALLOW_ORIGINS.includes(origin);
     const cors = {
-      'Access-Control-Allow-Origin': ALLOW_ORIGIN,
+      'Access-Control-Allow-Origin': allowed ? origin : ALLOW_ORIGINS[0],
       'Access-Control-Allow-Headers': 'Authorization, Accept, Content-Type',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Max-Age': '86400',
@@ -34,7 +36,7 @@ export default {
 
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
-    if ((req.headers.get('Origin') || '') !== ALLOW_ORIGIN) {
+    if (!allowed) {
       return new Response('Forbidden', { status: 403, headers: cors });
     }
 
