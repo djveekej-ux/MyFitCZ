@@ -231,6 +231,9 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .hspt .hti{width:26px;height:26px;border-radius:8px}.hspt .hti svg{width:15px;height:15px}
 .hspv{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-top:7px;white-space:nowrap}.hspv small{font-size:10px;color:var(--mute);font-weight:600;margin-left:1px}
 .hspn{font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--mute);margin-top:3px}.hsps{font-size:10.5px;font-weight:700;color:var(--k);margin-top:2px;white-space:nowrap}
+.hfx{background:var(--card);border-radius:18px;padding:14px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06)}
+.hfh{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--line)}.hfh b{font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--k)}.hfh span{font-size:13px;color:var(--mute);line-height:1.35}.hfh span strong{display:block;color:var(--ink);font-size:15px}
+.hfx .fac .row span:first-child{font-size:14px}.hfx .fac .row .mute{font-size:12.5px;text-align:right}
 </style>
 </head>
 <body>
@@ -269,8 +272,6 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="loadg"></div>
   <div class="card" id="trtype"></div>
   <div class="card" id="trlist"></div>
-  <h2>Co ovlivňuje skóre</h2>
-  <div class="card" id="facs"></div>
   <h2>Denní přehled</h2>
   <div class="card"><ul class="tl" id="tl"></ul></div>
 </section>
@@ -321,7 +322,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   
 </section>
 </main>
-<div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div id="hsb"></div></div></div>
+<div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div class="hsc">Jak se počítá připravenost</div><div class="hfx"><div class="hfh" id="hfh"></div><div id="facs"></div></div><div id="hsb"></div></div></div>
 <nav role="tablist">
   <button role="tab" aria-selected="true" data-t="prehled">Přehled</button>
   <button role="tab" aria-selected="false" data-t="dnes" hidden>Dnes</button>
@@ -418,13 +419,13 @@ function advSub(){var el=document.getElementById('advs'),b=document.getElementBy
  el.textContent=race?('Rozjetí '+(q.ex.wu.tm||'')+' · závod '+(q.tm||'')+(q.done?' · dojeto ✓':'')):!m?'Volno · regenerace':(String(q.t).replace(/\s*od\s+\d{1,2}:\d{2}$/,'')+' · '+(q.tm||TM[TK]?(q.tm||TM[TK])+' · ':'')+fmt(m)+' · '+(q.done?'':'~')+tssOf(q)+' TSS'+(q.done?' ✓':''))}
 function draw(){var s0=Math.round(F.reduce(function(a,f,i){return a+f[3]*WT[i]},0)),s=rScore(),C=2*Math.PI*54,a=document.getElementById('arc');
  a.setAttribute('stroke',s<45?'var(--z5)':s<65?'var(--z3)':'var(--z2)');a.setAttribute('stroke-dashoffset',(C*(1-s/100)).toFixed(1));
- window.SC=s;hmx();try{renderHStrip()}catch(e){}document.getElementById('sc').textContent=s;document.getElementById('lbl').textContent=s<45?'Nízká':s<65?'Střední':'Vysoká';
+ window.SC=s;hmx();try{var hh=document.getElementById('hfh');if(hh){var cc=s<45?'var(--z5)':s<65?'var(--z3)':'var(--z2)';hh.style.setProperty('--k',cc);hh.innerHTML='<b>'+s+'</b><span><strong>Připravenost '+(s<45?'nízká':s<65?'střední':'vysoká')+'</strong>5 faktorů podle váhy, kontrolní signály ubírají body jen při odchylce</span>'}}catch(e){}try{renderHStrip()}catch(e){}document.getElementById('sc').textContent=s;document.getElementById('lbl').textContent=s<45?'Nízká':s<65?'Střední':'Vysoká';
  document.getElementById('facs').innerHTML=F.map(function(f,i){return '<div class="fac"><div class="row"><span>'+f[0]+' <span class="mute">('+Math.round(WT[i]*100)+' %)</span></span><span class="mute">'+f[1]+' · '+f[2]+'</span></div><div class="bar"><i style="width:'+f[3]+'%;background:'+(f[3]<45?'var(--z5)':f[3]<65?'var(--z3)':'var(--z2)')+'"></i></div></div>'}).join('')+'<div class="ksx"><div class="row"><b>Kontrolní signály</b><span class="mute">ubírají jen při odchylce</span></div><div class="ksg">'+KS.map(function(g){var e=ksEval(g),sh={dech:'Dech',spo2:'SpO₂',shr:'Tep noc',ssc:'Spánek',feel:'Pocit'}[g.k],fv=['','Těžké','Těžší','Normál','Dobré','Svěží'],val=g.feel?(e.has?'<span class="ksw">'+fv[ksFeel()]+'</span>':'—'):ksF(g.v)+(g.u===' %'?'<small>%</small>':''),sub=!e.has?'bez dat':e.p?'<b>−'+e.p+'</b>':'✓';return '<div class="kst" style="--k:'+e.c+'" title="'+g.n+': '+e.t+'"><span class="ksc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+g.ic+'</svg></span><div class="ksv">'+val+'</div><div class="ksn">'+sh+'</div><div class="kss">'+sub+'</div></div>'}).join('')+'</div>'+(s0!==s?'<p class="mute" style="margin:10px 0 0;font-size:13px">Skóre '+s0+' − signály '+(s0-s)+' = <b style="color:var(--ink)">'+s+'</b></p>':'')+'</div>'}
 draw();
 function sug(t){document.getElementById('sugt').textContent=t;document.getElementById('sugb').className='hide'}
 
 /* ===== Zdraví ===== */
-var HD={ctl:71,atl:47,ramp:9.2,rhr:54,rhrB:53,hrv:39,hrvB:35,slp:25500,slpB:28500,ssc:78,sscB:80,spo2:93,spo2B:94,vo2:48,kg:84,kgB:84.4,steps:6420,stepsB:8100,live:false};
+var HD={ctl:71,atl:53,ramp:9.2,rhr:54,rhrB:51,hrv:52,hrvB:57,slp:25800,slpB:27600,ssc:78,sscB:80,spo2:93,spo2B:94,vo2:48,kg:84,kgB:84.4,steps:6420,stepsB:8100,live:false};
 var HIC={form:'<path d="M3 17l5-6 4 3 6-8"/><path d="M15 6h3v3"/>',ctl:'<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',atl:'<path d="M12 21a7 7 0 0 0 7-7c0-4-3-6-4-9-1 2-2 3-3.5 3.5C10 7 9.5 5.5 9.5 4 7 6.5 5 9.5 5 14a7 7 0 0 0 7 7z"/>',ramp:'<path d="M4 19h16"/><path d="M5 15l4-4 3 3 7-7"/>',rhr:'<path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 12 8a4 4 0 0 1 7 2.4C19 15.6 12 20 12 20z"/>',hrv:'<path d="M3 12h4l2-5 3 10 2-5h7"/>',slp:'<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/>',ssc:'<path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/><path d="M15 4h4l-4 4h4"/>',spo2:'<path d="M12 3.5c3.2 4.1 5.5 7.3 5.5 10.2a5.5 5.5 0 0 1-11 0c0-2.9 2.3-6.1 5.5-10.2z"/>',vo2:'<circle cx="12" cy="13" r="8"/><path d="M12 13l3.5-3.5"/><path d="M12 5V3"/>',kg:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9.5a4 4 0 0 1 6 0l-2 2.5h-2z"/>',steps:'<path d="M8 14c-1.7 0-3-1.8-3-4.5S6 4 8 4s2.5 2.8 2.5 5S9.7 14 8 14z"/><path d="M6 17.5c0 1.4.9 2.5 2 2.5s2-1.1 2-2.5"/><path d="M16 11c1.7 0 3-1.8 3-4.5S18 2 16 2s-2.5 2.8-2.5 5 .8 4 2.5 4z"/>',reg:'<path d="M12 20s-7-4.4-7-9.6A4 4 0 0 1 12 8a4 4 0 0 1 7 2.4C19 15.6 12 20 12 20z"/>',load:'<path d="M3 17l5-6 4 3 6-8"/>'};
 var FZ=[{n:'Vysoké riziko',to:-30,c:'var(--z5)'},{n:'Optimální trénink',to:-10,c:'var(--z2)'},{n:'Šedá zóna',to:5,c:'var(--mute)'},{n:'Svěží',to:25,c:'var(--acc)'},{n:'Přechodová',to:99,c:'var(--z3)'}];
 function hNum(v,d){if(v==null||isNaN(v))return '—';var r=d?Math.round(v*Math.pow(10,d))/Math.pow(10,d):Math.round(v);return String(r).replace('.',',').replace('-','−')}
@@ -705,7 +706,7 @@ function drawCurve(){var el=document.getElementById('curve');if(!el)return;
  el.innerHTML='<h2 style="margin:0">Křivka výkonnosti</h2><div class="chips"><button type="button" data-v="w" aria-pressed="'+wk+'">Týden</button><button type="button" data-v="m" aria-pressed="'+!wk+'">Měsíc</button></div><svg viewBox="0 0 '+VW+' '+VH+'" role="img" aria-label="Kondice a únava" style="margin-top:10px">'+g+lb+line('c','var(--acc)')+line('a','var(--z4)')+'</svg><div class="cvl"><span><i style="background:var(--acc)"></i>Kondice '+Math.round(pts[ti].c)+'</span><span><i style="background:var(--z4)"></i>Únava '+Math.round(pts[ti].a)+'</span></div>';
  Array.prototype.forEach.call(el.querySelectorAll('.chips button'),function(b){b.onclick=function(){CV=b.dataset.v;drawCurve()}})}
 function initWidgets(){var P=document.getElementById('p-prehled'),sub=document.getElementById('arr'),box=document.createElement('div'),arr=document.getElementById('arr'),sv=[];
- var defs=[['ready','Připravenost',[P.querySelector('.rdy')]],['sug','Návrh kouče',[document.getElementById('sug')]],['week','Tento týden',[P.querySelector('.wkc')]],['curve','Křivka výkonnosti',[document.getElementById('curve')]],['zones','Intenzita tréninku',[document.getElementById('zchart')]],['load','Týdenní zátěž',[document.getElementById('loadg')]],['trtype','Týdenní zóny',[document.getElementById('trtype')]],['types','Typy tréninků',[document.getElementById('trlist')]],['facs','Co ovlivňuje skóre',[document.getElementById('facs').previousElementSibling,document.getElementById('facs')]],['day','Denní přehled',[document.getElementById('tl').closest('.card').previousElementSibling,document.getElementById('tl').closest('.card')]]];
+ var defs=[['ready','Připravenost',[P.querySelector('.rdy')]],['sug','Návrh kouče',[document.getElementById('sug')]],['week','Tento týden',[P.querySelector('.wkc')]],['curve','Křivka výkonnosti',[document.getElementById('curve')]],['zones','Intenzita tréninku',[document.getElementById('zchart')]],['load','Týdenní zátěž',[document.getElementById('loadg')]],['trtype','Týdenní zóny',[document.getElementById('trtype')]],['types','Typy tréninků',[document.getElementById('trlist')]],['day','Denní přehled',[document.getElementById('tl').closest('.card').previousElementSibling,document.getElementById('tl').closest('.card')]]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order')||'[]')}catch(e){sv=[]}
  defs.sort(function(a,b){var x=sv.indexOf(a[0]),y=sv.indexOf(b[0]);return (x<0?99:x)-(y<0?99:y)});
  box.id='wgs';sub.insertAdjacentElement('afterend',box);sub.insertAdjacentElement('afterend',document.getElementById('ftps'));
