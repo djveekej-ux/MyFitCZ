@@ -14,6 +14,12 @@ const PATHS = [
   /^\/hrv-service\/hrv\/\d{4}-\d{2}-\d{2}$/,
   /^\/wellness-service\/wellness\/bodyBattery\/reports\/daily$/,
   /^\/wellness-service\/wellness\/daily\/spo2\/\d{4}-\d{2}-\d{2}$/,
+  /^\/usersummary-service\/v2\/dailysummaries$/,
+  /^\/usersummary-service\/usersummary\/daily$/,
+  /^\/fitnessage-service\/fitnessage\/v2\/\d{4}-\d{2}-\d{2}$/,
+  // Zkušebně – Garmin je v Personal API možná nevydá (pak vrátí 404 a aplikace je přeskočí).
+  /^\/metrics-service\/metrics\/trainingreadiness\/\d{4}-\d{2}-\d{2}$/,
+  /^\/metrics-service\/metrics\/trainingstatus\/aggregated\/\d{4}-\d{2}-\d{2}$/,
 ];
 
 export default {

@@ -449,10 +449,32 @@ function gaApply(sl,hrv,bb,sp){var got=[],dto=function(x){return x&&(x.dailySlee
  var hs=hrv&&(hrv.hrvSummary||hrv);if(hs&&gaPick(hs,['lastNightAvg'])!=null){HD.ghrv=gaPick(hs,['lastNightAvg']);HD.ghrvW=gaPick(hs,['weeklyAvg']);HD.ghrvS=hs.status||null;got.push('HRV status')}
  var bd=Array.isArray(bb)?bb[bb.length-1]:bb;if(bd){var arr=bd.bodyBatteryValuesArray||[],mx=null;arr.forEach(function(v){var x=Array.isArray(v)?v[v.length-1]:v;if(typeof x==='number'&&(mx==null||x>mx))mx=x});if(mx==null)mx=gaPick(bd,['bodyBatteryHighestValue','highest','max']);if(mx!=null){HD.bb=mx;HD.bbC=gaPick(bd,['charged']);got.push('Body Battery')}}
  return got}
+function gaDeep(o,keys,d){if(o==null||(d|0)>6)return null;if(Array.isArray(o)){for(var i=o.length-1;i>=0;i--){var x=gaDeep(o[i],keys,(d|0)+1);if(x!=null)return x}return null}if(typeof o!=='object')return null;
+ for(var k=0;k<keys.length;k++){var v=o[keys[k]];if(v!=null&&v!==''&&(typeof v==='string'||!isNaN(v)))return v}
+ for(var q in o){var y=gaDeep(o[q],keys,(d|0)+1);if(y!=null)return y}return null}
+function gaApply2(rng,sd,fa,tr,ts){var got=[],n=function(v){return v==null||v===''||isNaN(v)?null:+v};
+ var rows=rng&&(Array.isArray(rng)?rng:rng.data||rng.dailySummaries)||[],t0=gaDay(0);
+ var rs=function(r){return {d:r.calendarDate,st:n(gaPick(r,['stress.avgLevel','averageStressLevel'])),hr:n(gaPick(r,['heartRate.restingValue','restingHeartRate']))}};
+ var all=rows.map(rs),past=all.filter(function(x){return x.d&&x.d<t0}),today=all.filter(function(x){return x.d===t0})[0]||{};
+ var st=n(gaPick(sd,['averageStressLevel','stress.avgLevel']));if(st==null)st=today.st;
+ if(st!=null&&st>=0){HD.dstr=Math.round(st);HD.dstrB=ilAvg(past.map(function(x){return x.st>=0?x.st:null}));got.push('denní stres')}
+ var hr=n(gaPick(sd,['restingHeartRate','heartRate.restingValue']));if(hr==null)hr=today.hr;
+ if(hr!=null&&hr>0){HD.grhr=hr;if(HD.rhr==null){HD.rhr=hr;HD.rhrB=ilAvg(past.map(function(x){return x.hr}))}got.push('klidový tep')}
+ var mo=n(gaPick(sd,['moderateIntensityMinutes'])),vi=n(gaPick(sd,['vigorousIntensityMinutes']));
+ if(mo!=null||vi!=null){HD.im=(mo||0)+2*(vi||0);HD.imG=n(gaPick(sd,['intensityMinutesGoal']));got.push('minuty intenzity')}
+ if(HD.steps==null){var sp=n(gaPick(sd,['totalSteps']));if(sp!=null)HD.steps=sp}
+ var fg=n(gaDeep(fa,['fitnessAge'])),ca=n(gaDeep(fa,['chronologicalAge'])),af=n(gaDeep(fa,['achievableFitnessAge']));
+ if(fg!=null){HD.fage=Math.round(fg*10)/10;HD.cage=ca;HD.afage=af;got.push('fitness věk')}
+ if(HD.vo2==null){var vo=n(gaDeep(fa,['vo2Max','vo2MaxValue','vo2MaxPreciseValue']));if(vo!=null)HD.vo2=Math.round(vo)}
+ var trs=n(gaDeep(tr,['score','trainingReadinessScore']));if(trs!=null){HD.gtr=Math.round(trs);got.push('Training Readiness')}
+ var tsl=gaDeep(ts,['trainingStatusFeedbackPhrase','trainingStatus']);if(tsl!=null&&isNaN(tsl)){HD.gts=String(tsl);got.push('Training Status')}
+ return got}
+var GTS={UNPRODUCTIVE:'Neproduktivní',PRODUCTIVE:'Produktivní',MAINTAINING:'Udržování',RECOVERY:'Regenerace',PEAKING:'Vrchol formy',DETRAINING:'Ztráta kondice',OVERREACHING:'Přetížení',STRAINED:'Vyčerpání',NO_STATUS:'Bez stavu'};
+function gaTs(s){var k=String(s||'').toUpperCase();for(var q in GTS)if(k.indexOf(q)===0)return GTS[q];return String(s).replace(/_/g,' ').toLowerCase()}
 function gaConnect(test){if(GA.busy||!GA.key)return;GA.busy=true;GA.msg='Spojuji se s Garminem…';renderApps();
  var t0=gaDay(0),t7=gaDay(7),days=[0,1,2,3,4,5,6,7].map(gaDay);
- gaToken().then(function(){return Promise.all([Promise.all(days.map(function(d){return gaGet('/sleep-service/sleep/dailySleep?date='+d).catch(function(){return null})})),gaGet('/hrv-service/hrv/'+t0).catch(function(){return null}),gaGet('/wellness-service/wellness/bodyBattery/reports/daily?startDate='+t0+'&endDate='+t0).catch(function(){return null}),gaGet('/wellness-service/wellness/daily/spo2/'+t0).catch(function(){return null})])}).then(function(r){
-  GA.raw=r;var got=gaApply(r[0],r[1],r[2],r[3]);GA.on=true;GA.busy=false;GA.at=new Date();APPS.forEach(function(a){if(a[0]==='gar')a[3]=1});
+ gaToken().then(function(){return Promise.all([Promise.all(days.map(function(d){return gaGet('/sleep-service/sleep/dailySleep?date='+d).catch(function(){return null})})),gaGet('/hrv-service/hrv/'+t0).catch(function(){return null}),gaGet('/wellness-service/wellness/bodyBattery/reports/daily?startDate='+t0+'&endDate='+t0).catch(function(){return null}),gaGet('/wellness-service/wellness/daily/spo2/'+t0).catch(function(){return null}),gaGet('/usersummary-service/v2/dailysummaries?startDate='+t7+'&endDate='+t0).catch(function(){return null}),gaGet('/usersummary-service/usersummary/daily?calendarDate='+t0).catch(function(){return null}),gaGet('/fitnessage-service/fitnessage/v2/'+t0).catch(function(){return null}),gaGet('/metrics-service/metrics/trainingreadiness/'+t0).catch(function(){return null}),gaGet('/metrics-service/metrics/trainingstatus/aggregated/'+t0).catch(function(){return null})])}).then(function(r){
+  GA.raw=r;var got=gaApply(r[0],r[1],r[2],r[3]).concat(gaApply2(r[4],r[5],r[6],r[7],r[8]));GA.on=true;GA.busy=false;GA.at=new Date();APPS.forEach(function(a){if(a[0]==='gar')a[3]=1});
   GA.msg=got.length?'Připojeno. Načteno z Garminu: '+got.join(', ')+'.':'Spojení funguje, ale Garmin za dnešní noc zatím nic nevrátil. Zkus to po synchronizaci hodinek.';
   try{localStorage.setItem('mfc-ga',JSON.stringify({key:GA.key,px:GA.px}))}catch(e){}
   try{draw();renderHealth();renderHStrip()}catch(e){}renderApps()}).catch(function(e){GA.busy=false;GA.on=false;GA.tok=null;
@@ -472,7 +494,7 @@ function hHM(sec){if(sec==null)return '—';var m=Math.round(sec/60);return Math
 function hTile(o){var dot=o.dot===false?'':'<i class="htd"></i>';return '<div class="ht" style="--k:'+o.c+'"><div class="hth"><span class="hti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+HIC[o.ic]+'</svg></span><span class="htn">'+o.n+'</span>'+dot+'</div><div class="htv'+(o.cv?' c':'')+'">'+o.v+(o.u?'<small>'+o.u+'</small>':'')+'</div><div class="hts">'+(o.s||'&nbsp;')+'</div>'+(o.bar||'')+'</div>'}
 function hRange(v,lo,hi,a,b,c){if(v==null)return '';var p=Math.max(3,Math.min(97,(v-lo)/(hi-lo)*100)),l=(a-lo)/(hi-lo)*100,r=(b-lo)/(hi-lo)*100;return '<div class="hrb"><i style="left:'+l+'%;right:'+(100-r)+'%"></i><span class="htm" style="left:'+p+'%;--k:'+c+'"></span></div>'}
 function hState(bad,warn){return bad?'var(--z5)':warn?'var(--z4)':'var(--z2)'}
-var HBX=[];function renderHealth(){var el=document.getElementById('hsb');if(!el)return;HBX=[];var t=[],tsb=HD.ctl!=null&&HD.atl!=null?HD.ctl-HD.atl:null,z=FZ[0],zi=0;
+var HBX=[],HBY=[];function renderHealth(){var el=document.getElementById('hsb');if(!el)return;HBX=[];var t=[],tsb=HD.ctl!=null&&HD.atl!=null?HD.ctl-HD.atl:null,z=FZ[0],zi=0;
  if(tsb!=null){for(zi=0;zi<FZ.length;zi++){if(tsb<FZ[zi].to){z=FZ[zi];break}}}
  var lo=-40,hi=35,zb='<div class="htz-w"><div class="htz">'+FZ.map(function(f,i){var a=i?FZ[i-1].to:lo,b=Math.min(f.to,hi);return '<i class="'+(i===zi?'on':'')+'" style="background:'+f.c+';flex:'+(b-a)+'"></i>'}).join('')+'</div>'+(tsb!=null?'<span class="htm" style="left:'+Math.max(3,Math.min(97,(tsb-lo)/(hi-lo)*100))+'%;--k:'+z.c+'"></span>':'')+'</div>';
  t.push(hTile({n:'Forma',ic:'form',c:z.c,v:hSgn(tsb),s:z.n+(HD.ctl?' · '+hSgn(Math.round(tsb/HD.ctl*100))+' %':''),bar:zb}));
@@ -490,12 +512,17 @@ var HBX=[];function renderHealth(){var el=document.getElementById('hsb');if(!el)
  if(HD.bb!=null){var bbc=hState(HD.bb<40,HD.bb<60);HBX.push(hTile({n:'Body Battery',ic:'bb',c:bbc,v:hNum(HD.bb),u:'/100',s:HD.bbC!=null?'nabito +'+hNum(HD.bbC)+' přes noc':'ranní maximum',bar:hRange(HD.bb,0,100,60,100,bbc)}))}
  if(HD.resp!=null){var drs=HD.respB!=null?Math.round((HD.resp-HD.respB)*10)/10:null,rsc=hState(drs>=2,drs>=1);HBX.push(hTile({n:'Dech',ic:'resp',c:rsc,v:hNum(HD.resp,1),u:'/min',s:drs==null?'z Garminu':hSgn(drs,1)+' vs průměr'}))}
  if(HD.str!=null){var stc=hState(HD.str>40,HD.str>25);HBX.push(hTile({n:'Stres v noci',ic:'hrv',c:stc,v:hNum(HD.str),u:'/100',s:HD.strB!=null?'průměr '+hNum(HD.strB):'z Garminu'}))}
+ if(HD.dstr!=null){var dsc=hState(HD.dstr>50,HD.dstr>35);HBX.push(hTile({n:'Denní stres',ic:'hrv',c:dsc,v:hNum(HD.dstr),u:'/100',s:HD.dstrB!=null?'průměr '+hNum(Math.round(HD.dstrB)):'z Garminu',bar:hRange(HD.dstr,0,100,0,35,dsc)}))}
+ if(HD.gtr!=null){var trc=hState(HD.gtr<33,HD.gtr<60);HBX.push(hTile({n:'Readiness',ic:'reg',c:trc,v:hNum(HD.gtr),u:'/100',s:'z Garminu',bar:hRange(HD.gtr,0,100,60,100,trc)}))}
+ HBY=[];if(HD.im!=null)HBY.push(hTile({n:'Intenzita',ic:'load',c:'var(--acc)',dot:false,v:hNum(HD.im),u:'min',s:'dnes'+(HD.imG?', cíl '+hNum(HD.imG)+'/týden':'')}));
+ if(HD.fage!=null)HBY.push(hTile({n:'Fitness věk',ic:'reg',c:HD.cage!=null&&HD.fage>HD.cage?'var(--z4)':'var(--z2)',v:hNum(Math.round(HD.fage)),u:'let',s:HD.cage!=null?'skutečný věk '+hNum(HD.cage):'z Garminu'}));
+ if(HD.gts!=null)HBY.push(hTile({n:'Training Status',ic:'load',c:/^(PRODUCTIVE|PEAKING|MAINTAINING|RECOVERY)/i.test(HD.gts)?'var(--z2)':'var(--z4)',v:'<span style="font-size:17px">'+gaTs(HD.gts)+'</span>',s:'z Garminu'}));
  t.push(hTile({n:'Kroky',ic:'steps',c:'var(--acc)',dot:false,v:HD.steps==null?'—':String(HD.steps).replace(/\B(?=(\d{3})+(?!\d))/g,' '),s:HD.stepsB?'průměr '+String(HD.stepsB).replace(/\B(?=(\d{3})+(?!\d))/g,' '):''}));
  var rg=[dh!=null&&dh<-3,dr!=null&&dr>1,sh<7,dp!=null&&dp<=-2],rgn=rg.filter(Boolean).length,ld=[tsb!=null&&tsb<-30,HD.ramp!=null&&HD.ramp>8,ac!=null&&ac>1.3],ldn=ld.filter(Boolean).length,all=rgn+ldn;
  var grp=function(n,ic,cnt,bad,lab){var c=bad?'var(--z4)':'var(--z2)';return '<div class="hgi" style="--k:'+c+'"><span class="hti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+HIC[ic]+'</svg></span><div><b>'+n+'</b><span>'+lab+'</span></div><span class="hpl"><i></i>'+(bad?'Pozor':'OK')+'</span></div>'};
- el.innerHTML='<div class="hsc">Zátěž z Intervals.icu</div><div class="hgr">'+t.slice(0,4).join('')+'</div><div class="hsc">Regenerace</div><div class="hgr">'+t.slice(4,HD.deep!=null?9:8).join('')+HBX.join('')+'</div><div class="hsc">Tělo a kyslík</div><div class="hgr">'+t.slice(HD.deep!=null?9:8).join('')+'</div>'
+ el.innerHTML='<div class="hsc">Zátěž z Intervals.icu</div><div class="hgr">'+t.slice(0,4).join('')+'</div><div class="hsc">Regenerace</div><div class="hgr">'+t.slice(4,HD.deep!=null?9:8).join('')+HBX.join('')+'</div><div class="hsc">Tělo a kyslík</div><div class="hgr">'+t.slice(HD.deep!=null?9:8).join('')+HBY.join('')+'</div>'
   +'<div class="hsg2"><b>Signály</b><span class="hpl" style="--k:'+(all?'var(--z4)':'var(--z2)')+'"><i></i>'+(all?all+' k pozornosti':'Vše v pořádku')+'</span></div><div class="hgp">'+grp('Regenerace','reg',4,rgn,rgn?rgn+' ze 4 signálů mimo normu':'HRV, klidový tep, spánek, SpO₂')+grp('Zátěž','load',3,ldn,ldn?(HD.ramp>8?'Ramp '+hSgn(HD.ramp,1)+' za týden':'Forma nebo únava mimo normu'):'Forma, ramp, únava')+'</div>'
-  +'<p class="hnote">'+(HD.live?'Data z Intervals.icu (Garmin). ':'Ukázková data, po napojení Intervals.icu se doplní tvoje. ')+''+(GA.on?'SpO₂, hluboký spánek, dech a Body Battery přímo z Garminu.':'Hluboký spánek, dech a Body Battery doplníš napojením Garminu v Nastavení.')+'</p>'}
+  +'<p class="hnote">'+(HD.live?'Data z Intervals.icu (Garmin). ':'Ukázková data, po napojení Intervals.icu se doplní tvoje. ')+''+(GA.on?'SpO₂, hluboký spánek, dech, Body Battery, stres a další metriky přímo z Garminu.':'Hluboký spánek, dech a Body Battery doplníš napojením Garminu v Nastavení.')+'</p>'}
 function openHealth(){renderHealth();var h=document.getElementById('hsh');h.hidden=false;document.body.style.overflow='hidden'}
 function closeHealth(){document.getElementById('hsh').hidden=true;document.body.style.overflow=''}
 (function(){var r=document.getElementById('rcr'),x=document.getElementById('hsx'),h=document.getElementById('hsh');if(r){r.onclick=openHealth;r.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openHealth()}}}if(x)x.onclick=closeHealth;if(h)h.onclick=function(e){if(e.target===h)closeHealth()}})();
