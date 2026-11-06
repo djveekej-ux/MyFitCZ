@@ -332,7 +332,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.58 · 5. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.60 · 6. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="hsh" class="hsh" hidden role="dialog" aria-modal="true" aria-label="Zdraví"><div class="hsi"><div class="hst"><span></span><b>Zdraví</b><button type="button" id="hsx">Hotovo</button></div><div class="hsc">Jak se počítá připravenost</div><div class="hfx"><div class="hfh" id="hfh"></div><div id="facs"></div></div><div id="hsb"></div></div></div>
@@ -986,7 +986,7 @@ function initDnesWidgets(){var P=document.getElementById('p-dnes'),sub=document.
  var tc=document.createElement('div');tc.className='card';tc.id='today-dnes';P.appendChild(tc);var ac=document.createElement('div');ac.className='card';ac.id='ask-dnes';P.appendChild(ac);var rcd=document.createElement('div');rcd.id='rem';P.appendChild(rcd);
  var defs=[['today','Dnes',[tc]],['rate','Hodnocení jízdy',[rcd]],['ask','Zeptej se kouče',[ac]],['goal',PAST?'Cíl závodu ('+raceDay().toLowerCase()+')':'Cíl dnešního závodu',[P.querySelector('.card')]],['coach','Zpráva kouče',[document.getElementById('coach-dnes')]],['fit','Cíl a kondice',[document.getElementById('goalfit')]],['plan','Plán rozjetí',[document.getElementById('plan-dnes')]],['planr','Plán závodu',[document.getElementById('planr-dnes')]],['planv','Plán vyjetí',[document.getElementById('planv-dnes')]],['ex','Rozjezd a vyjetí',[document.getElementById('ex-dnes')]],['res','Výsledek',[document.getElementById('res-dnes')]],['race','Závod: cíl a výsledek',[document.getElementById('race-dnes')]]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order-d')||'[]')}catch(e){sv=[]}
- var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=d[0]==='today'?-1:x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});
+ var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:d[0]==='today'?-1:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});
  defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  box.id='wgd';sub.insertAdjacentElement('afterend',box);
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
@@ -1564,6 +1564,12 @@ refresh();
  Array.prototype.forEach.call(el.querySelectorAll('button'),function(b){b.onclick=function(){var v=b.dataset.v;try{if(v==='auto')localStorage.removeItem('mfc-theme');else localStorage.setItem('mfc-theme',v)}catch(e){}
   if(v==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',v);mark();try{refresh()}catch(e){}}});
  mark()})();
+
+/* ===== Nový den: po návratu do aplikace načíst znovu, aby sedělo datum ===== */
+(function(){function dk(){var n=new Date();return n.getFullYear()+'-'+n.getMonth()+'-'+n.getDate()}var D0=dk(),busy=false;
+ function chk(){if(busy||dk()===D0)return;busy=true;location.reload()}
+ document.addEventListener('visibilitychange',function(){if(!document.hidden)chk()});
+ window.addEventListener('pageshow',chk);window.addEventListener('focus',chk);setInterval(chk,60000)})();
 </script>
 </body>
 </html>
