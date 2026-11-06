@@ -340,7 +340,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.69 · 6. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.71 · 6. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -641,7 +641,7 @@ function show(k){var d=W[k],tot=mins(d.seg);window.cur=k;WOPEN=k;try{dPlace(k)}c
   if(mins(d.seg)&&(ifD||tssD)&&gi('e-if')){var cur=planIf(d.seg)*100,tg=ifD?+g('e-if'):Math.sqrt(+g('e-tss')*60/(mins(d.seg)*100))*100;if(tg>0&&Math.abs(tg-cur)>.5){var kf=tg/cur;d.seg=d.seg.map(function(s){return [s[0],Math.max(20,Math.min(200,Math.round(s[1]*kf)))]})}}
   if(isR(k)){var T=d.tg||(d.tg={min:27,km:21,spd:47,el:283,int:100,load:45});if(!d.tm)d.tm='18:00';d.nm=(g('e-t')||'').replace(/\s*\d{1,2}:\d{2}\s*$/,'').trim()||d.nm;d.t=raceTitle();T.min=mins(d.seg);T.int=Math.round(planIf(d.seg)*100);
       if(!d.done){if(g('e-km')!=='')T.km=+g('e-km');if(g('e-el')!=='')T.el=+g('e-el');d.km='';d.el=''}
-   d.ex.wu.tm=addMin(d.tm,-RDEF.wu);d.ex.cd.tm=addMin(d.tm,RDEF.cd);syncRaceT('min');syncRaceT('km');renderDnes()}
+   d.ex.wu.tm=addMin(d.tm,-RDEF.wu);d.ex.cd.tm=cdAt(d.tm);syncRaceT('min');syncRaceT('km');renderDnes()}
   refresh();show(k)};
  document.getElementById('fit').onchange=function(ev){var f=ev.target.files[0];if(!f)return;var r=new FileReader();
   r.onload=function(){try{var s=parseFit(r.result),ok=function(x,m){return x!=null&&x!==m},U=4294967295,
@@ -699,8 +699,11 @@ function fitSlot(st){var p=(W.dnes.tm||'18:00').split(':'),rs=+p[0]*60+(+p[1]),t
 function fitAuto(files,cb){var res=[],n=files.length;
  function finish(){var nm={wu:'rozjezd',race:'závod',cd:'vyjetí'},msg=[],ex=W.dnes.ex,tg={wu:ex.wu,race:W.dnes,cd:ex.cd};
   res.sort(function(a,b){return (a.o&&a.o.st?+a.o.st:0)-(b.o&&b.o.st?+b.o.st:0)});
+  var p0=(W.dnes.tm||'18:00').split(':'),ok=res.filter(function(x){return x.o}),rx=null,best=1e9;
+  ok.forEach(function(x){x.nm=raceSlotName(x.f.name);if(x.nm||!x.o.st)return;var t=x.o.st.getHours()*60+x.o.st.getMinutes(),df=Math.abs(t-(+p0[0]*60+(+p0[1])));if(df<best){best=df;rx=x}});
+  if(rx&&best>45&&ok.length>1)rx=null;
   res.forEach(function(x){if(!x.o){msg.push(esc(x.f.name)+': nepodařilo se přečíst (je to původní .FIT?)');return}
-   var sl=x.o.st?fitSlot(x.o.st):(n===1?'race':null);
+   var sl=x.nm?x.nm:x===rx?'race':(rx&&x.o.st)?(x.o.st<rx.o.st?'wu':'cd'):x.o.st?fitSlot(x.o.st):(n===1?'race':null);
    if(!sl){msg.push(esc(x.f.name)+': chybí čas startu, nahraj ho zvlášť u rozjezdu nebo vyjetí');return}
    fitApply(x.o,tg[sl]);msg.push(nm[sl]+(x.o.st?' '+hm(x.o.st):'')+' ('+Math.round(x.o.t)+' min)')});
   FITMSG='Rozpoznáno: '+msg.join(' · ');cb()}
@@ -725,7 +728,7 @@ function raceHtml(d){var T=d.tg||(d.tg={min:27,km:21,spd:47,el:283,int:100,load:
  +'<div class="fh">JAK SE TI JELO?</div><div class="fl">'+fl.map(function(f){return '<button type="button" data-v="'+f[0]+'" aria-pressed="'+(d.feel===f[0])+'"><span>'+f[1]+'</span>'+f[2]+'</button>'}).join('')+'</div>'
  +(d.fbMsg&&d.feel?'<p class="mute" style="margin:8px 0 0">'+d.fbMsg+'</p>':'')
  +'<div class="chips"><button type="button" id="d-an">'+(d.an?'Skrýt analýzu':'Analýza kouče')+'</button></div>'+(d.an?'<div class="an">'+raceAnalysis(d)+'</div>':'')+'</div>'}
-function renderDnes(){var d=W.dnes,el=document.getElementById('res-dnes'),$=function(i){return document.getElementById(i)};
+function renderDnes(){if(RACE.on&&W.dnes.ex&&W.dnes.ex.cd&&!W.dnes.ex.cd.done&&W.dnes.tm)W.dnes.ex.cd.tm=cdAt(W.dnes.tm);var d=W.dnes,el=document.getElementById('res-dnes'),$=function(i){return document.getElementById(i)};
  var h='<h2>Výsledek</h2><div class="card"><div class="done" style="margin-top:0"><button type="button" id="d-dn" aria-pressed="'+!!d.done+'">'+(d.done?'Dojeto ✓':'Označit závod jako dojetý')+'</button></div><p class="mute" style="margin:12px 0 6px">Nahraj soubory .FIT z ROUVY najednou nebo postupně. Rozpoznám rozjezd, závod (pevně v '+esc(d.tm||'18:00')+') i vyjetí podle času startu.</p><input id="d-fit" type="file" accept=".fit" multiple>'+(FITMSG?'<p class="mute" style="margin:8px 0 0">'+FITMSG+'</p>':'')+(d.fit?'<p style="margin:8px 0 0">'+esc(d.fit)+'</p>':'');
  if(d.done)h+=ifHtml(d);
  h+=noteHtml(d,'d-note');
@@ -878,13 +881,13 @@ function renderEftp(){var el=document.getElementById('keftp');if(!el)return;
  el.innerHTML='<strong>eFTP</strong><p class="mute" style="margin:6px 0 0">Odhad FTP z Intervals.icu. Počítá se jen z posledních 3 měsíců, tedy od přechodu na Zwift Ride, ne ze starého trenažéru.</p><div class="cs"><span>Odhad eFTP (W)</span><input id="ef-v" type="number" min="50" max="600" value="'+FTPS.val+'"></div><label class="rule"><input type="checkbox" id="ef-on"'+(FTPS.dis?'':' checked')+'>Nabízet změnu FTP podle eFTP</label>';
  document.getElementById('ef-v').onchange=function(){var v=+this.value;if(v>=50&&v<=600){FTPS.val=v;renderFtp()}};
  document.getElementById('ef-on').onchange=function(){FTPS.dis=!this.checked;renderFtp()}}
-var RDEF={wu:30,cd:50,tm:'18:00'};
+var RDEF={wu:30,cd:50,cg:0,tm:'18:00'};function rLen(){var d=W.dnes,T=d.tg||{};return Math.round(+T.min||mins(d.seg)||27)}function cdAt(tm,len){return addMin(tm,(len==null?rLen():+len)+(+RDEF.cg||0))};
 function renderRaceSet(){var el=document.getElementById('krace');if(!el)return;
- el.innerHTML='<strong>Pravidelný závod</strong><p class="mute" style="margin:6px 0 0">Den, kdy každý týden jezdíš závod. Kouč ho nechá v plánu, den předem dá rozjetí a den po něm lehčí jízdu. Když žádný nejezdíš, vyber Žádný.</p><div class="cs"><span>Den závodu</span>'+(RACE.pend?raceSel('rs-day',RACE.pend.on,RACE.pend.d):raceSel('rs-day',RACE.on,RACE.d))+'</div>'+(RACE.pend&&RACE.pend.on?(function(){var x=new Date(MON.getFullYear(),MON.getMonth(),MON.getDate()+7+RACE.pend.d);return '<p class="mute" style="margin:6px 0 0">První závod: '+DNAME[RACE.pend.d].toLowerCase()+' '+x.getDate()+'. '+(x.getMonth()+1)+'. Tento týden se plán nemění.</p>'})():'')+'<div class="cs"><span>Start závodu</span><input id="rs-st" type="time" value="'+esc((RACE.on&&W.dnes.tm)||RDEF.tm||'18:00')+'"></div><div class="chips" style="margin-top:10px"><button type="button" id="rs-go">Uložit závod</button></div><p class="rpe" id="rs-msg"></p>'+(RACE.on||(RACE.pend&&RACE.pend.on)?'<strong style="display:block;margin-top:14px">Výchozí nastavení závodů</strong><p class="mute" style="margin:6px 0 0">Stálé hodnoty pro každý závod. Konkrétní závod (název, start, cíle) upravíš v kartě Dnes.</p><div class="cs"><span>Rozjezd začíná před startem (min)</span><input id="rs-w" type="number" min="5" max="180" value="'+RDEF.wu+'"></div><div class="cs"><span>Vyjetí začíná po startu (min)</span><input id="rs-c" type="number" min="5" max="300" value="'+RDEF.cd+'"></div><div class="cs"><span>Výchozí start nového závodu</span><input id="rs-t" type="time" value="'+RDEF.tm+'"></div>':'');
+ el.innerHTML='<strong>Pravidelný závod</strong><p class="mute" style="margin:6px 0 0">Den, kdy každý týden jezdíš závod. Kouč ho nechá v plánu, den předem dá rozjetí a den po něm lehčí jízdu. Když žádný nejezdíš, vyber Žádný.</p><div class="cs"><span>Den závodu</span>'+(RACE.pend?raceSel('rs-day',RACE.pend.on,RACE.pend.d):raceSel('rs-day',RACE.on,RACE.d))+'</div>'+(RACE.pend&&RACE.pend.on?(function(){var x=new Date(MON.getFullYear(),MON.getMonth(),MON.getDate()+7+RACE.pend.d);return '<p class="mute" style="margin:6px 0 0">První závod: '+DNAME[RACE.pend.d].toLowerCase()+' '+x.getDate()+'. '+(x.getMonth()+1)+'. Tento týden se plán nemění.</p>'})():'')+'<div class="cs"><span>Start závodu</span><input id="rs-st" type="time" value="'+esc((RACE.on&&W.dnes.tm)||RDEF.tm||'18:00')+'"></div><div class="chips" style="margin-top:10px"><button type="button" id="rs-go">Uložit závod</button></div><p class="rpe" id="rs-msg"></p>'+(RACE.on||(RACE.pend&&RACE.pend.on)?'<strong style="display:block;margin-top:14px">Výchozí nastavení závodů</strong><p class="mute" style="margin:6px 0 0">Stálé hodnoty pro každý závod. Konkrétní závod (název, start, cíle) upravíš v kartě Dnes.</p><div class="cs"><span>Rozjezd začíná před startem (min)</span><input id="rs-w" type="number" min="5" max="180" value="'+RDEF.wu+'"></div><div class="cs"><span>Vyjetí začíná po skončení závodu (min)</span><input id="rs-c" type="number" min="0" max="60" value="'+(+RDEF.cg||0)+'"></div><p class="mute" style="margin:4px 0 0;font-size:13px">0 znamená hned po dojetí. Konec závodu se počítá ze startu a délky závodu, takže se vyjetí posune samo.</p><div class="cs"><span>Výchozí start nového závodu</span><input id="rs-t" type="time" value="'+RDEF.tm+'"></div>':'');
  document.getElementById('rs-go').onclick=function(){var dv=+document.getElementById('rs-day').value,r=setRace(dv>=0,dv>=0?dv:RACE.d,document.getElementById('rs-st').value);var m=document.getElementById('rs-msg');if(typeof r==='string'){m.textContent=r}else if(r===false){m=document.getElementById('rs-msg');if(m){m.style.color='var(--mute)';m.textContent='Uloženo ✓'}}};
  if(!(RACE.on||(RACE.pend&&RACE.pend.on)))return;
  var f=function(id,fn){document.getElementById(id).onchange=function(){if(this.value!==''){fn(this.value);applyRace(W.dnes.tm)}}};
- f('rs-w',function(v){RDEF.wu=+v});f('rs-c',function(v){RDEF.cd=+v});f('rs-t',function(v){RDEF.tm=v})}
+ f('rs-w',function(v){RDEF.wu=+v});f('rs-c',function(v){var x=Math.max(0,Math.min(60,+v));if(!isNaN(x))RDEF.cg=x});f('rs-t',function(v){RDEF.tm=v})}
 function raceTitle(){var d=W.dnes;return (d.nm?d.nm.charAt(0).toUpperCase()+d.nm.slice(1):'Závod')+' '+d.tm}
 var ILIVE=null,IL={id:'',key:'',on:false,open:false,busy:false,msg:'',at:null,rem:false};
 try{var _il=JSON.parse(localStorage.getItem('mfc-il')||'{}');if(_il.id){IL.id=_il.id}if(_il.key){IL.key=_il.key}}catch(e){}
@@ -937,9 +940,9 @@ function syncRaceT(k){var d=W.dnes,T=d.tg,m=+T.min,i=+T.int,r1=function(x){retur
  if(k==='load'&&+T.load>0)T.int=Math.round(Math.sqrt(T.load*60/(m*100))*100);
  if((k==='min'||k==='km')&&+T.km>0)T.spd=r1(T.km/(m/60));
  if(k==='spd'&&+T.spd>0)T.km=r1(T.spd*m/60);
- if(+T.int>0)d.seg=[[m,+T.int]]}
+ if(+T.int>0)d.seg=[[m,+T.int]];if(d.ex&&d.ex.cd&&d.tm)d.ex.cd.tm=cdAt(d.tm)}
 function setRaceMin(v){var d=W.dnes,tot=mins(d.seg),T=d.tg;T.min=v;if(v>0&&tot!==v)d.seg=tot?d.seg.map(function(x){return [Math.max(1,Math.round(x[0]*v/tot)),x[1]]}):[[v,100]]}
-function applyRace(tm){if(!RACE.on)return;var d=W.dnes;d.tm=tm;d.t=raceTitle();d.ex.wu.tm=addMin(tm,-RDEF.wu);d.ex.cd.tm=addMin(tm,RDEF.cd);renderDnes();refresh();show(window.cur||TK)}
+function applyRace(tm){if(!RACE.on)return;var d=W.dnes;d.tm=tm;d.t=raceTitle();d.ex.wu.tm=addMin(tm,-RDEF.wu);d.ex.cd.tm=cdAt(tm);renderDnes();refresh();show(window.cur||TK)}
 function renderRgoal(){var d=W.dnes,T=d.tg||{},el=document.getElementById('rgoal'),nm=d.nm||'závod';
  var q=function(i){return document.getElementById(i)};
  if(q('rt-start'))q('rt-start').textContent='Start '+d.tm;if(q('rt-wu'))q('rt-wu').textContent='Rozjetí, '+d.ex.wu.tm;if(q('rt-big'))q('rt-big').textContent=(T.min||27)+' min naplno';
@@ -1327,8 +1330,8 @@ function aemOwnForm(c){var af=AFUT[c.ds]||ADRAFT[c.ds]||{},p=c.ds.split('-'),wi=
 function aemFutForm(c){var rf=rfOf(c.ds),T0=(W.dnes&&W.dnes.tg)||{},nv=function(v){return v==null||v===''?'':String(v)};
  return '<p class="mute" style="margin:0">'+aemDay(c.ds)+' · pravidelný závod</p><div class="grid">'+aemField('Název závodu','rf-n',nv(rf.nm),'w',' placeholder="závod"')+aemField('Start závodu','rf-t',nv(rf.tm),'time')
   +aemField('Délka trati (km)','rf-km',nv(rf.km),'number',' min="0" step="0.1" inputmode="decimal" placeholder="'+esc(nv(T0.km))+'"')+aemField('Převýšení (m)','rf-el',nv(rf.el),'number',' min="0" inputmode="numeric" placeholder="'+esc(nv(T0.el))+'"')
-  +aemField('Cílová rychlost (km/h)','rf-spd',nv(rf.spd),'number',' min="0" step="0.1" inputmode="decimal" placeholder="'+esc(nv(T0.spd))+'"')+aemField('Rozjezd před startem (min)','rf-wu',RDEF.wu,'number',' min="5" max="180" inputmode="numeric"')+aemField('Vyjetí po startu (min)','rf-cd',RDEF.cd,'number',' min="5" max="300" inputmode="numeric"')+'</div><p class="mute" id="rf-wut" style="margin:8px 0 0;font-size:13px"></p>'
-  +'<p class="mute" style="margin:8px 0 0;font-size:13px">Rozjezd a vyjetí platí pro všechny závody. V pondělí týdne závodu se vše propíše do plánu, karty Dnes a do Intervals.icu.</p>'
+  +aemField('Cílová rychlost (km/h)','rf-spd',nv(rf.spd),'number',' min="0" step="0.1" inputmode="decimal" placeholder="'+esc(nv(T0.spd))+'"')+aemField('Rozjezd před startem (min)','rf-wu',RDEF.wu,'number',' min="5" max="180" inputmode="numeric"')+aemField('Vyjetí po skončení (min)','rf-cd',+RDEF.cg||0,'number',' min="0" max="60" inputmode="numeric"')+'</div><p class="mute" id="rf-wut" style="margin:8px 0 0;font-size:13px"></p>'
+  +'<p class="mute" style="margin:8px 0 0;font-size:13px">Rozjezd a vyjetí platí pro všechny závody. Vyjetí začíná po konci závodu, jako Cool Down v ROUVY. V pondělí týdne závodu se vše propíše do plánu, karty Dnes a do Intervals.icu.</p>'
   +'<div class="chips" style="margin-top:12px"><button type="button" id="aem-race">Změnit den závodu</button>'+(RFUT[c.ds]?'<button type="button" id="aem-rx">Vrátit výchozí</button>':'')+'</div>'}
 function aemRender(){var c=AEM.c,box=$a('aem-c');
  $a('aem-t').textContent=c.t==='own'?(AFUT[c.ds]?'Upravit aktivitu':'Nová aktivita'):c.t==='fut'?'Upravit závod':c.nw?'Nový trénink':c.x==='race'?'Upravit závod':'Upravit trénink';
@@ -1336,7 +1339,7 @@ function aemRender(){var c=AEM.c,box=$a('aem-c');
  if(c.t==='w'){var fi=$a('f-if'),ft=$a('f-tss'),fm=$a('f-min'),mv=function(){return +fm.value||0},rec=function(){var v=+fi.value;if(v>0&&mv())ft.value=Math.round(v*v/10000*mv()/60*100)};
   fi.addEventListener('input',function(){AEM.ifD=1;AEM.tssD=0;rec()});ft.addEventListener('input',function(){AEM.tssD=1;AEM.ifD=0;var v=+ft.value;if(v>=0&&mv())fi.value=Math.round(Math.sqrt(v*60/(mv()*100))*100)});fm.addEventListener('input',rec)}
  if(c.t==='own')$a('af-ty').onchange=function(){var g=function(i){var e=$a(i);return e?e.value:null};c.nm=g('af-n');c.tm=g('af-t')||c.tm;c.min=g('af-m')||c.min;c.ty=this.value;AEM.dirty=true;aemRender()};
- if(c.t==='fut'){var wh=function(){var t=$a('rf-t').value||rfOf(c.ds).tm,w=+$a('rf-wu').value||RDEF.wu,d=+$a('rf-cd').value||RDEF.cd;$a('rf-wut').textContent='Rozjezd v '+addMin(t,-w)+', start '+t+', vyjetí v '+addMin(t,d)+'.'};['rf-t','rf-wu','rf-cd'].forEach(function(i){$a(i).addEventListener('input',wh)});wh()}
+ if(c.t==='fut'){var wh=function(){var t=$a('rf-t').value||rfOf(c.ds).tm,w=+$a('rf-wu').value||RDEF.wu,g=$a('rf-cd').value===''?(+RDEF.cg||0):Math.max(0,+$a('rf-cd').value),L=Math.round(+((W.dnes&&W.dnes.tg)||{}).min||27),e=addMin(t,L);$a('rf-wut').textContent='Rozjezd v '+addMin(t,-w)+', start '+t+', konec závodu ~'+e+' ('+L+' min), vyjetí v '+addMin(e,g)+'.'};['rf-t','rf-wu','rf-cd'].forEach(function(i){$a(i).addEventListener('input',wh)});wh()}
  var rc=$a('aem-race');if(rc)rc.onclick=function(){closeAem(0,function(){document.querySelector('nav button[data-t="nast"]').click();var k=document.getElementById('krace');if(k)setTimeout(function(){k.scrollIntoView({block:'start',behavior:'smooth'})},50)})};
  var rx=$a('aem-rx');if(rx)rx.onclick=function(){delete RFUT[c.ds];closeAem(1);renderMonth()};
  var db=$a('aem-del');if(db)db.onclick=function(){if(!AEM.del){AEM.del=1;db.textContent='Opravdu smazat? Klepni znovu';db.classList.add('on');return}var cc=AEM.c;closeAem(1);aemDelete(cc)}}
@@ -1350,7 +1353,7 @@ function saveAem(){var c=AEM.c;if(!c)return;var msg=$a('aem-m'),g=function(i){va
  if(c.t==='own'){var o={ty:g('af-ty')||'z2'},n=g('af-n').trim(),t=g('af-t'),m=+g('af-m'),prev=AFUT[c.ds]||ADRAFT[c.ds]||{};if(n)o.t=n;if(o.ty!=='off'){o.tm=t||prev.tm||'16:00';o.min=m>=20?Math.min(480,m):(prev.min||60)}
   AFUT[c.ds]=o;delete ADRAFT[c.ds];MEVD='';closeAem(1);renderMonth();return}
  if(c.t==='fut'){var r={},q=function(i){return g(i).trim()};r.nm=q('rf-n');r.tm=q('rf-t');['km','el','spd'].forEach(function(k){var v=q('rf-'+k).replace(',','.');if(v!==''&&!isNaN(+v)&&+v>=0)r[k]=+v});if(!r.nm)delete r.nm;if(!r.tm||r.tm===(RDEF.tm||'18:00'))delete r.tm;
-  if(Object.keys(r).length)RFUT[c.ds]=r;else delete RFUT[c.ds];var w1=+q('rf-wu'),c1=+q('rf-cd'),ch=false;if(w1>=5&&w1<=180&&w1!==RDEF.wu){RDEF.wu=w1;ch=true}if(c1>=5&&c1<=300&&c1!==RDEF.cd){RDEF.cd=c1;ch=true}closeAem(1);if(ch){if(RACE.on)applyRace(W.dnes.tm);try{renderRaceSet()}catch(e){}}renderMonth();return}
+  if(Object.keys(r).length)RFUT[c.ds]=r;else delete RFUT[c.ds];var w1=+q('rf-wu'),c1=+q('rf-cd'),ch=false;if(w1>=5&&w1<=180&&w1!==RDEF.wu){RDEF.wu=w1;ch=true}if(q('rf-cd')!==''&&c1>=0&&c1<=60&&c1!==(+RDEF.cg||0)){RDEF.cg=c1;ch=true}closeAem(1);if(ch){if(RACE.on)applyRace(W.dnes.tm);try{renderRaceSet()}catch(e){}}renderMonth();return}
  var k=c.k,d=W[k],race=c.x==='race',o=c.x==='wu'?d.ex.wu:c.x==='cd'?d.ex.cd:d,tot=c.nw?0:mins(o.seg),nm=Math.max(0,Math.round(+g('f-min')||0));
  if((!c.x||race)&&!g('f-t').trim()){msg.textContent='Vyplň název.';return}
  if(!nm&&(c.nw||c.x)){msg.textContent='Zadej trvání v minutách.';return}
@@ -1362,7 +1365,7 @@ function saveAem(){var c=AEM.c;if(!c)return;var msg=$a('aem-m'),g=function(i){va
  if(!c.x){o.km=g('f-km');o.el=g('f-el')}
  if(race&&isR(k)){o.km=g('f-km');o.el=g('f-el');var T=d.tg||(d.tg={min:27,km:21,spd:47,el:283,int:100,load:45});if(!d.tm)d.tm='18:00';d.nm=(g('f-t')||'').replace(/\s*\d{1,2}:\d{2}\s*$/,'').trim()||d.nm;d.t=raceTitle();T.min=mins(d.seg);T.int=Math.round(planIf(d.seg)*100);
   if(!d.done){if(g('f-km')!=='')T.km=+g('f-km');if(g('f-el')!=='')T.el=+g('f-el');d.km='';d.el=''}
-  d.ex.wu.tm=addMin(d.tm,-RDEF.wu);d.ex.cd.tm=addMin(d.tm,RDEF.cd);syncRaceT('min');syncRaceT('km')}
+  d.ex.wu.tm=addMin(d.tm,-RDEF.wu);d.ex.cd.tm=cdAt(d.tm);syncRaceT('min');syncRaceT('km')}
  if(c.nw)MEVD='';closeAem(1);refresh();if(WOPEN)show(WOPEN);if(race)renderDnes()}
 (function(){var m=$a('aem');if(!m)return;
  $a('aem-x').onclick=function(){closeAem(0)};$a('aem-s').onclick=saveAem;
