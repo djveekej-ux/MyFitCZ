@@ -346,7 +346,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label></div></div>
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.81 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.82 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -583,11 +583,11 @@ function closeHealth(){document.getElementById('hsh').hidden=true;document.body.
 
 function renderHStrip(){var el=document.getElementById('hsp');if(!el||typeof HD==='undefined')return;
  var acr=HD.ctl&&HD.atl?HD.atl/HD.ctl:null,ac=acr==null?'var(--mute)':acr>1.3?'var(--z5)':acr>1.1?'var(--z4)':'var(--z2)',rc=HD.ramp==null?'var(--mute)':HD.ramp>10?'var(--z5)':HD.ramp>8?'var(--z4)':HD.ramp<0?'var(--z3)':'var(--z2)',
- dp=HD.spo2!=null&&HD.spo2B!=null?HD.spo2-HD.spo2B:null,pc=HD.spo2==null?'var(--mute)':hState(HD.spo2<90||dp<=-4,dp<=-2),
+ dv=HD.hrv!=null&&HD.hrvB?Math.round((HD.hrv-HD.hrvB)/HD.hrvB*100):null,vc=HD.hrv==null?'var(--mute)':hState(dv<-10,dv<-3),
  it=[{ic:'ctl',n:'Kondice',c:'var(--acc)',v:hNum(HD.ctl),s:'CTL'},
   {ic:'atl',n:'Únava',c:ac,v:hNum(HD.atl),s:'ATL'},
   {ic:'ramp',n:'Ramp',c:rc,v:hSgn(HD.ramp,1),s:HD.ramp==null?'bez dat':HD.ramp>8?'rychlý':HD.ramp<0?'pokles':'✓'},
-  {ic:'spo2',n:'SpO₂',c:pc,v:hNum(HD.spo2)+(HD.spo2!=null?'<small>%</small>':''),s:HD.spo2==null?'bez dat':pc==='var(--z2)'?'✓':'pozor'}];
+  {ic:'hrv',n:'VST',c:vc,v:hNum(HD.hrv)+(HD.hrv!=null?'<small>ms</small>':''),s:HD.hrv==null?'bez dat':dv==null?'✓':(vc==='var(--z2)'?'✓ ':'')+hSgn(dv)+' %'}];
  el.innerHTML='<div class="hsph"><b>Zdraví</b><span>12 metrik ›</span></div><div class="hspg">'+it.map(function(o){return '<div class="hspt" style="--k:'+o.c+'"><span class="hti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+HIC[o.ic]+'</svg></span><div class="hspv">'+o.v+'</div><div class="hspn">'+o.n+'</div><div class="hsps">'+o.s+'</div></div>'}).join('')+'</div>';
  el.onclick=openHealth}
 renderHStrip();
