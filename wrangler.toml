@@ -2,3 +2,8 @@ name = "myfitcz-coach"
 main = "garmin-worker.js"
 compatibility_date = "2026-11-01"
 
+
+# Úložiště pro denní zálohu dat aplikace (namespace myfitcz-backup)
+[[kv_namespaces]]
+binding = "BACKUP"
+id = "005b219a86fd48eb8b917925d71d8225"
