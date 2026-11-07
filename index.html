@@ -352,7 +352,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.90 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.91 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -922,7 +922,7 @@ var FITF=[['bike','Kolo','text','např. Trek Madone'],['size','Velikost rámu','
  ['sad','Sedlo','text','model a šířka'],['ped','Pedály a zarážky','text','typ, plovoucí, pozice'],
  ['dt','Datum posledního fitu','date','']];
 function renderFit(){var el=document.getElementById('kfit');if(!el)return;var F=fitGet();
- el.innerHTML='<strong>MyBikeFit</strong><p class="mute" style="margin:8px 0 0;line-height:1.45;font-size:13px">Míry posedu, ať je máš vždy po ruce. Písmena odpovídají obrázku. Ukládá se v telefonu a jde i do denní zálohy.</p>'+fitSvg()
+ el.innerHTML='<strong>BikeFit</strong><p class="mute" style="margin:8px 0 0;line-height:1.45;font-size:13px">Míry posedu, ať je máš vždy po ruce. Písmena odpovídají obrázku. Ukládá se v telefonu a jde i do denní zálohy.</p>'+fitSvg()
   +'<div class="rpf">'+FITF.map(function(f){var v=F[f[0]]==null?'':String(F[f[0]]),t=f[2]==='num'?'text" inputmode="decimal':f[2];
    return '<label'+(f[2]==='text'&&(f[0]==='sad'||f[0]==='ped')?' style="grid-column:1/-1"':'')+'><span>'+(f[4]?'<b style="display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--acc);color:#fff;font-size:11px;margin-right:6px">'+f[4]+'</b>':'')+esc(f[1])+'</span><input type="'+t+'" data-fit="'+f[0]+'" value="'+esc(v)+'" placeholder="'+esc(f[3])+'" autocomplete="off"></label>'}).join('')+'</div>'
   +'<label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute);font-weight:600;margin-top:10px">Poznámky<textarea data-fit="note" rows="3" class="xft" placeholder="např. sedlovka značka 7, sedlo 2 mm dopředu po fitu">'+esc(F.note||'')+'</textarea></label>'
@@ -1170,7 +1170,7 @@ function renderRgoal(){var d=W.dnes,T=d.tg||{},el=document.getElementById('rgoal
  q('rg-n').onchange=function(){d.nm=this.value.trim()||'závod';d.t=raceTitle();renderDnes();refresh()};
  q('rg-t').onchange=function(){if(this.value)applyRace(this.value)}}
 function initKoucWidgets(){try{renderFit()}catch(e){}var _kr=document.getElementById('krem');if(_kr)_kr.remove();renderApps();renderEftp();renderRaceSet();var P=document.getElementById('p-nast'),box=document.getElementById('kw'),arr=document.getElementById('arr3'),sv=[],g=function(i){return document.getElementById(i)};
- var defs=[['prof','Profil jezdce',g('kprof')],['fit','MyBikeFit',g('kfit')],['av','Moje dostupnost',g('kav')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['sync','Plán do Intervals.icu',g('ksync')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')],['thm','Vzhled',g('kthm')],['bk','Záloha dat',g('kbk')],['xfer','Přenos nastavení',g('kxfer')]].filter(function(d){return d[2]});
+ var defs=[['prof','Profil jezdce',g('kprof')],['fit','BikeFit',g('kfit')],['av','Moje dostupnost',g('kav')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['sync','Plán do Intervals.icu',g('ksync')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')],['thm','Vzhled',g('kthm')],['bk','Záloha dat',g('kbk')],['xfer','Přenos nastavení',g('kxfer')]].filter(function(d){return d[2]});
  try{sv=JSON.parse(localStorage.getItem('mfc-order-k')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
@@ -1882,7 +1882,7 @@ refresh();
  if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0)navigator.serviceWorker.register('sw.js').catch(function(){});
 })();
 /* ===== Rozbalovací karty v Nastavení ===== */
-var SXN={prof:'Profil jezdce',av:'Kdy můžu jezdit',zset:'Zóny FTP & WATTS',hr:'Zóny HR & LTHR',race:'Závodní plán',apps:'Napojení aplikací',sync:'Odesílání plánu',ai:'AI kouč (Gemini)',rul:'Pravidla kouče',thm:'Vzhled',bk:'Záloha dat',xfer:'Přenos nastavení'},SXO={};
+var SXN={prof:'Profil jezdce',fit:'BikeFit',av:'Kdy můžu jezdit',zset:'Zóny FTP & WATTS',hr:'Zóny HR & LTHR',race:'Závodní plán',apps:'Napojení aplikací',sync:'Odesílání plánu',ai:'AI kouč (Gemini)',rul:'Pravidla kouče',thm:'Vzhled',bk:'Záloha dat',xfer:'Přenos nastavení'},SXO={};
 try{SXO=JSON.parse(localStorage.getItem('mfc-sx')||'{}')||{}}catch(e){SXO={}}
 function sxDn(n){return n===1?' den':n>=2&&n<=4?' dny':' dní'}
 function sxSum(k){try{switch(k){
