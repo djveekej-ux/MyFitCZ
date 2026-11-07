@@ -352,7 +352,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.93 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.94 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -814,7 +814,7 @@ function renderWeek(){var el=document.querySelector('.wkc');if(!el)return;var GB
   else{var sg=d.seg,fh=-1,lh=-1;sg.forEach(function(x,j){if(x[1]>=88){if(fh<0)fh=j;lh=j}});var pre=0,post=0;sg.forEach(function(x,j){if(j<fh)pre+=x[0];if(j>lh)post+=x[0]});
    if(pre)br+='<i style="flex:'+pre+';background:var(--mute)"></i>';sg.forEach(function(x,j){if(j>=fh&&j<=lh&&x[1]>=88)br+='<i style="flex:'+x[0]+';background:var(--z4)"></i>'});if(post)br+='<i style="flex:'+post+';background:var(--mute)"></i>'}
   return '<button type="button" class="ac'+(dn?'':i<TDI?' pl mi':' pl')+(td?' td':'')+'" data-k="'+k+'" style="--k:'+(!dn&&i<TDI?'var(--mute)':cc)+'"><strong>'+dl+' '+(dn?'<em>✓</em>':i<TDI?'<small>vynecháno</small>':'<small>plán</small>')+'</strong><span class="acr">'+acRing(t,!dn&&i<TDI?'var(--mute)':cc)+'<small>'+ty+'</small></span><p>'+esc(race?'Závod':String(d.t).replace(/\s+od\s+\d{1,2}:\d{2}$/,''))+'</p><span class="acm">'+fmt(tot)+' · '+(dn?'':'~')+t+' TSS'+(km?'<br>'+String(Math.round(km*10)/10).replace('.',',')+' km':'')+'</span><span class="acb">'+br+'</span></button>'};
- var ix=order.map(function(k,i){return i});ix.filter(function(i){return i<=TDI}).reverse().concat(ix.filter(function(i){return i>TDI})).forEach(function(i){cards+=tile(i,order[i])});
+ var ix=order.map(function(k,i){return i});ix.forEach(function(i){cards+=tile(i,order[i])});
  var HW=histWk(),demo=!HW;HW=HW||H;var fc=done+plan,left=Math.max(0,GOALE-done),pct=Math.round(done/GOALE*100),mx=Math.max.apply(null,HW.concat([fc,GOALE])),avg=Math.round(HW.reduce(function(a,b){return a+b},0)/HW.length),bars='';
  HW.forEach(function(v,i){var h=Math.max(4,v/mx*60);bars+='<rect x="'+(5+40*i)+'" y="'+(64-h).toFixed(1)+'" width="30" height="'+h.toFixed(1)+'" rx="5"/>'});
  var hf=Math.max(8,fc/mx*60),hd=Math.max(3,done/mx*60);
@@ -832,7 +832,7 @@ function acRing(t,c){var C=2*Math.PI*15,f=Math.min(t/100,1);return '<svg viewBox
 function acBind(el){var st=el.querySelector('.acs');if(!st)return;
  Array.prototype.forEach.call(st.querySelectorAll('.ac[data-k]'),function(b){b.onclick=function(){var k=b.dataset.k;if(order.indexOf(k)===TDI){calView('dnes');window.scrollTo(0,0);return}calView('tyden');show(k);var r=document.querySelector('#days .day[data-k="'+k+'"]');if(r)setTimeout(function(){r.scrollIntoView({block:'start',behavior:'smooth'})},30)}});
  var f=st.querySelector('.ac.td')||Array.prototype.filter.call(st.querySelectorAll('.ac[data-k]'),function(x){return order.indexOf(x.dataset.k)>TDI})[0];
- var go=function(){if(f)st.scrollLeft=f.offsetLeft-st.offsetLeft-6};go();requestAnimationFrame(go)}
+ var go=function(){if(f)st.scrollLeft=Math.max(0,f.offsetLeft-st.offsetLeft-(f.previousElementSibling?40:6))};go();requestAnimationFrame(go)}
 function noteHtml(d,id){return '<div class="note"><label>Poznámka<textarea id="'+id+'" rows="3" placeholder="Pocity, vybavení, co příště udělat jinak…">'+esc(d.note||'')+'</textarea></label></div>'}
 function bindNote(d,id){var t=document.getElementById(id);t.oninput=function(){d.note=t.value;if(d===W.dnes){var o=document.getElementById(id==='e-note'?'d-note':'e-note');if(o&&(id==='e-note'||window.cur==='dnes'))o.value=d.note}}}
 var CV='w',OFF=null;
