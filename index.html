@@ -258,6 +258,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .sxh i{flex:none;font-style:normal;font-size:22px;line-height:1;color:var(--mute);transition:transform .15s}#kw>.wg.sx:not(.col) .sxh i{transform:rotate(90deg)}#kw>.wg.sx:not(.col) .sxh{padding-bottom:6px}
 #p-nast.edit #kw>.wg.sx{position:relative;padding-bottom:0;border-bottom:0;outline:1.5px dashed color-mix(in srgb,var(--acc) 45%,transparent);outline-offset:3px}#p-nast.edit #kw>.wg.sx>.wgc{position:absolute;top:50%;right:12px;transform:translateY(-50%);margin:0;z-index:1}#p-nast.edit #kw>.wg.sx:not(.col)>.wgc{top:14px;transform:none}#p-nast.edit #kw>.wg.sx>.wgc span{display:none}#p-nast.edit #kw>.wg.sx .sxh i{display:none}#p-nast.edit #kw>.wg.sx .sxh{padding-right:112px}
 #kw>.wg.sx>#keftp{border-top:1px solid var(--line);border-radius:0 0 22px 22px;padding-top:16px}#kw>.wg.sx>#keftp>strong:first-child{display:block}#kw>.wg.sx>.card:not(:last-child){border-radius:0;padding-bottom:16px}
+.mwt{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:12px;font-variant-numeric:tabular-nums}.mwt th{font-size:11px;font-weight:600;color:var(--mute);text-align:right;padding:0 2px 6px}.mwt td{font-size:14px;font-weight:600;text-align:right;padding:9px 2px;border-top:1px solid var(--line)}.mwt th:first-child,.mwt td:first-child{text-align:left}.mwt td:first-child{font-size:13px}.mwt .mwd{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.mwt tr.cur td{color:var(--acc)}.mwt tr.tot td{font-weight:800;border-top:2px solid var(--line)}.mwt tr.tot td:first-child{font-weight:600;color:var(--mute)}.mwt .fu{color:var(--mute);font-weight:500}.mwn{display:flex;align-items:center;gap:4px}.mwn button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:16px;cursor:pointer}.mwn button:disabled{opacity:.35}.mwn span{min-width:78px;text-align:center;font-size:13px;font-weight:600;color:var(--mute)}
 </style>
 </head>
 <body>
@@ -294,6 +295,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
     <p class="mute" style="margin:14px 0 0">Forma <b style="color:var(--ink)">+17 %</b> · <b style="color:var(--acc)">Svěží</b></p>
   </div>
   <div class="card" id="phases"></div>
+  <div class="card" id="mweeks"></div>
   <div class="card" id="trend"></div>
   <div class="card cv" id="curve"></div>
   <div class="card" id="zchart"></div>
@@ -352,7 +354,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.01 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.02 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -889,9 +891,10 @@ function drawCurve(){var el=document.getElementById('curve');if(!el)return;
  el.innerHTML='<h2 style="margin:0">Křivka výkonnosti</h2><div class="chips"><button type="button" data-v="w" aria-pressed="'+wk+'">Týden</button><button type="button" data-v="m" aria-pressed="'+!wk+'">Měsíc</button></div><svg viewBox="0 0 '+VW+' '+VH+'" role="img" aria-label="Kondice a únava" style="margin-top:10px">'+g+lb+line('c','var(--acc)')+line('a','var(--z4)')+'</svg><div class="cvl"><span><i style="background:var(--acc)"></i>Kondice '+Math.round(pts[ti].c)+'</span><span><i style="background:var(--z4)"></i>Únava '+Math.round(pts[ti].a)+'</span></div>';
  Array.prototype.forEach.call(el.querySelectorAll('.chips button'),function(b){b.onclick=function(){CV=b.dataset.v;drawCurve()}})}
 function initWidgets(){var P=document.getElementById('p-prehled'),sub=document.getElementById('arr'),box=document.createElement('div'),arr=document.getElementById('arr'),sv=[];
- var defs=[['ready','Připravenost',[P.querySelector('.rdy')]],['sug','Návrh kouče',[document.getElementById('sug')]],['wrev','Hodnocení týdne',[document.getElementById('wrev')]],['week','Tento týden',[P.querySelector('.wkc')]],['phases','Fáze sezóny',[document.getElementById('phases')]],['trend','Pocit a připravenost',[document.getElementById('trend')]],['curve','Křivka výkonnosti',[document.getElementById('curve')]],['zones','Intenzita tréninku',[document.getElementById('zchart')]],['load','Týdenní zátěž',[document.getElementById('loadg')]],['trtype','Týdenní zóny',[document.getElementById('trtype')]],['types','Typy tréninků',[document.getElementById('trlist')]],['day','Denní přehled',[document.getElementById('tl').closest('.card').previousElementSibling,document.getElementById('tl').closest('.card')]]];
+ var defs=[['ready','Připravenost',[P.querySelector('.rdy')]],['sug','Návrh kouče',[document.getElementById('sug')]],['wrev','Hodnocení týdne',[document.getElementById('wrev')]],['week','Tento týden',[P.querySelector('.wkc')]],['phases','Fáze sezóny',[document.getElementById('phases')]],['mweeks','Týdny v měsíci',[document.getElementById('mweeks')]],['trend','Pocit a připravenost',[document.getElementById('trend')]],['curve','Křivka výkonnosti',[document.getElementById('curve')]],['zones','Intenzita tréninku',[document.getElementById('zchart')]],['load','Týdenní zátěž',[document.getElementById('loadg')]],['trtype','Týdenní zóny',[document.getElementById('trtype')]],['types','Typy tréninků',[document.getElementById('trlist')]],['day','Denní přehled',[document.getElementById('tl').closest('.card').previousElementSibling,document.getElementById('tl').closest('.card')]]];
  try{sv=JSON.parse(localStorage.getItem('mfc-order')||'[]')}catch(e){sv=[]}
  if(sv.length&&sv.indexOf('phases')<0){var wi=sv.indexOf('week');sv.splice(wi<0?sv.length:wi+1,0,'phases')}
+ if(sv.length&&sv.indexOf('mweeks')<0){var pi=sv.indexOf('phases');sv.splice(pi<0?sv.length:pi+1,0,'mweeks')}
  defs.sort(function(a,b){var x=sv.indexOf(a[0]),y=sv.indexOf(b[0]);return (x<0?99:x)-(y<0?99:y)});
  box.id='wgs';sub.insertAdjacentElement('afterend',box);sub.insertAdjacentElement('afterend',document.getElementById('ftps'));
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
@@ -935,6 +938,23 @@ function renderEx(){var el=document.getElementById('ex-dnes'),ex=W.dnes.ex;if(!e
   row.querySelector('[data-a=t]').onclick=function(){e.done=!e.done;refresh()};
   row.querySelector('[data-a=f]').onchange=function(ev){var f=ev.target.files[0];if(f)fitInto(f,e,refresh)}})}
 
+
+/* ===== Týdny v měsíci ===== */
+var MWO=0;
+function renderMWeeks(){var el=document.getElementById('mweeks');if(!el)return;var t=new Date(),m0=new Date(t.getFullYear(),t.getMonth()-MWO,1),L=new Date(m0.getFullYear(),m0.getMonth()+1,0).getDate(),RD=rdOn(),td=ilD(t);
+ var CL={base:'var(--z2)',build:'var(--z4)',peak:'var(--z5)',deload:'var(--z1)'},MNa=['leden','únor','březen','duben','květen','červen','červenec','srpen','září','říjen','listopad','prosinec'];
+ var bl=[[1,7],[8,14],[15,L-7],[L-6,L]].map(function(b){var a=new Date(m0.getFullYear(),m0.getMonth(),b[0]),z=new Date(m0.getFullYear(),m0.getMonth(),b[1]);return {a:a,z:z,lo:ilD(a),hi:ilD(z),ph:phCyc(a),km:0,s:0,tss:0,z4:0,el:0,n:0}});
+ if(RD)ILH.forEach(function(x){if(!isRide(x))return;var d=(x.start_date_local||'').slice(0,10);bl.forEach(function(b){if(d>=b.lo&&d<=b.hi){b.n++;b.km+=(x.distance||0)/1000;b.s+=x.moving_time||0;b.tss+=Math.round(x.icu_training_load||0);b.el+=Math.round(x.total_elevation_gain||0);var zz=actZ(x);b.z4+=(zz[3]+zz[4]+zz[5]+zz[6])*3600}})});
+ var hm=function(sec){var mm=Math.round(sec/60);return Math.floor(mm/60)+':'+('0'+mm%60).slice(-2)},nf=function(v){return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')},T={km:0,s:0,tss:0,z4:0,el:0};
+ var rows=bl.map(function(b){var fut=b.lo>td,cur=b.lo<=td&&b.hi>=td;['km','s','tss','z4','el'].forEach(function(k){T[k]+=b[k]});
+  var v=function(x){return fut||!RD?'<span class="fu">–</span>':x};
+  return '<tr'+(cur?' class="cur"':'')+'><td><span class="mwd" style="background:'+(CL[b.ph.k]||'var(--mute)')+'"></span>'+b.a.getDate()+'.–'+b.z.getDate()+'.</td><td>'+v(nf(b.km))+'</td><td>'+v(hm(b.s))+'</td><td>'+v(nf(b.tss))+'</td><td>'+v(hm(b.z4))+'</td><td>'+v(nf(b.el))+'</td></tr>'}).join('');
+ var mx=RD?Math.min(2,Math.floor((t-new Date(ILH.reduce(function(a,x){var d=x.start_date_local||'';return d&&d<a?d:a},'9999').slice(0,10)+'T00:00:00'))/864e5/30)):0;
+ el.innerHTML='<div class="row" style="align-items:center"><h2 style="margin:0">Týdny v měsíci</h2><div class="mwn"><button type="button" id="mw-p" aria-label="Předchozí měsíc"'+(MWO>=mx?' disabled':'')+'>‹</button><span>'+MNa[m0.getMonth()]+'</span><button type="button" id="mw-n" aria-label="Další měsíc"'+(MWO<=0?' disabled':'')+'>›</button></div></div>'
+  +'<table class="mwt"><colgroup><col style="width:25%"><col><col><col><col><col style="width:17%"></colgroup><tr><th>Týden</th><th>km</th><th>čas</th><th>TSS</th><th>Z4+</th><th>převýš.</th></tr>'+rows
+  +'<tr class="tot"><td>Celkem</td><td>'+(RD?nf(T.km):'–')+'</td><td>'+(RD?hm(T.s):'–')+'</td><td>'+(RD?nf(T.tss):'–')+'</td><td>'+(RD?hm(T.z4):'–')+'</td><td>'+(RD?nf(T.el):'–')+'</td></tr></table>'
+  +'<p class="mute" style="margin:8px 0 0;font-size:12px">'+(RD?'Týdny podle měsíčního cyklu, barva tečky je fáze. Z4+ je čas na prahu a výš, převýšení v metrech. Z jízd z Intervals.icu.':'Po napojení Intervals.icu se tabulka vyplní z tvých jízd.')+'</p>';
+ var bp=document.getElementById('mw-p'),bn=document.getElementById('mw-n');if(bp)bp.onclick=function(){if(MWO<mx){MWO++;renderMWeeks()}};if(bn)bn.onclick=function(){if(MWO>0){MWO--;renderMWeeks()}}}
 /* ===== MyBikeFit ===== */
 function fitGet(){try{return JSON.parse(localStorage.getItem('mfc-fit')||'{}')||{}}catch(e){return{}}}
 function fitSet(o){try{localStorage.setItem('mfc-fit',JSON.stringify(o))}catch(e){}}
@@ -1366,7 +1386,7 @@ var TLS=[['REC','🐢','Odpočinek a regenerace',12],['END','🐹','Vytrvalost, 
 function renderTList(){var el=document.getElementById('trlist');if(!el)return;var RD=rdOn(),cur=typeFromZ(RD?wkZones(0):weekZ()),CN=null;
  if(RD){CN={};var lo=ilD(wkMon(11));ILH.forEach(function(a){if(isRide(a)&&(a.start_date_local||'').slice(0,10)>=lo){var t=actType(a);CN[t]=(CN[t]||0)+1}})}
  el.innerHTML='<h2 style="margin:0">Typy tréninků</h2><table class="tlist"><tbody>'+TLS.map(function(r){return '<tr'+(r[0]===cur?' class="cur"':'')+'><td>'+r[1]+'</td><td>'+r[2]+(r[0]===cur?' <em class="lb lb-b">tento týden</em>':'')+'</td><td>'+(CN?(CN[r[0]]||0):r[3])+'</td></tr>'}).join('')+'</tbody></table><p class="mute" style="margin:8px 0 0;font-size:12px">'+(CN?'Počty jízd za posledních 12 týdnů podle času v zónách z Intervals.icu.':'Počty jednotek jsou ukázka, po napojení Intervals.icu se spočítají z tvých jízd.')+'</p>'}
-function renderPrehledX(){renderStrip();renderLoad();renderTRT();renderTList();try{renderZChart()}catch(e){}}
+function renderPrehledX(){renderStrip();renderLoad();renderTRT();renderTList();try{renderZChart()}catch(e){}try{renderMWeeks()}catch(e){}}
 var PWT='W';
 function rdyS(){return rScore()}
 function addMin(t,m){var p=t.split(':'),x=(+p[0])*60+(+p[1])+Math.round(m);return ('0'+Math.floor(x/60)%24).slice(-2)+':'+('0'+x%60).slice(-2)}
