@@ -262,9 +262,9 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 </head>
 <body>
 <main>
-<header class="brand"><div class="bl"><span class="logo"><svg class="mk" viewBox="0 0 48 30" fill="none" stroke="url(#lg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="lg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="48" y2="0"><stop offset="0" stop-color="#2563FF"/><stop offset="1" stop-color="#7A5CFF"/></linearGradient></defs><circle cx="10" cy="21" r="7"/><circle cx="38" cy="21" r="7"/><path d="M10 21L22 21L18 10L32 10L38 21M22 21L32 10"/><path d="M18 9L29 4L33 10M18 9L25 15L22 21"/><circle cx="32" cy="2.6" r="1.8"/></svg>MyFiT<b>CZ</b></span><span class="mute tg">Trénink s AI koučem <span id="sv" aria-live="polite" style="margin-left:6px;font-size:11px"></span></span></div><button type="button" class="pill" id="arrG" aria-pressed="false">Uspořádat</button></header>
+<header class="brand"><div class="bl"><span class="logo"><svg class="mk" viewBox="0 0 48 30" fill="none" stroke="url(#lg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><linearGradient id="lg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="48" y2="0"><stop offset="0" stop-color="#2563FF"/><stop offset="1" stop-color="#7A5CFF"/></linearGradient></defs><circle cx="10" cy="21" r="7"/><circle cx="38" cy="21" r="7"/><path d="M10 21L22 21L18 10L32 10L38 21M22 21L32 10"/><path d="M18 9L29 4L33 10M18 9L25 15L22 21"/><circle cx="32" cy="2.6" r="1.8"/></svg>MyFiT<b>CZ</b></span><span class="mute tg">Trénink s AI koučem <span id="sv" aria-live="polite" style="margin-left:6px;font-size:11px"></span></span></div><button type="button" class="pill" id="arrG" aria-pressed="false">Edit</button></header>
 <section id="p-prehled">
-  <button type="button" id="arr" hidden>Uspořádat</button>
+  <button type="button" id="arr" hidden>Edit</button>
   <div class="rdy">
     <div class="rg2">
       <div class="rc rcl" id="rcl"><div class="rch"><b id="rdt">Dnes</b><span class="rdot" id="rdot">●</span></div><div class="hl"><svg class="ring" viewBox="0 0 132 132" role="img" aria-label="Skóre připravenosti"><circle cx="66" cy="66" r="54" fill="none" stroke="var(--line)" stroke-width="12"/><circle id="arc" cx="66" cy="66" r="54" fill="none" stroke-width="12" stroke-linecap="round" transform="rotate(-90 66 66)"/><text id="sc" x="66" y="80" text-anchor="middle"></text></svg><div class="mute">Připravenost</div><div class="big" id="lbl"></div><div class="rbr" id="rbr" aria-hidden="true"></div></div></div>
@@ -307,7 +307,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 <div id="calseg" class="calseg hide" role="tablist" aria-label="Pohled kalendáře"><button type="button" data-v="dnes" aria-pressed="true">Den</button><button type="button" data-v="tyden" aria-pressed="false">Týden</button><button type="button" data-v="mesic" aria-pressed="false">Měsíc</button></div>
 <section id="p-mesic" class="hide"><div class="card" id="mcal"></div><div class="card" id="mday"></div><div class="card mnext" id="mnext" role="button" tabindex="0"></div></section>
 <section id="p-dnes" class="hide">
-  <button type="button" id="arr2" hidden>Uspořádat</button>
+  <button type="button" id="arr2" hidden>Edit</button>
   <div class="card">
     <div class="row"><span class="mute">Cíl dnešního závodu</span><span class="mute" id="rt-start">Start 18:00</span></div>
     <div class="big" id="rt-big">27 min naplno</div>
@@ -327,7 +327,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 </section>
 
 <section id="p-tyden" class="hide">
-  <button type="button" id="arr4" hidden>Uspořádat</button>
+  <button type="button" id="arr4" hidden>Edit</button>
   <div class="wk" id="wk"></div>
   <div class="card" id="wgen"></div>
   <div class="card" id="whist"></div>
@@ -336,22 +336,23 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 </section>
 
 <section id="p-kouc" class="hide">
-  <button type="button" id="arr5" hidden>Uspořádat</button>
+  <button type="button" id="arr5" hidden>Edit</button>
   <div id="chat"><div class="msg ai">Ahoj! Po včerejšku jsi v pohodě. Dnes je hlavní závod, zbytek týdne můžu přizpůsobit.</div></div>
   <div class="chips" id="chips"></div>
   <form id="f"><input id="q" placeholder="Napiš zprávu" aria-label="Zpráva"><button class="send">Poslat</button></form>
 </section>
 <section id="p-nast" class="hide">
-  <button type="button" id="arr3" hidden>Uspořádat</button>
+  <button type="button" id="arr3" hidden>Edit</button>
   <div id="kw"><div class="card" id="keftp"></div><div class="card" id="krace"></div><div class="card" id="kav"></div><div class="card" id="kapp"></div><div class="card" id="ksync"></div><div class="card" id="kai"></div><div class="card" id="kprof"><strong>Profil jezdce</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">FTP (W)</span><input id="p-ftp" type="number" min="50" max="600" value="261" disabled style="flex:none;width:110px"></div><label class="rule"><input type="checkbox" id="p-man">Upravit FTP ručně</label><p class="mute" id="p-note" style="margin:8px 0 0">Automaticky z Intervals.icu po napojení. Teď ukázková hodnota.</p><div id="kprof2"></div></div>
   <div class="card" id="zset"></div>
   <div class="card" id="zhr"></div>
   <div class="card" id="krem" style="display:none"><strong>Připomínka hodnocení</strong><div class="row" style="margin-top:10px;align-items:center"><span class="mute">Po dojízdě připomenu v</span><input id="rt" type="time" value="21:00"></div></div>
   <div class="card" id="krul"><strong>Kdy navrhnu změnu</strong><label class="rule"><input type="checkbox" checked>HRV pod normálem 2 dny po sobě: zkrátit nejbližší tvrdý trénink</label><label class="rule"><input type="checkbox" checked>Forma pod −20: lehký den nebo volno</label><label class="rule"><input type="checkbox" checked>RPE 8 a víc dvakrát po sobě: ubrat objem dalšího týdne</label><label class="rule"><input type="checkbox" checked>Připravenost nad 70 tři dny: nabídnout víc intenzity (cíl zlepšení)</label><label class="rule"><input type="checkbox" checked>Typ intervalů volit podle připravenosti: pod 45 sweet spot, 45–64 práh 3× 8, 65–74 práh 4× 8, od 75 VO2max</label><label class="rule"><input type="checkbox" checked disabled>Závod nikdy neměním</label><label class="rule"><input type="checkbox" checked>Ramp nad 8 CTL/týden: ubrat ~15 % z nejdelší jízdy</label><label class="rule"><input type="checkbox" checked>Ramp nad 10 CTL/týden: odlehčit, tvrdý trénink nahradit lehkou jízdou</label><label class="rule"><input type="checkbox" checked>Ramp pod 0 a připravenost od 65: přidat 15 min k vytrvalostní jízdě</label><label class="rule"><input type="checkbox" checked>Vynechaný klíčový trénink: přesunout na nejbližší vhodný den, jinak nedohánět</label></div></div>
+  <div class="card" id="kfit"></div>
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.89 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.90 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -862,7 +863,7 @@ function initWidgets(){var P=document.getElementById('p-prehled'),sub=document.g
  box.onclick=function(e){var b=e.target.closest('.wgc button');if(!b)return;var w=b.closest('.wg'),d=+b.dataset.d;
   if(d<0&&w.previousElementSibling)box.insertBefore(w,w.previousElementSibling);else if(d>0&&w.nextElementSibling)box.insertBefore(w.nextElementSibling,w);
   save();arrows();w.scrollIntoView({block:'nearest',behavior:'smooth'})};
- arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
+ arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Edit';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function ifAny(d){var m,s=0,g;if(d.np||d.pw)return(d.np||d.pw)/FTP;g=d.seg.concat(d.race||[]);m=mins(g);if(!m)return 0;g.forEach(function(x){s+=x[0]*Math.pow(x[1]/100,4)});return Math.pow(s/m,.25)}
 function stHtml(d,m){if(!m)return '';var v=ifAny(d);return '<span class="st"><i style="background:'+ZC(v*100)+'"></i>'+(d.done?'':'~')+tssOf(d)+' TSS · IF '+v.toFixed(2).replace('.',',')+'</span>'}
@@ -894,6 +895,39 @@ function renderEx(){var el=document.getElementById('ex-dnes'),ex=W.dnes.ex;if(!e
  Array.prototype.forEach.call(el.querySelectorAll('.exr'),function(row){var e=ex[row.dataset.x];
   row.querySelector('[data-a=t]').onclick=function(){e.done=!e.done;refresh()};
   row.querySelector('[data-a=f]').onchange=function(ev){var f=ev.target.files[0];if(f)fitInto(f,e,refresh)}})}
+
+/* ===== MyBikeFit ===== */
+function fitGet(){try{return JSON.parse(localStorage.getItem('mfc-fit')||'{}')||{}}catch(e){return{}}}
+function fitSet(o){try{localStorage.setItem('mfc-fit',JSON.stringify(o))}catch(e){}}
+function fitSvg(){var a='var(--acc)',m='var(--mute)',b=function(x,y,l){return '<circle cx="'+x+'" cy="'+y+'" r="8" fill="'+a+'"/><text x="'+x+'" y="'+(y+3.6)+'" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">'+l+'</text>'},dl='stroke="'+a+'" stroke-width="1.6" stroke-dasharray="4 3" fill="none"',gl='stroke="'+m+'" stroke-width="1" stroke-dasharray="2 3" fill="none"';
+ return '<svg viewBox="0 0 320 210" role="img" aria-label="Schéma kola s mírami A až F" style="display:block;width:100%;height:auto;margin-top:10px">'
+ +'<g stroke="'+m+'" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="196" x2="316" y2="196" stroke-width="1"/><circle cx="72" cy="150" r="45"/><circle cx="252" cy="150" r="45"/>'
+ +'<path d="M150 155 L124 74 L227 82 L234 112 Z"/><path d="M150 155 L72 150 L124 74"/><path d="M234 112 L252 150"/><path d="M227 82 L229 72"/><path d="M229 74 L254 80"/><path d="M254 80 q14 2 12 16 q-2 12 -12 10"/>'
+ +'<path d="M150 155 L160 182"/><path d="M152 182 L170 182" stroke-width="3"/><path d="M124 74 L120 62"/><path d="M96 60 Q114 56 136 60" stroke-width="4"/></g>'
+ +'<circle cx="150" cy="155" r="3.5" fill="'+m+'"/><circle cx="254" cy="80" r="3" fill="'+a+'"/>'
+ +'<line x1="150" y1="155" x2="118" y2="58" '+dl+'/>'+b(122,112,'A')
+ +'<line x1="136" y1="58" x2="136" y2="36" '+gl+'/><line x1="150" y1="150" x2="150" y2="36" '+gl+'/><line x1="136" y1="40" x2="150" y2="40" '+dl+'/>'+b(143,24,'B')
+ +'<line x1="136" y1="60" x2="254" y2="80" '+dl+'/>'+b(195,58,'C')
+ +'<line x1="136" y1="58" x2="292" y2="58" '+gl+'/><line x1="266" y1="80" x2="292" y2="80" '+gl+'/><line x1="286" y1="58" x2="286" y2="80" '+dl+'/>'+b(300,69,'D')
+ +'<line x1="254" y1="88" x2="254" y2="194" '+dl+'/>'+b(254,126,'E')
+ +'<line x1="96" y1="58" x2="14" y2="58" '+gl+'/><line x1="18" y1="58" x2="18" y2="194" '+dl+'/>'+b(18,122,'F')
+ +'</svg>'}
+var FITF=[['bike','Kolo','text','např. Trek Madone'],['size','Velikost rámu','text','např. 56'],
+ ['sh','Výška sedla (mm)','num','střed osy → vrch sedla','A'],['sb','Přesah sedla (mm)','num','špička sedla za osou','B'],
+ ['sr','Sedlo–řídítka (mm)','num','špička sedla → řídítka','C'],['dr','Převýšení (mm)','num','sedlo nad řídítky','D'],
+ ['hg','Řídítka od země (mm)','num','střed řídítek','E'],['sg','Sedlo od země (mm)','num','vrch sedla uprostřed','F'],
+ ['cr','Délka klik (mm)','num','např. 172,5'],['bw','Šířka řídítek (cm)','num','např. 42'],
+ ['stl','Představec (mm)','num','např. 110'],['sta','Úhel představce (°)','num','např. −6'],
+ ['spc','Podložky (mm)','num','pod představcem'],['tilt','Sklon sedla (°)','num','např. 0'],
+ ['sad','Sedlo','text','model a šířka'],['ped','Pedály a zarážky','text','typ, plovoucí, pozice'],
+ ['dt','Datum posledního fitu','date','']];
+function renderFit(){var el=document.getElementById('kfit');if(!el)return;var F=fitGet();
+ el.innerHTML='<strong>MyBikeFit</strong><p class="mute" style="margin:8px 0 0;line-height:1.45;font-size:13px">Míry posedu, ať je máš vždy po ruce. Písmena odpovídají obrázku. Ukládá se v telefonu a jde i do denní zálohy.</p>'+fitSvg()
+  +'<div class="rpf">'+FITF.map(function(f){var v=F[f[0]]==null?'':String(F[f[0]]),t=f[2]==='num'?'text" inputmode="decimal':f[2];
+   return '<label'+(f[2]==='text'&&(f[0]==='sad'||f[0]==='ped')?' style="grid-column:1/-1"':'')+'><span>'+(f[4]?'<b style="display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--acc);color:#fff;font-size:11px;margin-right:6px">'+f[4]+'</b>':'')+esc(f[1])+'</span><input type="'+t+'" data-fit="'+f[0]+'" value="'+esc(v)+'" placeholder="'+esc(f[3])+'" autocomplete="off"></label>'}).join('')+'</div>'
+  +'<label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute);font-weight:600;margin-top:10px">Poznámky<textarea data-fit="note" rows="3" class="xft" placeholder="např. sedlovka značka 7, sedlo 2 mm dopředu po fitu">'+esc(F.note||'')+'</textarea></label>'
+  +'<p class="mute" style="margin:10px 0 0;font-size:12px;line-height:1.45">Jak měřit: kolo na rovině, klika v ose sedlové trubky. A a B měř od středu osy středového složení, C a E ke středu řídítek, F a A doprostřed sedla. Měř vždy stejně, ať jdou hodnoty porovnat.</p>';
+ Array.prototype.forEach.call(el.querySelectorAll('[data-fit]'),function(i){i.onchange=function(){var o=fitGet(),k=this.dataset.fit,v=String(this.value||'').trim();if(v)o[k]=v.replace('.',',');else delete o[k];o.at=new Date().toISOString();fitSet(o);try{sxUpd()}catch(e){}}})}
 /* ===== Fáze sezóny ===== */
 function phaseOf(t,gdate){t=t||new Date();var t0=new Date(t.getFullYear(),t.getMonth(),t.getDate()),gd=new Date((gdate||GL.date)+'T00:00:00'),N=Math.round((gd-t0)/864e5);
  if(isNaN(N))return{k:'base',n:'Základ',mul:1,tip:'Objem v Z2 a sweet spot, intenzity jen málo.'};
@@ -1135,8 +1169,8 @@ function renderRgoal(){var d=W.dnes,T=d.tg||{},el=document.getElementById('rgoal
  el.innerHTML='<div class="cs"><span>Název závodu</span><input id="rg-n" type="text" value="'+esc(d.nm||'závod')+'" style="width:140px;flex:none"></div><div class="cs"><span>Start závodu</span><input id="rg-t" type="time" value="'+d.tm+'"></div>';
  q('rg-n').onchange=function(){d.nm=this.value.trim()||'závod';d.t=raceTitle();renderDnes();refresh()};
  q('rg-t').onchange=function(){if(this.value)applyRace(this.value)}}
-function initKoucWidgets(){var _kr=document.getElementById('krem');if(_kr)_kr.remove();renderApps();renderEftp();renderRaceSet();var P=document.getElementById('p-nast'),box=document.getElementById('kw'),arr=document.getElementById('arr3'),sv=[],g=function(i){return document.getElementById(i)};
- var defs=[['prof','Profil jezdce',g('kprof')],['av','Moje dostupnost',g('kav')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['sync','Plán do Intervals.icu',g('ksync')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')],['thm','Vzhled',g('kthm')],['bk','Záloha dat',g('kbk')],['xfer','Přenos nastavení',g('kxfer')]].filter(function(d){return d[2]});
+function initKoucWidgets(){try{renderFit()}catch(e){}var _kr=document.getElementById('krem');if(_kr)_kr.remove();renderApps();renderEftp();renderRaceSet();var P=document.getElementById('p-nast'),box=document.getElementById('kw'),arr=document.getElementById('arr3'),sv=[],g=function(i){return document.getElementById(i)};
+ var defs=[['prof','Profil jezdce',g('kprof')],['fit','MyBikeFit',g('kfit')],['av','Moje dostupnost',g('kav')],['zset','Výkon a zóny ve wattech',g('zset')],['hr','Tep a LTHR',g('zhr')],['race','Závod a plán',g('krace')],['apps','Připojené aplikace',g('kapp')],['sync','Plán do Intervals.icu',g('ksync')],['ai','AI kouč',g('kai')],['rul','Kdy navrhnu změnu',g('krul')],['thm','Vzhled',g('kthm')],['bk','Záloha dat',g('kbk')],['xfer','Přenos nastavení',g('kxfer')]].filter(function(d){return d[2]});
  try{sv=JSON.parse(localStorage.getItem('mfc-order-k')||'[]')}catch(e){sv=[]}
  var kk={};defs.forEach(function(d,i){var x=sv.indexOf(d[0]);kk[d[0]]=x>=0?x:(i&&sv.length?kk[defs[i-1][0]]+.5:99)});defs.sort(function(a,b){return kk[a[0]]-kk[b[0]]});
  defs.forEach(function(d){var w=document.createElement('div');w.className='wg';w.dataset.w=d[0];
@@ -1148,7 +1182,7 @@ function initKoucWidgets(){var _kr=document.getElementById('krem');if(_kr)_kr.re
  box.onclick=function(e){var b=e.target.closest('.wgc button');if(!b)return;var w=b.closest('.wg'),d=+b.dataset.d;
   if(d<0&&w.previousElementSibling)box.insertBefore(w,w.previousElementSibling);else if(d>0&&w.nextElementSibling)box.insertBefore(w.nextElementSibling,w);
   save();arrows();w.scrollIntoView({block:'nearest',behavior:'smooth'})};
- arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
+ arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Edit';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function initTydenWidgets(){var P=document.getElementById('p-tyden'),arr=document.getElementById('arr4'),box=document.createElement('div'),sv=[],g=function(i){return document.getElementById(i)},
  defs=[['wk','Přehled týdne',g('wk')],['gen','Plánování týdne',g('wgen')],['hist','Souhrn aktivit',g('whist')],['days','Dny týdne',g('dwrap')]];
@@ -1163,7 +1197,7 @@ function initTydenWidgets(){var P=document.getElementById('p-tyden'),arr=documen
  box.onclick=function(e){var b=e.target.closest('.wgc button');if(!b)return;var w=b.closest('.wg'),d=+b.dataset.d;
   if(d<0&&w.previousElementSibling)box.insertBefore(w,w.previousElementSibling);else if(d>0&&w.nextElementSibling)box.insertBefore(w.nextElementSibling,w);
   save();arrows();w.scrollIntoView({block:'nearest',behavior:'smooth'})};
- arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
+ arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Edit';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function initKoucPage(){var P=document.getElementById('p-kouc'),arr=document.getElementById('arr5'),box=document.createElement('div'),sv=[],g=function(i){return document.getElementById(i)},
  defs=[['chat','Konverzace',g('chat')],['chips','Rychlé otázky',g('chips')],['form','Napsat zprávu',g('f')]];
@@ -1178,7 +1212,7 @@ function initKoucPage(){var P=document.getElementById('p-kouc'),arr=document.get
  box.onclick=function(e){var b=e.target.closest('.wgc button');if(!b)return;var w=b.closest('.wg'),d=+b.dataset.d;
   if(d<0&&w.previousElementSibling)box.insertBefore(w,w.previousElementSibling);else if(d>0&&w.nextElementSibling)box.insertBefore(w.nextElementSibling,w);
   save();arrows();w.scrollIntoView({block:'nearest',behavior:'smooth'})};
- arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
+ arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Edit';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 function initDnesWidgets(){var P=document.getElementById('p-dnes'),sub=document.getElementById('arr2'),box=document.createElement('div'),arr=document.getElementById('arr2'),sv=[],cc=document.getElementById('chart-dnes').closest('.card');cc.previousElementSibling.style.display='none';cc.style.display='none';
  var tc=document.createElement('div');tc.className='card';tc.id='today-dnes';P.appendChild(tc);var ac=document.createElement('div');ac.className='card';ac.id='ask-dnes';P.appendChild(ac);var rcd=document.createElement('div');rcd.id='rem';P.appendChild(rcd);
@@ -1195,7 +1229,7 @@ function initDnesWidgets(){var P=document.getElementById('p-dnes'),sub=document.
  box.onclick=function(e){var b=e.target.closest('.wgc button');if(!b)return;var w=b.closest('.wg'),d=+b.dataset.d;
   if(d<0&&w.previousElementSibling)box.insertBefore(w,w.previousElementSibling);else if(d>0&&w.nextElementSibling)box.insertBefore(w.nextElementSibling,w);
   save();arrows();w.scrollIntoView({block:'nearest',behavior:'smooth'})};
- arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Uspořádat';arr.setAttribute('aria-pressed',String(on))};
+ arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Edit';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 var MAP=340,LTHR=157,LT1={h:139,w:208},LT2W=259;
 var ZPn=['Regenerace','Vytrvalost','Tempo','Práh','VO2max','Anaerobní','Sprint'],ZPhi=[55,75,90,105,120,150],ZHn=['Regenerace','Vytrvalost','Tempo','Práh','VO2max'],ZHhi=[80,89,93,99],ZCOL=['#7C8D99','#3B87C8','#8DAA62','#D2B040','#D8963F','#D2705B','#C94545'],PZ=[41,26,14,9,5,3,1],HZ=[20,40,20,15,5];
@@ -1392,7 +1426,7 @@ show=function(k){_show(k);var d=W[k],el=document.getElementById('detail');el.cla
 refresh();show(window.cur||TK);renderDnes();initWidgets();initProfile();initDnesWidgets();initKoucWidgets();initTydenWidgets();initKoucPage();
 (function(){var g=document.getElementById('arrG'),M={prehled:'arr',dnes:'arr2',tyden:'arr4',kouc:'arr5',nast:'arr3',mesic:''};
  function cur(){return document.querySelector('nav button[aria-selected=true]').dataset.t}
- function sync(){var m=M[cur()];g.style.visibility=m?'visible':'hidden';if(m){var on=document.getElementById(m).textContent==='Hotovo';g.textContent=on?'Hotovo':'Uspořádat';g.setAttribute('aria-pressed',String(on))}}
+ function sync(){var m=M[cur()];g.style.visibility=m?'visible':'hidden';if(m){var on=document.getElementById(m).textContent==='Hotovo';g.textContent=on?'Hotovo':'Edit';g.setAttribute('aria-pressed',String(on))}}
  g.onclick=function(){var m=M[cur()];if(m){document.getElementById(m).click();sync()}};
  Array.prototype.forEach.call(document.querySelectorAll('nav button'),function(b){b.addEventListener('click',sync)});sync()})();
 /* ===== Odesílání plánu do Intervals.icu (a dál do ROUVY) ===== */
@@ -1864,6 +1898,7 @@ function sxSum(k){try{switch(k){
  case 'ai':return GM.key?'Klíč zadán'+(GM.model?' · '+GM.model:''):'Bez klíče, kouč odpovídá z pravidel';
  case 'thm':var tv='';try{tv=localStorage.getItem('mfc-theme')||''}catch(e){}return tv==='light'?'Světlý':tv==='dark'?'Tmavý':'Automaticky podle telefonu';
  case 'bk':return BK.code?'Poslední '+bkAgo(BK.at)+(BK.auto?' · denně':' · ručně'):'Vypnuto';
+ case 'fit':var F=fitGet();return F.sh?'Výška sedla '+F.sh+' mm'+(F.cr?' · kliky '+F.cr+' mm':'')+(F.bike?' · '+F.bike:''):'Zatím nevyplněno';
  case 'xfer':return 'Export a import profilu, klíčů a vzhledu';
  case 'rul':var c=document.querySelectorAll('#krul input[type=checkbox]'),n=0;Array.prototype.forEach.call(c,function(x){if(x.checked)n++});return n+' z '+c.length+' pravidel zapnuto';
  }}catch(e){}return ''}
