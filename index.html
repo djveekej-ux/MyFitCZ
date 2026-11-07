@@ -352,7 +352,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.91 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.92 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -413,23 +413,25 @@ document.getElementById('facs').innerHTML=F.map(function(f,i){return '<div class
 renderTl();
 (function(){var b=document.getElementById('advb');if(b)b.onclick=function(){calView('dnes');window.scrollTo(0,0)}})();
 var tabs=document.querySelectorAll('nav button');
-tabs.forEach(function(b){b.onclick=function(){var cv=['dnes','tyden','mesic'].indexOf(b.dataset.t)>=0;if(cv)CALV=b.dataset.t;tabs.forEach(function(x){x.setAttribute('aria-selected',x===b||(cv&&x.dataset.t==='kal'))});
+tabs.forEach(function(b){b.onclick=function(){if(b.dataset.t==='kouc')try{renderChips()}catch(e){}var cv=['dnes','tyden','mesic'].indexOf(b.dataset.t)>=0;if(cv)CALV=b.dataset.t;tabs.forEach(function(x){x.setAttribute('aria-selected',x===b||(cv&&x.dataset.t==='kal'))});
  ['prehled','dnes','tyden','mesic','kouc','nast'].forEach(function(t){document.getElementById('p-'+t).classList.toggle('hide',t!==b.dataset.t)});
  var cs=document.getElementById('calseg');if(cs){cs.classList.toggle('hide',!cv);Array.prototype.forEach.call(cs.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',String(x.dataset.v===b.dataset.t))})}
  if(b.dataset.t==='mesic'){try{renderMonth()}catch(e){}}if(b.dataset.t==='tyden'){try{show(TK)}catch(e){}}window.scrollTo(0,0)}});
 (function(){var kb=document.querySelector('nav button[data-t="kal"]');if(kb)kb.onclick=function(){calView(CALV)};var cs=document.getElementById('calseg');if(cs)Array.prototype.forEach.call(cs.querySelectorAll('button'),function(x){x.onclick=function(){calView(x.dataset.v)}})})();
 var R=[
- [/metrik|uprav|změn|návrh/i,'Podle noci (HRV −8 %, forma +26 %) navrhuji zkrátit středeční intervaly na 3× 8 min. Po závodě zhodnotím znovu. Pokud bude HRV zpět v normu, vrátím 4. interval.'],
- [/proč|odpočin/i,'Den po závodě nebo tvrdém tréninku dávám lehčí jízdu, aby nohy byly čerstvé na další kvalitní jednotku.'],
- [/pátek|pá\b/i,'Pátek nechávám otevřený. Když pojedeš, naplánuju 45 min lehce, ať neublížíš sobotnímu volnu.'],
- [/přesu|sobot|interval/i,'Sobota je u tebe volná kvůli práci. Intervaly můžu dát na čtvrtek, ale pak se posune delší Z2 na neděli. Mám to udělat?'],
- [/ftp|výkon|305/i,'V aplikaci držím FTP 261 W. eFTP z Intervals.icu (305 W) je výrazně výš, takže bych ho brát jako orientační, dokud nepojedeš test.'],
- [/hr|tep|test/i,'Max HR 185 bpm je v profilu. Zrušený test můžeme přeplánovat na první volný pátek, až budeš odpočatý.']
+ [/metrik|uprav|změn|návrh|pojedu|dnešní trénink/i,function(){var S=rdyS(),ph=phaseOf(),t=W[TK]&&mins(W[TK].seg)?W[TK].t:'';return 'Připravenost dnes '+S+(S<45?' (nízká). '+(t?'Dnešní trénink ('+t+') bych zkrátil nebo vyměnil za lehkou Z2.':'Volno se dnes hodí.'):S<65?' (střední). '+(t?'Plán ('+t+') nech, jen hlídej pocit a klidně uber poslední úsek.':'Dnes odpočívej.'):' (vysoká). '+(t?'Jeď podle plánu: '+t+'.':'Dnes je volno, nohy budou svěží na další jednotku.'))+' Fáze '+ph.n+': '+ph.tip}],
+ [/proč|odpočin|volno/i,function(){var t=W[TK]&&mins(W[TK].seg)?W[TK].t:'';return t?'Dnes máš v plánu '+t+'. Lehčí dny dávám po tvrdých jednotkách a závodech, aby další kvalitní trénink šel v odpočatém stavu.':'Dnes je volno podle plánu a tvé dostupnosti. Regenerace je součást tréninku, forma se staví právě v odpočinku.'}],
+ [/jíst|jídl|výživ|sachar|pít/i,function(){var kg=+RP.kg||75;return 'Podrobnou výživu najdeš v Dnes pod tréninkem. Obecně: 2–3 h před jízdou jídlo s 1–2 g sacharidů na kg (u tebe zhruba '+Math.round(kg)+'–'+Math.round(kg*2)+' g). Na jízdu nad 75 min 60–90 g sacharidů za hodinu a 500–750 ml pití. Po jízdě sacharidy a bílkoviny, asi '+Math.round(kg*.3)+' g.'}],
+ [/ftp|výkon/i,function(){var e=+FTPS.val||0;return 'V profilu máš FTP '+FTP+' W.'+(e&&e!==FTP?' eFTP z Intervals.icu je '+e+' W. '+(e>FTP?'Je výš, takže novou hodnotu bych potvrdil testem nebo závodem, než změníme zóny.':'Je níž, může to být únavou. Sleduj to pár dní.'):'')}],
+ [/týd|hodno/i,'Hodnocení týdne najdeš v Přehledu, ukáže se v sobotu od 16:00. Tlačítkem tam můžeš nechat napsat komentář od AI kouče.'],
+ [/hr|tep|zón/i,function(){return 'Max tep '+MAXHR+' bpm, LTHR '+LTHR+' bpm. Zóny ve wattech i tepu upravíš v Nastavení.'}]
 ];
+function rAns(r){try{return typeof r[1]==='function'?r[1]():r[1]}catch(e){return 'Zapíšu si to a upravím plán.'}}
 var chat=document.getElementById('chat');
 function add(t,c){var m=document.createElement('div');m.className='msg '+c;m.textContent=t;chat.appendChild(m);m.scrollIntoView({block:'nearest'})}
-function ask(t){if(!t.trim())return;add(t,'me');if(typeof GM!=='undefined'&&GM.on){var w=document.createElement('div');w.className='msg ai';w.textContent='Kouč přemýšlí…';chat.appendChild(w);aiAsk(t,function(r,err){var f=R.find(function(x){return x[0].test(t)});w.textContent=r||((f?f[1]:'Zapíšu si to a upravím plán.')+(err?' ('+err+')':''));w.scrollIntoView({block:'nearest'})});return}var r=R.find(function(x){return x[0].test(t)});setTimeout(function(){add(r?r[1]:'Zapíšu si to a upravím plán. V ostré verzi tady odpoví AI kouč s tvými daty.','ai')},350)}
-['Uprav trénink podle metrik','Proč dnes odpočinek?','Přesuň intervaly na sobotu','Jak je to s mým FTP?','Co ten zrušený test?'].forEach(function(t){var b=document.createElement('button');b.textContent=t;b.type='button';b.onclick=function(){ask(t)};document.getElementById('chips').appendChild(b)});
+function ask(t){if(!t.trim())return;add(t,'me');if(typeof GM!=='undefined'&&GM.on){var w=document.createElement('div');w.className='msg ai';w.textContent='Kouč přemýšlí…';chat.appendChild(w);aiAsk(t,function(r,err){var f=R.find(function(x){return x[0].test(t)});w.textContent=r||((f?rAns(f):'Zapíšu si to a upravím plán.')+(err?' ('+err+')':''));w.scrollIntoView({block:'nearest'})});return}var r=R.find(function(x){return x[0].test(t)});setTimeout(function(){add(r?rAns(r):'Na tohle odpoví AI kouč, až v Nastavení zadáš klíč Gemini. Zatím umím otázky na plán, volno, výživu, FTP, týden a tep.','ai')},350)}
+function renderChips(){var c=document.getElementById('chips');if(!c)return;var rest=true;try{rest=!mins(W[TK].seg)}catch(e){}c.innerHTML='';['Uprav trénink podle metrik',rest?'Proč mám dnes volno?':'Jak pojedu dnešní trénink?','Co jíst k dnešní jízdě?','Jak je to s mým FTP?','Jak hodnotíš můj týden?'].forEach(function(t){var b=document.createElement('button');b.textContent=t;b.type='button';b.onclick=function(){ask(t)};c.appendChild(b)})}
+setTimeout(renderChips,0);
 document.getElementById('f').onsubmit=function(e){e.preventDefault();var i=document.getElementById('q');ask(i.value);i.value=''};
 var KS=[{k:'dech',n:'Dech',v:15.4,b:15.0,u:' /min',dir:1,t:[1,2],ic:'<path d="M3 8.5h10.5a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 12.5h15a2.5 2.5 0 1 1-2.5 2.5"/><path d="M3 16.5h7"/>'},
  {k:'spo2',n:'SpO₂',v:93,b:94,u:' %',dir:-1,t:[2,4],fl:90,ic:'<path d="M12 3.5c3.2 4.1 5.5 7.3 5.5 10.2a5.5 5.5 0 0 1-11 0c0-2.9 2.3-6.1 5.5-10.2z"/>'},
