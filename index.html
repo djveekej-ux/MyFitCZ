@@ -352,7 +352,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 1.94 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 1.95 · 7. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -837,9 +837,12 @@ function noteHtml(d,id){return '<div class="note"><label>Poznámka<textarea id="
 function bindNote(d,id){var t=document.getElementById(id);t.oninput=function(){d.note=t.value;if(d===W.dnes){var o=document.getElementById(id==='e-note'?'d-note':'e-note');if(o&&(id==='e-note'||window.cur==='dnes'))o.value=d.note}}}
 var CV='w',OFF=null;
 function series(){var P=[.16,.14,.18,.04,.20,.18,.10],tss=[],w,j,di=(new Date().getDay()+6)%7,c=60,a=60,out=[];
- for(w=0;w<6;w++)for(j=0;j<7;j++)tss.push({v:Math.round(H[w]*P[j]),f:0});
+ var HW=null;try{HW=histWk()}catch(e){}for(w=0;w<6;w++)for(j=0;j<7;j++){var hd=null;if(HW){try{hd=trDayLoad(ilD(new Date(MON.getFullYear(),MON.getMonth(),MON.getDate()-42+w*7+j))).t}catch(e){}}tss.push({v:hd!=null?hd:Math.round(H[w]*P[j]),f:0})}
  order.forEach(function(k,j){var d=W[k],m=mins(d.seg),t=m?tssOf(d):0,fut=j>di;tss.push({v:(d.done||fut?t:0)+(isR(k)?exT():0),f:fut?1:0})});
- tss.forEach(function(x){c+=(x.v-c)/42;a+=(x.v-a)/7;out.push({c:c,a:a,f:x.f})});var t=out[42+di];if(ILIVE){OFF={c:ILIVE.c-t.c,a:ILIVE.a-t.a}}else if(!OFF){OFF={c:73-t.c,a:53-t.a}}out.forEach(function(p){p.c+=OFF.c;p.a+=OFF.a});return{out:out,di:di}}
+ tss.forEach(function(x){c+=(x.v-c)/42;a+=(x.v-a)/7;out.push({c:c,a:a,f:x.f})});var t=out[42+di];if(ILIVE){OFF={c:ILIVE.c-t.c,a:ILIVE.a-t.a}}else if(!OFF){OFF={c:73-t.c,a:53-t.a}}out.forEach(function(p){p.c+=OFF.c;p.a+=OFF.a});
+ if(ILWM){var ti=42+di,pc=null,pa=null;for(var q=0;q<out.length;q++){var ds=ilD(new Date(MON.getFullYear(),MON.getMonth(),MON.getDate()-42+q)),r=ILWM[ds];
+  if(q<=ti&&r){out[q].c=r.c;out[q].a=r.a}else if(q>ti&&pc!=null){out[q].c=pc+(tss[q].v-pc)/42;out[q].a=pa+(tss[q].v-pa)/7}pc=out[q].c;pa=out[q].a}}
+ return{out:out,di:di}}
 function drawCurve(){var el=document.getElementById('curve');if(!el)return;
  var s=series(),o=s.out,di=s.di,wk=CV==='w',pts=wk?o.slice(42,49):o.slice(42+di-29,42+di+1),n=pts.length,VW=300,VH=132,pl=26,pr=8,pt=8,pb=20,vals=[],ti=wk?di:n-1,i;
  pts.forEach(function(p){vals.push(p.c,p.a)});
@@ -1110,13 +1113,13 @@ function renderRaceSet(){var el=document.getElementById('krace');if(!el)return;
  var f=function(id,fn){document.getElementById(id).onchange=function(){if(this.value!==''){fn(this.value);applyRace(W.dnes.tm)}}};
  f('rs-w',function(v){RDEF.wu=+v});f('rs-c',function(v){var x=Math.max(0,Math.min(60,+v));if(!isNaN(x))RDEF.cg=x});f('rs-t',function(v){RDEF.tm=v})}
 function raceTitle(){var d=W.dnes;return (d.nm?d.nm.charAt(0).toUpperCase()+d.nm.slice(1):'Závod')+' '+d.tm}
-var ILIVE=null,IL={id:'',key:'',on:false,open:false,busy:false,msg:'',at:null,rem:false};
+var ILWM=null,ILIVE=null,IL={id:'',key:'',on:false,open:false,busy:false,msg:'',at:null,rem:false};
 try{var _il=JSON.parse(localStorage.getItem('mfc-il')||'{}');if(_il.id){IL.id=_il.id}if(_il.key){IL.key=_il.key}}catch(e){}
 function ilGet(path){return fetch('https://intervals.icu/api/v1/athlete/'+encodeURIComponent(IL.id)+path,{headers:{Authorization:'Basic '+btoa('API_KEY:'+IL.key)}}).then(function(r){if(!r.ok){var e=new Error('http');e.code=r.status;throw e}return r.json()})}
 function ilD(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 function ilAvg(a){a=a.filter(function(x){return x!=null&&!isNaN(x)});return a.length?a.reduce(function(s,x){return s+x},0)/a.length:null}
 function ilApply(wl,acts,ath){var n=[],rows=(wl||[]).filter(function(x){return x&&x.ctl!=null}).sort(function(a,b){return a.id<b.id?-1:1}),last=rows[rows.length-1];
- if(last){ILIVE={c:last.ctl,a:last.atl};HD.ctl=last.ctl;HD.atl=last.atl;SRC.ctl='i';HD.ramp=last.rampRate!=null?last.rampRate:null;HD.live=true;RAMP=last.rampRate!=null?Math.round(last.rampRate*10)/10:null;if(RAMP!=null)n.push('ramp');var tsb=last.ctl-last.atl,fp=Math.round(tsb/Math.max(last.ctl,1)*100);
+ if(last){ILWM={};rows.forEach(function(x){if(x.id&&x.atl!=null)ILWM[String(x.id).slice(0,10)]={c:x.ctl,a:x.atl}});ILIVE={c:last.ctl,a:last.atl};HD.ctl=last.ctl;HD.atl=last.atl;SRC.ctl='i';HD.ramp=last.rampRate!=null?last.rampRate:null;HD.live=true;RAMP=last.rampRate!=null?Math.round(last.rampRate*10)/10:null;if(RAMP!=null)n.push('ramp');var tsb=last.ctl-last.atl,fp=Math.round(tsb/Math.max(last.ctl,1)*100);
   F[0]=['Forma',(fp>0?'+':'')+fp+' %',fp>=15?'Svěží':fp>=5?'Dobrá':fp>=-10?'Neutrální':fp>=-20?'Unavený':'Velmi unavený',fp>=15?85:fp>=5?75:fp>=-10?60:fp>=-20?40:25];n.push('kondice')}
  var all=(wl||[]).slice().sort(function(a,b){return a.id<b.id?-1:1}),lh=null,i;
  for(i=all.length-1;i>=0;i--){if(all[i].hrv!=null){lh=all[i];break}}
