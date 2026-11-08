@@ -367,7 +367,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.29 · 8. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.30 · 8. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -774,6 +774,7 @@ var TPL={thr4:{n:'Práh 4× 8 min (95 % FTP)',seg:mk(12,4,8,95,4,8),d:'4× 8 min
  TPL.nast={n:'Nástupy 5× sprint + 4 min (88 % FTP)',seg:nst,d:'5× 15 s sprint na 160 % a hned 3:45 na 88 % FTP, pauza 3 min. Simuluje nástup a doskočení skupiny.'};
  TPL.f4020={n:'40/20 3× 8 opakování (120 % FTP)',seg:f,d:'3 sady po 8× 40 s na 120 % / 20 s na 50 % FTP, mezi sadami 5 min'};
  TPL.tempo={n:'Tempo 2× 20 min (83 % FTP)',seg:[[12,55],[20,83],[5,55],[20,83],[8,50]],d:'2× 20 min na 80–85 % FTP, pauza 5 min'};
+ (function(){var t=[[5,55],[2,54]];for(var i=0;i<4;i++){t.push([1,100],[1,107],[1,113],[1,120]);if(i<3)t.push([1.5,54])}t.push([2,54],[5,45]);TPL.thrst={n:'Práh stupňovaně 4× 4 min (100→120 % FTP)',seg:t,d:'4× 4 min stupňovaně po minutách 100, 107, 113 a 120 % FTP, pauza 1,5 min. Krátký ostrý prahový trénink.'}})();
  TPL.cad={n:'Kadence 5× 4 min (100–110 ot./min)',seg:cd,d:'5× 4 min v Z3 na 100–110 ot./min, mezi nimi 3 min v Z2 na 90 ot./min. Technika šlapání.'}})();
 function ifOf(d){var tot=mins(d.seg),a=d.np||d.pw;if(a)return{v:a/FTP,real:1,min:d.dur||tot};var sum=0;d.seg.forEach(function(s){sum+=s[0]*Math.pow(s[1]/100,4)});return{v:Math.pow(sum/tot,.25),real:0,min:tot}}
 function ifHtml(d){var o=ifOf(d);if(!o.real&&d.noEst)return '<p class="mute" style="margin:18px 0 0">IF se spočítá po nahrání souboru .FIT.</p>';var v=o.v,C=2*Math.PI*30,fr=Math.min(v/1.2,1),tss=Math.round(v*v*o.min/60*100),c=ZC(v*100),lab=v<.75?'Lehký':v<.85?'Střední':v<.95?'Tvrdý':v<1.05?'Závodní':'Extrémní',
@@ -1643,7 +1644,7 @@ function renderWPlan(k){var el=document.getElementById('wplan');if(!el)return;
  if(isR(k)){el.innerHTML='<div id="wp-r"></div><div id="wp-z"></div><div id="wp-v"></div>';planCard('wp-r','r');planCard('wp-z','z');planCard('wp-v','v')}else{el.innerHTML='<div id="wp-t"></div>';planCard('wp-t','t',k)}}
 var _showP=show;show=function(k){_showP(k);try{renderWPlan(k)}catch(e){}};
 function renderPlanDnes(){planCard('plan-dnes','r');planCard('planr-dnes','z');planCard('planv-dnes','v')}
-function ivGrp(s){return s<45?['ss','tempo']:s<65?['thr3','ou']:s<75?['thr4','nast']:['vo2','f4020','nast']}
+function ivGrp(s){return s<45?['ss','tempo']:s<65?['thr3','ou']:s<75?['thr4','nast','thrst']:['vo2','f4020','nast']}
 function recIv(s,seed){var g=ivGrp(s);return g[seed==null?0:((seed%g.length)+g.length)%g.length]}
 var IVSEED=null;
 function setIv(k,d,id){var t=TPL[id];d.iv=id;d.seg=t.seg.map(function(s){return s.slice()});d.d=t.d;refresh();show(k)}
@@ -1999,8 +2000,9 @@ function raceSel(id,on,d){return '<select id="'+id+'"><option value="-1"'+(on?''
 function hhmm(t,add){var p=(t||'16:00').split(':'),v=(+p[0]*60+(+p[1])+(add||0)+1440)%1440;return ('0'+Math.floor(v/60)).slice(-2)+':'+('0'+v%60).slice(-2)}
 function sess(type,max,rdy){var m,s,t,d,iv='',lb='',lc='';
  if(type==='hard'){var id=recIv(rdy,IVSEED),T=TPL[id];if(mins(T.seg)>max&&id!=='thr3'&&mins(TPL.thr3.seg)<=max){id='thr3';T=TPL.thr3}
-  s=T.seg.map(function(x){return x.slice()});while(mins(s)>max){var c=shortSeg(s);if(!c)break;s=c}
-  if(mins(s)>max)return sess('end',max,rdy);iv=id;t={ss:'Sweet spot',thr4:'Intervaly',thr3:'Intervaly',vo2:'VO2max',ou:'Over-under',nast:'Nástupy',f4020:'40/20',tempo:'Tempo Z3'}[id]||'Intervaly';d='Tvrdý trénink: '+T.d;lb='Tvrdý';lc='lb-h'}
+  if(mins(T.seg)>max&&rdy>=45&&mins(TPL.thrst.seg)<=max){id='thrst';T=TPL.thrst}
+  s=T.seg.map(function(x){return x.slice()});while(id!=='thrst'&&mins(s)>max){var c=shortSeg(s);if(!c)break;s=c}
+  if(mins(s)>max)return sess('end',max,rdy);iv=id;t={ss:'Sweet spot',thr4:'Intervaly',thr3:'Intervaly',vo2:'VO2max',ou:'Over-under',nast:'Nástupy',f4020:'40/20',thrst:'Práh stupňovaně',tempo:'Tempo Z3'}[id]||'Intervaly';d='Tvrdý trénink: '+T.d;lb='Tvrdý';lc='lb-h'}
  else if(type==='long'){m=Math.min(max,150);s=[[10,55],[m-20,68],[10,50]];t='Delší Z2';d='Vytrvalost, '+(m>=60?Math.floor(m/60)+' h'+(m%60?' '+m%60+' min':''):m+' min')+' na 65–70 % FTP';lb='Dlouhý';lc='lb-l'}
  else if(type==='open'){m=Math.min(max,45);s=[[Math.max(10,m-20),55],[1,105],[2,55],[1,105],[2,55],[1,105],[3,55],[1/6,170],[1,50],[1/6,170],[1,50],[1/6,170],[5,50]];t='Aktivace před závodem';d='Den před závodem: '+Math.round(mins(s))+' min lehce, 3× 1 min na 105 % FTP a 3× 10 s sprint, ať nohy na startu nejsou ospalé'}
  else if(type==='cad'){var T2=TPL.cad;s=T2.seg.map(function(x){return x.slice()});t='Kadence';d=T2.d}
