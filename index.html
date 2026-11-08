@@ -186,6 +186,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .mc{display:flex;flex-direction:column;gap:4px;min-height:56px;padding:6px 5px 4px;border:0;border-radius:11px;background:var(--bg);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.mc b{font-size:14px;line-height:1}.mc.out{opacity:.4}.mc.td{box-shadow:inset 0 0 0 2px var(--acc)}.mc.td b{color:var(--acc)}.mc[aria-pressed=true]{background:var(--acc);color:var(--accink)}.mc[aria-pressed=true] b,.mc[aria-pressed=true] small{color:var(--accink)}
 .md{display:flex;gap:3px;min-height:7px}.md i,.mlg i{display:block;width:7px;height:7px;border-radius:50%;background:var(--c)}.md i.pl,.mlg i.pl{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c)}.mc[aria-pressed=true] .md i{box-shadow:0 0 0 1.5px #fff}.mc[aria-pressed=true] .md i.pl{box-shadow:inset 0 0 0 1.5px #fff}
 .mc small{margin-top:auto;font-size:11px;font-weight:600;color:var(--mute)}
+.mhg{display:grid;grid-template-columns:18px repeat(13,1fr);gap:3px;margin-top:10px}.mhg .hdw{font-size:10px;color:var(--mute);display:flex;align-items:center}.mhg .hm{font-size:10px;color:var(--mute);height:14px;white-space:nowrap;overflow:visible}.hc{position:relative;aspect-ratio:1;border-radius:4px;background:var(--line);border:0;padding:0;cursor:pointer}.hc.f{opacity:.35;cursor:default}.hc.td{box-shadow:inset 0 0 0 1.5px var(--ink)}.hc u{position:absolute;right:3px;bottom:3px;width:4px;height:4px;border-radius:50%;background:#fff;opacity:.85}.mhs{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin-top:6px}.mhs b{font-size:15px}
 .mlg{display:flex;flex-wrap:wrap;gap:6px 12px;margin:12px 4px 0;font-size:12px;color:var(--mute)}.mlg span{display:flex;align-items:center;gap:5px}.mlg i{width:8px;height:8px}
 .mdl{list-style:none;margin:10px 0 0;padding:0}.mdl li{display:flex;align-items:center;gap:10px;padding:9px 0 9px 10px;border-top:1px solid var(--line);border-left:3px solid var(--c)}.mdl .mdn{flex:1;min-width:0}.mdl b{display:block;font-size:14px}.mdl small{display:block;font-size:12px;color:var(--mute)}.mdl .mdt{text-align:right;font-weight:700}
 .mnext{display:flex;align-items:center;gap:12px;cursor:pointer}.mni{width:36px;height:36px;border-radius:50%;background:var(--z5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
@@ -310,7 +311,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 </section>
 
 <div id="calseg" class="calseg hide" role="tablist" aria-label="Pohled kalendáře"><button type="button" data-v="dnes" aria-pressed="true">Den</button><button type="button" data-v="tyden" aria-pressed="false">Týden</button><button type="button" data-v="mesic" aria-pressed="false">Měsíc</button></div>
-<section id="p-mesic" class="hide"><div class="card" id="mcal"></div><div class="card" id="mday"></div><div class="card mnext" id="mnext" role="button" tabindex="0"></div></section>
+<section id="p-mesic" class="hide"><div class="card" id="mcal"></div><div class="card" id="mday"></div><div class="card mnext" id="mnext" role="button" tabindex="0"></div><div class="card" id="mheat"></div></section>
 <section id="p-dnes" class="hide">
   <button type="button" id="arr2" hidden>Edit</button>
   <div class="card">
@@ -361,7 +362,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.14 · 8. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.15 · 8. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -1719,7 +1720,26 @@ function renderMonth(){var el=document.getElementById('mcal');if(!el)return;var 
   +'<div class="mlg"><span><i style="--c:var(--z5)"></i>Závod</span><span><i style="--c:var(--z4)"></i>Tvrdý</span><span><i style="--c:var(--z2)"></i>Z2 a dlouhý</span><span><i style="--c:var(--z1)"></i>Lehký</span><span><i class="pl" style="--c:var(--mute)"></i>Plán</span></div>';
  document.getElementById('m-prev').onclick=function(){MOFF--;renderMonth()};document.getElementById('m-next').onclick=function(){MOFF++;renderMonth()};
  Array.prototype.forEach.call(el.querySelectorAll('.mc'),function(b){b.onclick=function(){MSEL=b.dataset.d;renderMonth()}});
- renderMDay();renderMNext()}
+ renderMDay();renderMNext();try{renderMHeat()}catch(e){}}
+function renderMHeat(){var el=document.getElementById('mheat');if(!el)return;
+ var t0=new Date(),T=new Date(t0.getFullYear(),t0.getMonth(),t0.getDate()),td=ilD(T),st=new Date(T.getFullYear(),T.getMonth(),T.getDate()-((T.getDay()+6)%7)-84),D={},i,j;
+ var add=function(ds,o){var x=D[ds]||(D[ds]={tss:0,n:0,ride:0,oth:0,km:0});x.n++;x.tss+=o.tss||0;x.km+=o.km||0;if(o.ride)x.ride++;else x.oth++};
+ if(ILH&&ILH.length)ILH.forEach(function(a){var ds=(a.start_date_local||'').slice(0,10),r=isRide(a);add(ds,{ride:r,tss:r?Math.round(a.icu_training_load||0):0,km:r&&a.distance?a.distance/1000:0})});
+ else Object.keys(HIST||{}).forEach(function(ds){var h=HIST[ds];add(ds,{ride:1,tss:h.tss,km:h.km})});
+ var lv=function(x){return x.tss>=130?1:x.tss>=80?.78:x.tss>=40?.56:.36},MS=['led','úno','bře','dub','kvě','čvn','čvc','srp','zář','říj','lis','pro'];
+ var hd='<span></span>',g='',pm=-1,act=0,tss=0,km=0,best=0,run=0,cur=0;
+ for(j=0;j<13;j++){var dm=new Date(st.getFullYear(),st.getMonth(),st.getDate()+7*j+6).getMonth();hd+='<span class="hm">'+(dm!==pm?MS[dm]:'')+'</span>';pm=dm}
+ for(i=0;i<7;i++){g+='<span class="hdw">'+(i%2?'':['Po','','St','','Pá','','Ne'][i])+'</span>';
+  for(j=0;j<13;j++){var d=new Date(st.getFullYear(),st.getMonth(),st.getDate()+7*j+i),ds=ilD(d),x=D[ds],fut=ds>td,bg='',lab=d.getDate()+'. '+(d.getMonth()+1)+'.';
+   if(x&&!fut){bg=x.ride?'background:color-mix(in srgb,var(--acc) '+Math.round(lv(x)*100)+'%,var(--line))':'background:color-mix(in srgb,var(--z2) 55%,var(--line))';lab+=', '+(x.ride?x.tss+' TSS':'jiná aktivita')}
+   g+='<button type="button" class="hc'+(fut?' f':'')+(ds===td?' td':'')+'" data-d="'+ds+'" style="'+bg+'" aria-label="'+lab+'"'+(fut?' disabled':'')+'>'+(x&&x.n>1&&!fut?'<u></u>':'')+'</button>'}}
+ for(i=0;i<90;i++){var q=ilD(new Date(T.getFullYear(),T.getMonth(),T.getDate()-89+i)),y=D[q];if(y){act++;tss+=y.tss;km+=y.km;run++;if(run>best)best=run}else if(q!==td)run=0}
+ cur=run;
+ el.innerHTML='<div class="row" style="align-items:baseline"><span class="mute" style="font-size:12px;font-weight:700;letter-spacing:.06em">AKTIVITA · 90 DNÍ</span><span class="mute" style="font-size:12px">série '+cur+' d · nejdelší '+best+' d</span></div>'
+  +'<div class="mhs"><span><b>'+act+'</b> <span class="mute">aktivních dní</span></span><span><b>'+tss.toLocaleString('cs-CZ')+'</b> <span class="mute">TSS</span></span><span><b>'+Math.round(km).toLocaleString('cs-CZ')+'</b> <span class="mute">km</span></span></div>'
+  +'<div class="mhg">'+hd+g+'</div>'
+  +'<div class="mlg"><span><i style="--c:var(--acc)"></i>Jízda (sytost podle TSS)</span><span><i style="--c:var(--z2)"></i>Jiná aktivita</span><span><i style="--c:#fff;width:5px;height:5px"></i>Víc aktivit za den</span></div>';
+ Array.prototype.forEach.call(el.querySelectorAll('.hc:not(.f)'),function(b){b.onclick=function(){var p=b.dataset.d.split('-');MSEL=b.dataset.d;MOFF=(+p[0]-t0.getFullYear())*12+(+p[1]-1)-t0.getMonth();renderMonth();var c=document.getElementById('mcal');if(c)setTimeout(function(){c.scrollIntoView({block:'start',behavior:'smooth'})},30)}})}
 var MEV=-1,MEVD='';
 function mdObj(inf,e){if(!inf.k)return null;var d=W[inf.k],ex=d.ex||{};return e.x==='wu'?ex.wu||null:e.x==='cd'?ex.cd||null:d}
 function mdTile(l,v){return '<div><small>'+l+'</small><b>'+v+'</b></div>'}
