@@ -365,7 +365,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.26 · 8. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.27 · 8. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -574,7 +574,7 @@ function gaConnect(test){if(GA.busy||!GA.key)return;GA.busy=true;GA.msg='Spojuji
   GA.raw=r;var got=gaApply(r[0],r[1],r[2],r[3]).concat(gaApply2(r[4],r[5],r[6],r[7],r[8]));try{gaF()}catch(e){}GA.on=true;GA.busy=false;GA.at=new Date();APPS.forEach(function(a){if(a[0]==='gar')a[3]=1});
   GA.msg=got.length?'Připojeno. Načteno z Garminu: '+got.join(', ')+'.':'Spojení funguje, ale Garmin za dnešní noc zatím nic nevrátil. Zkus to po synchronizaci hodinek.';
   try{localStorage.setItem('mfc-ga',JSON.stringify({key:GA.key,px:GA.px}))}catch(e){}
-  try{draw();renderHealth();renderHStrip()}catch(e){}renderApps()}).catch(function(e){GA.busy=false;GA.on=false;GA.tok=null;try{renderHStrip()}catch(x){}
+  try{draw();renderHealth();renderHStrip()}catch(e){}try{hSnap()}catch(e){}renderApps()}).catch(function(e){GA.busy=false;GA.on=false;GA.tok=null;try{renderHStrip()}catch(x){}
   GA.msg=e&&(e.code===401||e.code===403)?'Garmin klíč odmítl. Zkontroluj, že je celý a nevypršel (Garmin Connect → Personal API Key).':e&&e.code?'Garmin vrátil chybu '+e.code+(e.step==='token'?' při ověření klíče.':'.'):(gaB()!==GAD?'Prostředník neodpovídá. Zkontroluj jeho adresu, že je nasazený a že v něm je v něm povolená adresa tvé stránky (ALLOW_ORIGINS).':'Garmin nepovoluje volání přímo ze stránky (CORS). Vyplň adresu prostředníka (Cloudflare Worker) níže a otestuj znovu.');
   renderApps()})}
 function gaDisc(){GA.on=false;GA.key='';GA.tok=null;GA.msg='Garmin odpojen.';APPS.forEach(function(a){if(a[0]==='gar')a[3]=0});try{localStorage.removeItem('mfc-ga')}catch(e){}renderApps()}
@@ -1387,7 +1387,7 @@ function ilConnect(){if(IL.busy)return;IL.busy=true;IL.msg='Načítám data z In
   var AC=ilDedupe(r[1]||[]);IL.night=(r[0]||[]).some(function(w){return w&&w.id===ilD(t)&&(w.sleepSecs||w.hrv||w.hrvSDNN)});ILH=AC.filter(function(a){return a&&(a.moving_time||0)>=180});var n=ilApply(r[0],AC,r[2]);IL.on=true;IL.edit=false;IL.busy=false;IL.at=new Date();APPS.forEach(function(a){if(a[0]==='int')a[3]=1});
   IL.msg=n.length?'Připojeno. Načteno: '+n.join(', ')+'.':'Připojeno, ale Intervals.icu nevrátilo žádná použitelná data za poslední týdny.';if(IL.dup)IL.msg+=' Zdvojené jízdy (stejná jízda z víc zdrojů, třeba ROUVY a Garmin): '+IL.dup+'×, počítám je jen jednou.';
   try{localStorage.setItem('mfc-il',JSON.stringify({id:IL.id,key:IL.key}))}catch(e){}
-  refresh();renderDnes();draw();show(window.cur||TK);renderApps();try{trSave();renderTrend();renderWrev();renderHist()}catch(e){}try{renderHStrip()}catch(e){}}).catch(function(e){IL.busy=false;IL.on=false;try{renderHStrip()}catch(x){}
+  refresh();renderDnes();draw();show(window.cur||TK);renderApps();try{trSave();renderTrend();renderWrev();renderHist()}catch(e){}try{renderHStrip()}catch(e){}try{hSnap()}catch(e){}}).catch(function(e){IL.busy=false;IL.on=false;try{renderHStrip()}catch(x){}
   IL.msg=e&&e.code===401||e&&e.code===403?'Intervals.icu odmítlo ID nebo klíč. ID má tvar i12345 a klíč je z Settings → Developer Settings.':e&&e.code?'Intervals.icu vrátilo chybu '+e.code+'.':'Spojení se nepovedlo. Stránka nemusí mít povolený přístup na intervals.icu, nebo jsi offline.';
   renderApps()})}
 function ilDisc(){IL.on=false;IL.key='';ILIVE=null;IL.msg='Odpojeno, aplikace zase používá ukázková data.';APPS.forEach(function(a){if(a[0]==='int')a[3]=0});try{localStorage.removeItem('mfc-il')}catch(e){}location.reload()}
@@ -2133,6 +2133,13 @@ refresh();
  setInterval(tick,3000);document.addEventListener('visibilitychange',function(){if(document.hidden)tick()});window.addEventListener('pagehide',tick);
  /* živá data z Intervals.icu: po otevření, po návratu do aplikace a každých 5 minut */
  function auto(){if(!(IL.id&&IL.key)||IL.busy)return;var a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return;if(IL.at&&Date.now()-IL.at.getTime()<60000)return;ilConnect()}
+ /* poslední známá data: uložit po synchronizaci, obnovit po spuštění, ať se neukazují ukázková ani zastaralá čísla */
+ window.hSnap=function(){try{var t=function(d){return d?(d.getTime?d.getTime():+d):0};localStorage.setItem('mfc-hsnap',JSON.stringify({d:ilD(new Date()),HD:HD,SRC:SRC,KS:KS.map(function(k){return[k.v,k.b]}),F:F,ga:[t(GA.at),GA.night],il:[t(IL.at),IL.night]}))}catch(e){}};
+ (function(){try{var o=JSON.parse(localStorage.getItem('mfc-hsnap')||'null');if(!o||!o.HD)return;var today=o.d===ilD(new Date());
+  Object.keys(o.HD).forEach(function(k){HD[k]=o.HD[k]});if(today&&o.SRC)Object.keys(o.SRC).forEach(function(k){SRC[k]=o.SRC[k]});
+  (o.KS||[]).forEach(function(x,i){if(KS[i]&&x){KS[i].v=x[0];KS[i].b=x[1]}});(o.F||[]).forEach(function(r,i){if(r&&F[i])F[i]=r});
+  if(o.ga&&o.ga[0]){GA.at=new Date(o.ga[0]);GA.night=today?o.ga[1]:false}if(o.il&&o.il[0]){IL.at=new Date(o.il[0]);IL.night=today?o.il[1]:false}
+  try{refresh()}catch(e){}try{draw()}catch(e){}try{renderHealth()}catch(e){}try{renderHStrip()}catch(e){}try{renderDnes()}catch(e){}}catch(e){}})();
  if(IL.id&&IL.key)setTimeout(ilConnect,300);
  if(GA.key)setTimeout(function(){gaConnect()},1500);
  try{renderSync()}catch(e){}if(IL.id&&IL.key)setTimeout(function(){syncNow()},5000);
