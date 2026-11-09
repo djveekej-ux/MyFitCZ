@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
 <style>html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}a,button,label,input,select,textarea,summary,[role=button],[role=tab],svg{touch-action:manipulation}input,select,textarea{font-size:max(16px,1em)!important}
 :root{--bg:#EDF1F4;--card:#fff;--ink:#14202B;--mute:#5B6B79;--line:#D5DDE4;--acc:#1D5FD6;--accink:#fff;
---z1:#9FB3C4;--z2:#3E9C8F;--z3:#E3B341;--z4:#E1782F;--z5:#C93C3C;--z6:#8E2440;--z7:#8B5CF6;
+--z1:#9FB3C4;--z2:#3E9C8F;--z3:#E3B341;--z4:#E1782F;--z5:#C93C3C;--z6:#8E2440;--z7:#8B5CF6;--p1:#8A93A6;--p2:#4FA3E0;--p3:#3FAF6A;--p4:#E9B83A;--p5:#E8782E;--p6:#D23F3F;--p7:#9B5CF6;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A24;--card:#17252F;--ink:#E7EEF4;--mute:#93A5B4;--line:#273946;--acc:#5B9BFF;--accink:#0F1A24}}
 :root[data-theme="dark"]{--bg:#0F1A24;--card:#17252F;--ink:#E7EEF4;--mute:#93A5B4;--line:#273946;--acc:#5B9BFF;--accink:#0F1A24}
@@ -98,7 +98,7 @@ nav button{padding:12px 0;border-radius:18px}nav button[aria-selected=true]{box-
 .chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px;font-weight:700}.chk.on{background:var(--z2);border-color:var(--z2);color:#fff}
 .done{margin-top:18px}.done button{width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 15px "Plus Jakarta Sans",system-ui,sans-serif;cursor:pointer}.done button[aria-pressed=true]{background:var(--z2);border-color:var(--z2);color:#fff}
 .fbk{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
-.lb{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;color:#fff;white-space:nowrap;vertical-align:1px}.lb-r{background:var(--z5)}.lb-e{background:var(--z1)}.lb-h{background:var(--z4)}.lb-l{background:var(--z2)}
+.lb{font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;color:#fff;white-space:nowrap;vertical-align:1px}.lb-r{background:var(--p6)}.lb-e{background:var(--p1)}.lb-h{background:var(--p5)}.lb-l{background:var(--p2)}
 #detail:not(.editing) .grid,#detail:not(.editing) .grid+.chips{display:none}
 .acts{display:flex;gap:8px;margin:0 0 14px}.acts button{flex:1;padding:11px 8px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:700 14px "Plus Jakarta Sans",system-ui,sans-serif;cursor:pointer}.acts .danger{color:var(--z5)}.acts .pri{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--accink);border:0}
 #a-sub{margin:-4px 0 14px}
@@ -148,7 +148,7 @@ nav{top:auto;left:10px!important;right:10px!important;bottom:max(2px,calc(env(sa
 .zbase{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.zbase label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute);font-weight:600}.zbase input{width:100%;flex:none}
 .zh{margin-top:16px;font-size:12px;letter-spacing:.06em;font-weight:700;color:var(--mute);text-transform:uppercase}
 .zr{display:grid;grid-template-columns:1fr 64px 96px;gap:8px;align-items:center;margin-top:8px;font-size:14px}.zn{font-weight:700;display:flex;align-items:center;gap:8px}.zn:before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}.zr input{width:100%;flex:none;padding:6px 8px;border-radius:10px;font-size:14px}.zo{color:var(--mute);font-size:13px;text-align:center}.zw{color:var(--mute);font-weight:600;text-align:right;font-size:13px;white-space:nowrap}
-.lb-b{background:var(--acc);color:var(--accink)}.lb-g{background:var(--z2)}
+.lb-b{background:var(--acc);color:var(--accink)}.lb-g{background:var(--p2)}
 .sh{display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:700}.sh .lb{margin:0}
 .sd{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:12px}
 .sc{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:6px 0;border-radius:14px;color:var(--ink);cursor:pointer;font:inherit}.sc small{font-size:11px;font-weight:700;color:var(--mute);min-height:14px}.sc svg{width:100%;max-width:46px;height:auto}.sc text{font:800 15px "Plus Jakarta Sans",system-ui,sans-serif;fill:var(--ink)}.sc[aria-pressed=true]{background:var(--bg);box-shadow:inset 0 0 0 2px var(--acc)}
@@ -371,7 +371,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.41 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.42 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -391,7 +391,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 <script>
 var FTP=261,MAXHR=185;
 var RP={ok:0,name:'',kg:84,plat:'ROUVY',team:'Trek Factory Team CZ'},RPFRESH=false;
-var ZC=function(p){return p<56?'var(--z1)':p<76?'var(--z2)':p<91?'var(--z3)':p<106?'var(--z4)':p<121?'var(--z5)':p<151?'var(--z6)':'var(--z7)'};
+var ZC=function(p){return p<56?'var(--p1)':p<76?'var(--p2)':p<91?'var(--p3)':p<106?'var(--p4)':p<121?'var(--p5)':p<151?'var(--p6)':'var(--p7)'};
 var W={
  dnes:{n:'Út',t:'Závod 18:00',d:'Rozjetí 17:30, potom 45 min max výkon',seg:[[8,55],[1,100],[1,55],[1,100],[1,55],[1,100],[3,55]]},
  po:{n:'Po',t:'Lehký trénink',d:'Hotovo, regenerace',seg:[[40,50]]},
@@ -409,7 +409,7 @@ function chart(seg){
 }
 function watts(seg){var m=0;seg.forEach(function(s){if(s[1]>m)m=s[1]});return seg.length?'Nejtvrdší část: '+Math.round(FTP*m/100)+' W ('+m+' % FTP)':''}
 document.getElementById('chart-dnes').innerHTML=chart(W.dnes.seg);
-document.getElementById('legend').innerHTML=[['Z1','--z1'],['Z2','--z2'],['Z3','--z3'],['Z4','--z4'],['Z5','--z5'],['Z6','--z6'],['Z7','--z7']].map(function(z){return '<span class="mute"><i style="background:var('+z[1]+')"></i>'+z[0]+'</span>'}).join('');
+document.getElementById('legend').innerHTML=[['Z1','--p1'],['Z2','--p2'],['Z3','--p3'],['Z4','--p4'],['Z5','--p5'],['Z6','--p6'],['Z7','--p7']].map(function(z){return '<span class="mute"><i style="background:var('+z[1]+')"></i>'+z[0]+'</span>'}).join('');
 var MON=(function(){var n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate()-(n.getDay()+6)%7)})(),SUN=new Date(MON.getFullYear(),MON.getMonth(),MON.getDate()+6),WKID=MON.getFullYear()+'-'+('0'+(MON.getMonth()+1)).slice(-2)+'-'+('0'+MON.getDate()).slice(-2),WKLBL=MON.getDate()+'.'+(MON.getMonth()!==SUN.getMonth()?' '+(MON.getMonth()+1)+'.':'')+'–'+SUN.getDate()+'. '+(SUN.getMonth()+1)+'.';
 var RACE=(function(){var s=null;try{s=localStorage.getItem('mfc-state')}catch(e){}if(!s)return {on:0,d:1};try{var o=JSON.parse(s);var P=o.RACE&&o.RACE.pend;if(P&&typeof P.d==='number'&&P.from&&P.from<=WKID)return {on:P.on?1:0,d:Math.max(0,Math.min(6,P.d))};if(o.RACE&&typeof o.RACE.d==='number'){var r={on:o.RACE.on?1:0,d:Math.max(0,Math.min(6,o.RACE.d))};if(P&&typeof P.d==='number'&&P.from)r.pend={on:P.on?1:0,d:Math.max(0,Math.min(6,P.d)),from:String(P.from)};return r}}catch(e){}return {on:1,d:1}})(),REGEN=0;
 var order=['po','dnes','st','ct','pa','so','ne'],dayEl=document.getElementById('days');if(RACE.d!==1){order[1]=order[RACE.d];order[RACE.d]='dnes'}
@@ -760,7 +760,7 @@ function buildDays(){dPark();dayEl.innerHTML='';var tp=0,dn=0,ses=0,stp='';
  order.forEach(function(k){if(!W[k]||typeof W[k]!=='object')W[k]={t:'Volno',d:'Bez tréninku.',seg:[]};if(!Array.isArray(W[k].seg))W[k].seg=[];if(typeof W[k].t!=='string')W[k].t=W[k].seg.length?'Trénink':'Volno';var _o=W[k].t.match(isR(k)?/\s+(?:od\s+)?(\d{1,2}:\d{2})$/:/\s+od\s+(\d{1,2}:\d{2})$/);if(_o){if(!W[k].tm)W[k].tm=_o[1];W[k].t=W[k].t.slice(0,_o.index)}var d=W[k],m=mins(d.seg);if(m){ses++;tp+=m;if(d.done)dn++}
   var b=document.createElement('button');b.className='day'+(k===TK?' today':'');b.setAttribute('aria-pressed','false');b.dataset.k=k;
   var L=autoLb(d);stp+='<button type="button" role="tab" data-k="'+k+'" class="'+(k===TK?'td':'')+'" aria-pressed="false">'+d.n+'<i class="'+(L?L[1]:'')+'"'+(L?'':' style="background:transparent"')+'></i></button>';b.setAttribute('aria-expanded','false');
-  b.innerHTML='<span class="dn"><small>'+d.n+'</small><b>'+d.dt+'</b></span><span class="vl '+(L?L[1]:'')+'"'+(L?'':' style="background:var(--line)"')+'></span><span class="mid"><span class="t">'+esc(d.t)+'</span><span class="mini">'+mini(d.seg,isR(k)?'var(--z5)':'')+'</span></span><span class="rt"><span class="dlb">'+(d.done&&m?'<span class="chk on" aria-label="Dojeto">✓</span>':'')+(function(L){return L?'<em class="lb '+L[1]+'">'+L[0]+'</em>':''})(autoLb(d))+'</span><span class="tag">'+(m?((d.tm||TM[k])?'<b class="wtm">'+esc(d.tm||TM[k])+'</b> · ':'')+Math.round(m)+' min':isR(k)&&d.tm?'<b class="wtm">'+esc(d.tm)+'</b>':'')+'</span></span>';
+  b.innerHTML='<span class="dn"><small>'+d.n+'</small><b>'+d.dt+'</b></span><span class="vl '+(L?L[1]:'')+'"'+(L?'':' style="background:var(--line)"')+'></span><span class="mid"><span class="t">'+esc(d.t)+'</span><span class="mini">'+mini(d.seg,isR(k)?'var(--p6)':'')+'</span></span><span class="rt"><span class="dlb">'+(d.done&&m?'<span class="chk on" aria-label="Dojeto">✓</span>':'')+(function(L){return L?'<em class="lb '+L[1]+'">'+L[0]+'</em>':''})(autoLb(d))+'</span><span class="tag">'+(m?((d.tm||TM[k])?'<b class="wtm">'+esc(d.tm||TM[k])+'</b> · ':'')+Math.round(m)+' min':isR(k)&&d.tm?'<b class="wtm">'+esc(d.tm)+'</b>':'')+'</span></span>';
   b.onclick=function(){if(WOPEN===k)dClose();else{show(k);dGo(k)}};dayEl.appendChild(b)});
  var st=document.getElementById('dstrip');if(st){st.innerHTML=stp;Array.prototype.forEach.call(st.querySelectorAll('button'),function(x){x.onclick=function(){var k=x.dataset.k;if(WOPEN===k){dClose();return}show(k);var r=dayEl.querySelector('.day[data-k="'+k+'"]');if(r)setTimeout(function(){r.scrollIntoView({block:'start',behavior:'smooth'})},30)}})}
  if(WOPEN)dPlace(WOPEN);
@@ -880,14 +880,14 @@ function renderWeek(){var el=document.querySelector('.wkc');if(!el)return;var GB
  if(RACE.on&&W.dnes.ex)['wu','cd'].forEach(function(x){var e=W.dnes.ex[x];if(e.done)done+=tssOf(e)});
  if(rdOn())done=wkLiveTss();
  var tile=function(i,k){var d=W[k],td=i===TDI,dl=(td?'Dnes':DNAME[i].slice(0,2))+' '+(d.dt||'')+'.',m=mins(d.seg),race=isR(k)&&d.ex,parts=[],tot,t,dn,ty,cc,br='';
-  if(!m&&!race)return '<button type="button" class="ac rs'+(td?' td':'')+'" data-k="'+k+'" style="--k:var(--z1)"><strong>'+dl+'</strong><span class="acr">'+acRing(0,'var(--z1)')+'<small>Volno</small></span><p>Volno</p><span class="acm">Regenerace</span></button>';
+  if(!m&&!race)return '<button type="button" class="ac rs'+(td?' td':'')+'" data-k="'+k+'" style="--k:var(--p1)"><strong>'+dl+'</strong><span class="acr">'+acRing(0,'var(--z1)')+'<small>Volno</small></span><p>Volno</p><span class="acm">Regenerace</span></button>';
   if(race){var ex=d.ex;if(ex.wu&&mins(ex.wu.seg))parts.push(ex.wu);parts.push(d);if(ex.cd&&mins(ex.cd.seg))parts.push(ex.cd)}else parts=[d];
   tot=0;t=0;var km=0;dn=parts.every(function(e){return !!e.done});parts.forEach(function(e){tot+=e.dur?e.dur:mins(e.seg.concat(e===d?(e.race||[]):[]));t+=tssOf(e);km+=+e.km||0});
-  var hard=d.seg.some(function(x){return x[1]>=88});ty=race?'Závod':hard?'Intervaly':'Volná jízda';cc=race?'var(--z5)':hard?'var(--z4)':'var(--z2)';
+  var hard=d.seg.some(function(x){return x[1]>=88});ty=race?'Závod':hard?'Intervaly':'Volná jízda';cc=race?'var(--p6)':hard?'var(--p5)':'var(--p2)';
   if(race)parts.forEach(function(e){var mm=e.dur?e.dur:mins(e.seg);br+='<i style="flex:'+mm+';background:'+(e===d?'var(--z5)':'var(--mute)')+'"></i>'});
   else if(!hard)br='<i style="flex:1;background:var(--z2)"></i>';
   else{var sg=d.seg,fh=-1,lh=-1;sg.forEach(function(x,j){if(x[1]>=88){if(fh<0)fh=j;lh=j}});var pre=0,post=0;sg.forEach(function(x,j){if(j<fh)pre+=x[0];if(j>lh)post+=x[0]});
-   if(pre)br+='<i style="flex:'+pre+';background:var(--mute)"></i>';sg.forEach(function(x,j){if(j>=fh&&j<=lh&&x[1]>=88)br+='<i style="flex:'+x[0]+';background:var(--z4)"></i>'});if(post)br+='<i style="flex:'+post+';background:var(--mute)"></i>'}
+   if(pre)br+='<i style="flex:'+pre+';background:var(--mute)"></i>';sg.forEach(function(x,j){if(j>=fh&&j<=lh&&x[1]>=88)br+='<i style="flex:'+x[0]+';background:var(--p5)"></i>'});if(post)br+='<i style="flex:'+post+';background:var(--mute)"></i>'}
   return '<button type="button" class="ac'+(dn?'':i<TDI?' pl mi':' pl')+(td?' td':'')+'" data-k="'+k+'" style="--k:'+(!dn&&i<TDI?'var(--mute)':cc)+'"><strong>'+dl+' '+(dn?'<em>✓</em>':i<TDI?'<small>vynecháno</small>':'<small>plán</small>')+'</strong><span class="acr">'+acRing(t,!dn&&i<TDI?'var(--mute)':cc)+'<small>'+ty+'</small></span><p>'+esc(race?'Závod':String(d.t).replace(/\s+od\s+\d{1,2}:\d{2}$/,''))+'</p><span class="acm">'+fmt(tot)+' · '+(dn?'':'~')+t+' TSS'+(km?'<br>'+String(Math.round(km*10)/10).replace('.',',')+' km':'')+'</span><span class="acb">'+br+'</span></button>'};
  var ix=order.map(function(k,i){return i});ix.forEach(function(i){cards+=tile(i,order[i])});
  var HW=histWk(),demo=!HW;HW=HW||H;var fc=done+plan,left=Math.max(0,GOALE-done),pct=Math.round(done/GOALE*100),mx=Math.max.apply(null,HW.concat([fc,GOALE])),avg=Math.round(HW.reduce(function(a,b){return a+b},0)/HW.length),bars='';
@@ -1489,7 +1489,7 @@ function initDnesWidgets(){var P=document.getElementById('p-dnes'),sub=document.
  arr.onclick=function(){var on=P.classList.toggle('edit');arr.textContent=on?'Hotovo':'Edit';arr.setAttribute('aria-pressed',String(on))};
  arrows()}
 var MAP=340,LTHR=157,LT1={h:139,w:208},LT2W=259;
-var ZPn=['Regenerace','Vytrvalost','Tempo','Práh','VO2max','Anaerobní','Sprint'],ZPhi=[55,75,90,105,120,150],ZHn=['Regenerace','Vytrvalost','Tempo','Práh','VO2max'],ZHhi=[80,89,93,99],ZCOL=['#7C8D99','#3B87C8','#8DAA62','#D2B040','#D8963F','#D2705B','#C94545'],PZD=[41,26,14,9,5,3,1],HZD=[20,40,20,15,5];
+var ZPn=['Regenerace','Vytrvalost','Tempo','Práh','VO2max','Anaerobní','Sprint'],ZPhi=[55,75,90,105,120,150],ZHn=['Regenerace','Vytrvalost','Tempo','Práh','VO2max'],ZHhi=[80,89,93,99],ZCOL=['#8A93A6','#4FA3E0','#3FAF6A','#E9B83A','#E8782E','#D23F3F','#9B5CF6'],PZD=[41,26,14,9,5,3,1],HZD=[20,40,20,15,5];
 function renderZChart(){var el=document.getElementById('zchart');if(!el)return;var ZS=zoneShare(28),PZ=ZS&&ZS.p||PZD,HZ=ZS&&ZS.h||HZD,zsrc=ZS&&(ZS.p||ZS.h)?'Posledních 28 dní z Intervals.icu.':'Ukázková data, po napojení Intervals.icu se ukáže tvoje intenzita.';
  var VW=300,top=6,H=238,rh=H/7,rh2=H/5,cx=150,k=70/41,i,y,w,o='<h2 style="margin:0">Intenzita tréninku</h2><p class="mute" style="margin:4px 0 0">Čas v zónách: výkon vlevo, tep vpravo. '+zsrc+'</p><svg viewBox="0 0 '+VW+' '+(H+top*2)+'" role="img" aria-label="Čas v zónách výkonu a tepu" style="margin-top:12px">';
  for(i=0;i<7;i++){y=top+(6-i)*rh;w=Math.max(2,PZ[i]*k);o+='<rect x="'+(cx-3-w).toFixed(1)+'" y="'+(y+2).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+(rh-4).toFixed(1)+'" rx="5" fill="'+ZCOL[i]+'"/><text class="zl" x="4" y="'+(y+rh/2+4).toFixed(1)+'">'+ZPn[i]+'</text><text class="zv" x="'+(cx-8)+'" y="'+(y+rh/2+4).toFixed(1)+'" text-anchor="end">'+PZ[i]+' %</text>'}
@@ -1670,7 +1670,7 @@ var IVSEED=null;
 function setIv(k,d,id){var t=TPL[id];d.iv=id;d.seg=t.seg.map(function(s){return s.slice()});d.d=t.d;refresh();show(k)}
 function swapDays(a,b){['t','d','seg','tm','km','el','done','fit','rpe','leg','fbDone','lb','lc'].forEach(function(f){var x=W[a][f];W[a][f]=W[b][f];W[b][f]=x})}
 function typePick(k,d,sub,q,btn){var op=sub.querySelector('.addk');if(op){sub.innerHTML='';if(btn)btn.setAttribute('aria-expanded','false');return}if(btn)btn.setAttribute('aria-expanded','true');
-  sub.innerHTML='<p class="mute" style="margin:10px 0 6px">'+q+'</p><div class="addk"><button type="button" data-a="free" style="--c:var(--z2)"><b>Volná jízda</b><span>60 min v Z2, tempo podle pocitu</span></button><button type="button" data-a="iv" style="--c:var(--z4)"><b>Intervaly</b><span>'+esc(TPL[recIv(window.SC)].n)+'</span></button><button type="button" data-a="race" style="--c:var(--z5)"><b>Závod</b><span>Rozjetí, závod 30 min, vyjetí</span></button></div>';
+  sub.innerHTML='<p class="mute" style="margin:10px 0 6px">'+q+'</p><div class="addk"><button type="button" data-a="free" style="--c:var(--p2)"><b>Volná jízda</b><span>60 min v Z2, tempo podle pocitu</span></button><button type="button" data-a="iv" style="--c:var(--p5)"><b>Intervaly</b><span>'+esc(TPL[recIv(window.SC)].n)+'</span></button><button type="button" data-a="race" style="--c:var(--p6)"><b>Závod</b><span>Rozjetí, závod 30 min, vyjetí</span></button></div>';
   Array.prototype.forEach.call(sub.querySelectorAll('[data-a]'),function(b){b.onclick=function(){var a=b.dataset.a;if(!d.tm)d.tm=TM[k]||'16:00';
    if(a==='free'){d.seg=[[10,55],[40,65],[10,50]];d.t='Volná jízda';d.d='Volná jízda v Z2, tempo podle pocitu.';d.iv='';d.lb='Volná';d.lc='lb-l'}
    else if(a==='iv'){var rc=recIv(window.SC),t=TPL[rc];d.iv=rc;d.seg=t.seg.map(function(s){return s.slice()});d.t='Intervaly';d.d=t.d;d.lb='Tvrdý';d.lc='lb-h'}
@@ -1743,14 +1743,14 @@ function renderSync(){var el=document.getElementById('ksync');if(!el)return;var 
  var b=document.getElementById('sy-go');if(b)b.onclick=function(){syncNow(true)}}
 /* ===== Kalendář: měsíční pohled ===== */
 var MOFF=0,MSEL='',RFUT={},AFUT={},ADRAFT={};
-var AFT={group:['Skupinová jízda','hard','var(--z4)'],hard:['Intervaly (vybere kouč)','hard','var(--z4)'],long:['Dlouhá Z2','long','var(--z2)'],z2:['Lehká Z2','end','var(--z2)'],easy:['Regenerace','rec','var(--z1)'],off:['Volno','off','var(--mute)']};
+var AFT={group:['Skupinová jízda','hard','var(--p5)'],hard:['Intervaly (vybere kouč)','hard','var(--p5)'],long:['Dlouhá Z2','long','var(--p2)'],z2:['Lehká Z2','end','var(--p2)'],easy:['Regenerace','rec','var(--p1)'],off:['Volno','off','var(--mute)']};
 function afSeg(o,rdy){var m=Math.max(20,+o.min||60),ty=o.ty||'z2';if(ty==='off')return [];if(ty==='hard')return sess('hard',m,rdy).seg;if(ty==='group')return [[15,55],[Math.max(10,m-25),78],[10,50]];if(ty==='easy')return [[m,52]];return [[10,55],[Math.max(10,m-15),ty==='long'?68:65],[5,50]]}
 function rfOf(ds){var o=RFUT[ds]||{};return {nm:o.nm||'',tm:o.tm||RDEF.tm||'18:00',km:o.km,el:o.el,spd:o.spd}}
-var LBC={'lb-r':'var(--z5)','lb-h':'var(--z4)','lb-l':'var(--z2)','lb-g':'var(--z2)','lb-e':'var(--z1)','lb-b':'var(--acc)'};
-function rideCol(n,iff,min){if(/race|závod|zavod|stage|series|cup/i.test(n||'')&&!/warm|cool/i.test(n||''))return 'var(--z5)';if(iff>=.85)return 'var(--z4)';if(min>=90)return 'var(--z2)';if(iff&&iff<.6)return 'var(--z1)';return 'var(--z2)'}
+var LBC={'lb-r':'var(--p6)','lb-h':'var(--p5)','lb-l':'var(--p2)','lb-g':'var(--p2)','lb-e':'var(--p1)','lb-b':'var(--acc)'};
+function rideCol(n,iff,min){if(/race|závod|zavod|stage|series|cup/i.test(n||'')&&!/warm|cool/i.test(n||''))return 'var(--p6)';if(iff>=.85)return 'var(--p5)';if(min>=90)return 'var(--p2)';if(iff&&iff<.6)return 'var(--p1)';return 'var(--p2)'}
 function dayInfo(ds){var ev=[],k=null;order.forEach(function(x){if(ilD(DT[x])===ds)k=x});
  if(k){var d=W[k];
-  if(isR(k)){var ex=d.ex||{};if(ex.wu&&mins(ex.wu.seg))ev.push({x:'wu',c:'var(--z1)',pl:!ex.wu.done,t:'Rozjezd',min:Math.round(ex.wu.dur||mins(ex.wu.seg)),tss:tssOf(ex.wu)});ev.push({x:'race',c:'var(--z5)',pl:!d.done,t:syCleanT(d.t),min:Math.round(d.dur||mins(d.seg)),tss:tssOf(d),km:d.km});if(ex.cd&&mins(ex.cd.seg))ev.push({x:'cd',c:'var(--z1)',pl:!ex.cd.done,t:'Vyjetí',min:Math.round(ex.cd.dur||mins(ex.cd.seg)),tss:tssOf(ex.cd)})}
+  if(isR(k)){var ex=d.ex||{};if(ex.wu&&mins(ex.wu.seg))ev.push({x:'wu',c:'var(--p1)',pl:!ex.wu.done,t:'Rozjezd',min:Math.round(ex.wu.dur||mins(ex.wu.seg)),tss:tssOf(ex.wu)});ev.push({x:'race',c:'var(--p6)',pl:!d.done,t:syCleanT(d.t),min:Math.round(d.dur||mins(d.seg)),tss:tssOf(d),km:d.km});if(ex.cd&&mins(ex.cd.seg))ev.push({x:'cd',c:'var(--p1)',pl:!ex.cd.done,t:'Vyjetí',min:Math.round(ex.cd.dur||mins(ex.cd.seg)),tss:tssOf(ex.cd)})}
   else if(mins(d.seg)){var L=autoLb(d);ev.push({c:L?LBC[L[1]]||'var(--z2)':'var(--z2)',pl:!d.done,t:syCleanT(d.t),min:Math.round(d.dur||mins(d.seg)),tss:tssOf(d),km:d.km,lb:L&&L[0]})}
   return {k:k,ev:ev}}
  if(ILH&&ILH.length){ILH.forEach(function(a){if((a.start_date_local||'').slice(0,10)!==ds||!isRide(a))return;var mn=Math.round((a.moving_time||0)/60),iff=a.icu_intensity?a.icu_intensity/100:0;ev.push({c:rideCol(a.name,iff,mn),pl:false,t:a.name||'Jízda',min:mn,tss:Math.round(a.icu_training_load||0),km:a.distance?+(a.distance/1000).toFixed(1):0,tm:(a.start_date_local||'').slice(11,16),pw:Math.round(a.icu_average_watts||a.average_watts||0),kj:a.icu_joules?Math.round(a.icu_joules/1000):Math.round((a.icu_average_watts||a.average_watts||0)*(a.moving_time||0)/1000)})});ev.sort(function(a,b){return (a.tm||'')<(b.tm||'')?-1:1})}
@@ -1766,7 +1766,7 @@ function renderMonth(){var el=document.getElementById('mcal');if(!el)return;var 
   h+='<button type="button" class="mc'+(d.getMonth()!==mo?' out':'')+(ds===td?' td':'')+'" data-d="'+ds+'" aria-pressed="'+(ds===MSEL)+'" aria-label="'+d.getDate()+'. '+(d.getMonth()+1)+'.'+(inf.ev.length?', '+inf.ev.length+'×':'')+'"><b>'+d.getDate()+'</b><span class="md">'+inf.ev.slice(0,3).map(function(e){return '<i class="'+(e.pl?'pl':'')+'" style="--c:'+e.c+'"></i>'}).join('')+'</span><small>'+(tss?(pl?'~':'')+tss:'')+'</small></button>'}
  var MN=['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
  el.innerHTML='<div class="mh"><button type="button" id="m-prev" aria-label="Předchozí měsíc">‹</button><b>'+MN[mo]+' '+m0.getFullYear()+'</b><button type="button" id="m-next" aria-label="Další měsíc">›</button></div><div class="mw">'+['Po','Út','St','Čt','Pá','So','Ne'].map(function(x){return '<span>'+x+'</span>'}).join('')+'</div><div class="mg">'+h+'</div>'
-  +'<div class="mlg"><span><i style="--c:var(--z5)"></i>Závod</span><span><i style="--c:var(--z4)"></i>Tvrdý</span><span><i style="--c:var(--z2)"></i>Z2 a dlouhý</span><span><i style="--c:var(--z1)"></i>Lehký</span><span><i class="pl" style="--c:var(--mute)"></i>Plán</span></div>';
+  +'<div class="mlg"><span><i style="--c:var(--p6)"></i>Závod</span><span><i style="--c:var(--p5)"></i>Tvrdý</span><span><i style="--c:var(--p2)"></i>Z2 a dlouhý</span><span><i style="--c:var(--p1)"></i>Lehký</span><span><i class="pl" style="--c:var(--mute)"></i>Plán</span></div>';
  document.getElementById('m-prev').onclick=function(){MOFF--;renderMonth()};document.getElementById('m-next').onclick=function(){MOFF++;renderMonth()};
  Array.prototype.forEach.call(el.querySelectorAll('.mc'),function(b){b.onclick=function(){MSEL=b.dataset.d;renderMonth()}});
  renderMDay();renderMNext();try{renderMHeat()}catch(e){}}
@@ -1797,7 +1797,7 @@ function mdPrev(inf,e){var o=mdObj(inf,e),h='<div class="mdp">',t=[],ed=false;
  if(o){var m=Math.round(o.dur||mins(o.seg)),race=e.x==='race',pk=race&&!o.done&&o.tg?o.tg:null,km=pk?pk.km:o.km,el=pk?pk.el:o.el;ed=true;
   if(o.tm&&m)t.push(mdTile('Start',esc(o.tm)));if(m)t.push(mdTile('Délka',fmt(m)));if(mins(o.seg))t.push(mdTile((o.done?'':'~')+'TSS',String(tssOf(o))));
   if(mins(o.seg))t.push(mdTile('IF',ifAny(o).toFixed(2).replace('.',',')));var pw0=mdPw(o,m);if(pw0){t.push(mdTile((pw0.pl?'~':'')+'Výkon',pw0.w+' W'));t.push(mdTile((pw0.pl?'~':'')+'Energie',pw0.kj+' kJ'))}if(km)t.push(mdTile('Vzdálenost',String(km).replace('.',',')+' km'));if(el)t.push(mdTile('Převýšení','+'+esc(String(el))+' m'));
-  h+=(t.length?'<div class="mdpg">'+t.join('')+'</div>':'')+(o.d&&!e.x?'<p class="mdpd">'+esc(o.d)+'</p>':'')+(mins(o.seg)?'<div class="mdpc">'+mini(o.seg,e.x==='race'?'var(--z5)':'')+'</div>':'')}
+  h+=(t.length?'<div class="mdpg">'+t.join('')+'</div>':'')+(o.d&&!e.x?'<p class="mdpd">'+esc(o.d)+'</p>':'')+(mins(o.seg)?'<div class="mdpc">'+mini(o.seg,e.x==='race'?'var(--p6)':'')+'</div>':'')}
  else if(e.own){var af=AFUT[MSEL]||{},at=AFT[af.ty]||AFT.z2;ed=true;t.push(mdTile('Typ',esc(at[0])));if(af.ty!=='off'){t.push(mdTile('Start',esc(af.tm||'16:00')));t.push(mdTile('Délka',fmt(+af.min||60)))}
   h+='<div class="mdpg">'+t.join('')+'</div><p class="mdpd">Vlastní aktivita. Kouč ji v pondělí nechá na místě a zbytek týdne postaví kolem ní.</p>'}
  else if(e.fut){var rf=rfOf(MSEL),T0=(W.dnes&&W.dnes.tg)||{},kmv=rf.km!=null?rf.km:T0.km,elv=rf.el!=null?rf.el:T0.el,sp=rf.spd!=null?rf.spd:T0.spd;ed=true;
@@ -2070,7 +2070,7 @@ function nwUpdate(){if(typeof AFUT==='undefined'||typeof SYNC==='undefined')retu
  if(!nwDue())return;var o=nwBuild();if(!o)return;var a=NW?JSON.stringify(NW.W):'';NW=o;if(a!==JSON.stringify(o.W)){try{localStorage.setItem('mfc-nw',JSON.stringify(NW))}catch(e){}try{syncSoon()}catch(e){}}}
 function nwRender(){var el=document.getElementById('wnext');if(!el)return;nwUpdate();if(!NW||NW.wk!==nwId()){el.hidden=true;el.innerHTML='';return}
  var m0=nwMon(),s0=new Date(m0.getFullYear(),m0.getMonth(),m0.getDate()+6),lbl=m0.getDate()+'.'+(m0.getMonth()!==s0.getMonth()?' '+(m0.getMonth()+1)+'.':'')+'–'+s0.getDate()+'. '+(s0.getMonth()+1)+'.',tot=0;
- var NO=NW.ord||order,rows=NO.map(function(k,i){var d=NW.W[k],ds=NW.ds[i],race=!!NW.ron&&k==='dnes',m=race?0:mins(d.seg),hard=(d.seg||[]).some(function(x){return x[1]>=88}),own=!!AFUT[ds],c=race?'var(--z5)':!m?'var(--mute)':hard?'var(--z4)':m>=90?'var(--z2)':'var(--z2)',nm=race?'Závod':String(d.t||'Volno').replace(/\s+od\s+\d{1,2}:\d{2}$/,'');if(m)tot+=m;
+ var NO=NW.ord||order,rows=NO.map(function(k,i){var d=NW.W[k],ds=NW.ds[i],race=!!NW.ron&&k==='dnes',m=race?0:mins(d.seg),hard=(d.seg||[]).some(function(x){return x[1]>=88}),own=!!AFUT[ds],c=race?'var(--p6)':!m?'var(--mute)':hard?'var(--p5)':'var(--p2)',nm=race?'Závod':String(d.t||'Volno').replace(/\s+od\s+\d{1,2}:\d{2}$/,'');if(m)tot+=m;
   return '<button type="button" class="nwr" data-ds="'+ds+'"'+(race?' disabled':'')+' style="--k:'+c+'"><span class="nwd">'+DNAME[i].slice(0,2)+' <b>'+d.dt+'.</b></span><i></i><span class="nwt">'+esc(nm)+(own?' <em class="nwo">vlastní</em>':'')+'<small>'+(race?esc(d.tm||'')+' · start':m?(d.tm?d.tm+' · ':'')+fmt(m):'regenerace')+(d.lb?' · '+esc(d.lb):'')+'</small></span>'+(race?'':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>')+'</button>'}).join('');
  el.hidden=false;el.innerHTML='<div class="nwh"><b>Příští týden</b><span>'+lbl+' · '+fmt(tot)+'</span></div><p class="mute nwp">Náhled podle tvé dostupnosti'+(IL.id&&IL.key&&SYNC.on?', už odeslaný do Intervals.icu a ROUVY':'')+'. V pondělí ráno se doladí podle připravenosti z noci. Klepnutím na den ho upravíš.</p>'+rows;
  Array.prototype.forEach.call(el.querySelectorAll('.nwr'),function(b){b.onclick=function(){var ds=b.dataset.ds;openAem(AFUT[ds]?{t:'own',ds:ds}:{t:'own',ds:ds,nw:1})}})}
