@@ -369,7 +369,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.36 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.37 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -1705,7 +1705,7 @@ refresh();show(window.cur||TK);renderDnes();initWidgets();initProfile();initDnes
 /* ===== Odesílání plánu do Intervals.icu (a dál do ROUVY) ===== */
 var SYNC={on:1,ids:[],h:'',at:'',msg:'',n:0,err:0},SYT=null,SYBUSY=false;
 function syDesc(seg){return (seg||[]).map(function(s){var m=+s[0],p=Math.round(+s[1]),t=m>=1&&Math.abs(m-Math.round(m))<1e-6?Math.round(m)+'m':Math.round(m*60)+'s';return '- '+t+' '+p+'%'+(s[2]?' '+s[2]+'rpm':'')}).join('\n')}
-function syCleanT(t){return String(t||'Trénink').replace(/\s+od\s+\d{1,2}:\d{2}$/,'')}
+function syCleanT(t){return String(t||'Trénink').replace(/\s+(?:od\s+)?\d{1,2}:\d{2}$/,'')}
 function syWanted(){var td=ilD(new Date()),ev=[],wk=function(Wx,dtOf){
  order.forEach(function(k,i){var d=Wx[k],dt=dtOf(k,i);if(!d||dt<td)return;
   var add=function(slot,o){o.external_id='mfc-'+dt+'-'+slot;o.name=String(o.name||'Trénink').replace(/\s+by MyFiTCZ$/,'')+' by MyFiTCZ';ev.push(o)};
@@ -1811,7 +1811,6 @@ function renderMDay(){var el=document.getElementById('mday');if(!el)return;var i
   :'<p class="mute" style="margin:10px 0 0">'+(OWN?'Zatím tu nic není. Můžeš si sem naplánovat vlastní aktivitu.':REST?'Volno.':MSEL>ilD(SUN)?'Plán na tento den zatím není. Kouč sestavuje vždy aktuální týden.':'Žádná jízda.')+'</p>';
  if(OWN&&!AFUT[MSEL])h+='<button type="button" class="mdadd" id="md-own">+ Naplánovat vlastní aktivitu</button>';
  if(REST)h+='<button type="button" class="mdadd" id="md-addw">+ Přidat trénink</button>';
- if(inf.k)h+='<div class="chips" style="margin-top:12px">'+(MSEL===td?'<button type="button" id="md-den">Otevřít Den</button>':'')+'<button type="button" id="md-wk">Otevřít v Týdnu</button></div>';
  el.innerHTML=h;
  Array.prototype.forEach.call(el.querySelectorAll('.mdb'),function(b){b.onclick=function(){var i=+b.dataset.i;MEV=MEV===i?-1:i;renderMDay();var li=el.querySelectorAll('.mdl li')[i];if(MEV===i&&li&&li.getBoundingClientRect().bottom>window.innerHeight-20)li.scrollIntoView({block:'nearest',behavior:'smooth'})}});
  var pe=el.querySelector('.mdpe');if(pe)pe.onclick=function(){var e=inf.ev[MEV];openAem(e.own?{t:'own',ds:MSEL}:e.fut?{t:'fut',ds:MSEL}:{t:'w',k:inf.k,x:e.x})};
