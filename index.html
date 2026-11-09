@@ -268,6 +268,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .day .dlb{display:flex;align-items:center;justify-content:flex-end;gap:6px}.day .dlb .chk{width:18px;height:18px;font-size:11px;border-width:0}
 #vtip button{display:block;margin:10px auto 0;padding:8px 16px;border-radius:999px;border:0;background:var(--acc);color:var(--accink,#fff);font:inherit;font-weight:700;font-size:14px;cursor:pointer}#vtip button:disabled{opacity:.6}
 .mdpa{display:flex;justify-content:center}.mdpe.pill{flex:none;border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);border-radius:99px;padding:7px 16px;background:var(--card);color:var(--ink);font:700 13px "Plus Jakarta Sans",system-ui,sans-serif}
+#zstrip{display:block;width:100%;margin:8px 0 2px;padding:0;border:0;background:none;font:inherit;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent}.zsr{display:flex;gap:3px}.zsc{flex:1;height:16px;border-radius:4px;font-size:10.5px;font-weight:700;line-height:16px;text-align:center;color:#fff}.zsw{display:grid;grid-template-columns:1fr;gap:5px;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--card);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent);text-align:left;font-size:12.5px;color:var(--mute)}.zsw span{display:flex;align-items:center;gap:6px;min-width:0}.zsw i{width:8px;height:8px;border-radius:2px;flex:none}.zsw b{color:var(--ink)}.zsw em{font-style:normal;margin-left:auto;color:var(--ink);white-space:nowrap}
 </style>
 </head>
 <body>
@@ -345,7 +346,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="wk" id="wk"></div>
   <div class="card" id="wgen"></div>
   <div class="card" id="whist"></div>
-  <div id="dwrap"><div id="dstrip" role="tablist" aria-label="Dny v týdnu"></div><div id="days"></div></div>
+  <div id="dwrap"><div id="dstrip" role="tablist" aria-label="Dny v týdnu"></div><button type="button" id="zstrip" aria-expanded="false" aria-label="Výkonové zóny, klepnutím ukážeš watty"></button><div id="days"></div></div>
   <div class="card" id="wnext" hidden></div>
   <div id="dpark" hidden><div class="card" id="detail"></div><div id="wplan"></div></div>
 </section>
@@ -371,7 +372,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.42 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.43 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -2318,5 +2319,9 @@ var _rsx=refresh;refresh=function(){_rsx();try{sxUpd()}catch(e){}};
   var p1=('serviceWorker' in navigator)?navigator.serviceWorker.getRegistration().then(function(r){return r&&r.update()}).catch(function(){}):Promise.resolve();
   var p2=window.caches?caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).catch(function(){}):Promise.resolve();
   Promise.all([p1,p2]).then(done,done);setTimeout(done,4000)}})()</script>
+<script>(function(){var el=document.getElementById('zstrip');if(!el)return;var N=['Regenerace','Vytrvalost','Tempo','Práh','VO2max','Anaerobní','Sprint'],B=[0,56,76,91,106,121,151],op=false;
+ function draw(){var F=typeof FTP!=='undefined'&&FTP?FTP:0;el.setAttribute('aria-expanded',op?'true':'false');
+  el.innerHTML='<span class="zsr">'+N.map(function(n,i){return '<span class="zsc" style="background:var(--p'+(i+1)+')">Z'+(i+1)+'</span>'}).join('')+'</span>'+(op?'<span class="zsw">'+N.map(function(n,i){var lo=Math.round(F*B[i]/100),hi=i<6?Math.round(F*B[i+1]/100)-1:0;return '<span><i style="background:var(--p'+(i+1)+')"></i><b>Z'+(i+1)+'</b> '+n+'<em>'+(F?(i===0?'do '+hi:i===6?'od '+lo:lo+'–'+hi)+' W':(i===0?'do '+(B[1]-1):i===6?'nad '+(B[6]-1):B[i]+'–'+(B[i+1]-1))+' %')+'</em></span>'}).join('')+'</span>':'')}
+ el.onclick=function(){op=!op;draw()};draw();window.zsDraw=draw})()</script>
 </body>
 </html>
