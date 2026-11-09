@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://intervals.icu https://personal.connectapi.garmin.com https://*.workers.dev https://generativelanguage.googleapis.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://intervals.icu https://personal.connectapi.garmin.com https://*.workers.dev https://generativelanguage.googleapis.com https://api.github.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>MyFiTCZ</title>
@@ -266,6 +266,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
 .nwh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.nwh span{color:var(--mute);font-size:13px}.nwp{font-size:12.5px;margin:6px 0 8px}.nwr{display:flex;align-items:center;gap:10px;width:100%;padding:10px 2px;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}.nwr:disabled{cursor:default;opacity:1}.nwr i{width:4px;align-self:stretch;border-radius:2px;background:var(--k);flex:none}.nwd{width:44px;flex:none;color:var(--mute);font-size:13px}.nwd b{color:var(--ink);font-weight:600}.nwt{flex:1;min-width:0;font-size:14.5px}.nwt small{display:block;color:var(--mute);font-size:12.5px}.nwo{font-style:normal;font-size:12px;color:var(--acc);margin-left:4px}.nwr svg{width:16px;height:16px;color:var(--mute);flex:none}
 .day{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent),0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06)}.day.open{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent),0 0 0 2px var(--acc)}.day .tag .wtm{display:inline;font-size:inherit;line-height:inherit;color:var(--ink);font-weight:700}
 .day .dlb{display:flex;align-items:center;justify-content:flex-end;gap:6px}.day .dlb .chk{width:18px;height:18px;font-size:11px;border-width:0}
+#vtip button{display:block;margin:10px auto 0;padding:8px 16px;border-radius:999px;border:0;background:var(--acc);color:var(--accink,#fff);font:inherit;font-weight:700;font-size:14px;cursor:pointer}#vtip button:disabled{opacity:.6}
 </style>
 </head>
 <body>
@@ -369,7 +370,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.37 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.38 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Upravit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -2299,11 +2300,21 @@ var _rsx=refresh;refresh=function(){_rsx();try{sxUpd()}catch(e){}};
 </script>
 <script>(function(){var lg=document.querySelector('header.brand .logo');if(!lg)return;lg.setAttribute('role','button');lg.setAttribute('aria-label','Zobrazit verzi aplikace');
  var cur=function(){var a=document.querySelector('.appver'),m=a&&a.textContent.match(/verze\s+([\d.]+)\s*·\s*([^\n]+?)(?:Powered|$)/);return m?{v:m[1],d:m[2].trim()}:{v:'?',d:''}},tm;
- function tip(h){var t=document.getElementById('vtip');if(!t){t=document.createElement('div');t.id='vtip';t.setAttribute('role','status');document.body.appendChild(t)}t.innerHTML=h;t.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){t.classList.remove('on')},5000)}
+ function tip(h){var t=document.getElementById('vtip');if(!t){t=document.createElement('div');t.id='vtip';t.setAttribute('role','status');document.body.appendChild(t)}t.innerHTML=h;t.classList.add('on');t.style.pointerEvents=/<button/.test(h)?'auto':'none';clearTimeout(tm);tm=setTimeout(function(){t.classList.remove('on');t.style.pointerEvents='none'},arguments[1]||5000)}
  lg.onclick=function(){var c=cur(),head='<b style="white-space:nowrap">MyFiTCZ · verze '+c.v+'</b>'+(c.d?'<small>vydáno '+c.d+'</small>':'');tip(head+'<small>Hledám novější verzi…</small>');
   if(navigator.onLine===false){tip(head+'<small>Jsi offline, novější verzi teď neověřím.</small>');return}
-  fetch('./index.html?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var m=x.match(/verze\s+([\d.]+)/),n=m&&m[1];
-   var cmp=function(a,b){a=a.split('.').map(Number);b=b.split('.').map(Number);for(var i=0;i<Math.max(a.length,b.length);i++){var d=(a[i]||0)-(b[i]||0);if(d)return d}return 0};
-   tip(head+'<small>'+(!n?'Novější verzi se nepodařilo ověřit.':cmp(n,c.v)>0?'Na serveru je verze '+n+'. Zavři aplikaci a otevři ji znovu.':'Máš nejnovější verzi.')+'</small>')}).catch(function(){tip(head+'<small>Novější verzi se nepodařilo ověřit.</small>')})}})()</script>
+  var cmp=function(a,b){a=String(a).split('.').map(Number);b=String(b).split('.').map(Number);for(var i=0;i<Math.max(a.length,b.length);i++){var d=(a[i]||0)-(b[i]||0);if(d)return d}return 0};
+  var srv=fetch('./index.html?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var m=x.match(/verze\s+([\d.]+)/);return m&&m[1]}).catch(function(){return null});
+  var gh=fetch('https://api.github.com/repos/djveekej-ux/MyFitCZ/commits/main',{cache:'no-store',headers:{Accept:'application/vnd.github+json'}}).then(function(r){return r.ok?r.json():null}).then(function(j){var m=j&&j.commit&&String(j.commit.message||'').match(/MyFiTCZ\s+(\d+\.\d+)/);return m&&m[1]}).catch(function(){return null});
+  Promise.all([srv,gh]).then(function(v){var sv=v[0],gv=v[1],best=[sv,gv].filter(Boolean).sort(cmp).pop(),btn='<button type="button" id="vupd">Aktualizovat teď</button>',msg;
+   if(!best){tip(head+'<small>Novější verzi se nepodařilo ověřit.</small>');return}
+   if(cmp(best,c.v)<=0){tip(head+'<small>Máš nejnovější verzi.</small>');return}
+   if(sv&&cmp(sv,c.v)>0)msg='Je připravená verze '+sv+'.';
+   else msg='Na GitHubu je verze '+gv+', server ji ještě rozesílá (obvykle do 10 minut). Můžeš zkusit aktualizovat hned, nebo za chvíli.';
+   tip(head+'<small>'+msg+'</small>'+btn,15000);var b=document.getElementById('vupd');if(b)b.onclick=function(e){e.stopPropagation();b.disabled=true;b.textContent='Aktualizuji…';vUpd()}})};
+ function vUpd(){var done=function(){location.replace(location.pathname+'?u='+Date.now()+location.hash)};
+  var p1=('serviceWorker' in navigator)?navigator.serviceWorker.getRegistration().then(function(r){return r&&r.update()}).catch(function(){}):Promise.resolve();
+  var p2=window.caches?caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}).catch(function(){}):Promise.resolve();
+  Promise.all([p1,p2]).then(done,done);setTimeout(done,4000)}})()</script>
 </body>
 </html>
