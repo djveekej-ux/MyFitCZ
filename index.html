@@ -374,7 +374,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.49 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.50 · 9. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Edit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -1716,7 +1716,7 @@ function syWanted(){var td=ilD(new Date()),ev=[],wk=function(Wx,dtOf){
   var add=function(slot,o){o.external_id='mfc-'+dt+'-'+slot;o.name=String(o.name||'Trénink').replace(/\s+by MyFiTCZ$/,'')+' by MyFiTCZ';ev.push(o)};
   if(isR(k)){var ex=d.ex||{};
    if(ex.wu&&mins(ex.wu.seg)&&!ex.wu.done)add('wu',{category:'WORKOUT',type:'Ride',start_date_local:dt+'T'+(ex.wu.tm||'17:30')+':00',name:'Rozjezd před závodem',description:syDesc(ex.wu.seg)});
-   add('race',{category:'NOTE',start_date_local:dt+'T'+(d.tm||'18:00')+':00',name:syCleanT(d.t)||'Závod',description:String(d.d||'Závod')});
+   add('race',{category:'RACE_B',type:'VirtualRide',start_date_local:dt+'T'+(d.tm||'18:00')+':00',name:syCleanT(d.t)||'Závod',description:String(d.d||'Závod'),moving_time:Math.round(((d.tg&&+d.tg.min)||mins(d.seg)||27)*60)});
    if(ex.cd&&mins(ex.cd.seg)&&!ex.cd.done)add('cd',{category:'WORKOUT',type:'Ride',start_date_local:dt+'T'+(ex.cd.tm||'18:50')+':00',name:'Vyjetí po závodě',description:syDesc(ex.cd.seg)});
    return}
   if(!mins(d.seg)||d.done)return;
