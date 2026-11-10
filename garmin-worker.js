@@ -18,6 +18,8 @@ const PATHS = [
   /^\/usersummary-service\/v2\/dailysummaries$/,
   /^\/usersummary-service\/usersummary\/daily$/,
   /^\/fitnessage-service\/fitnessage\/v2\/\d{4}-\d{2}-\d{2}$/,
+  // VO2max (obecné i cyklistické) za rozsah dnů.
+  /^\/metrics-service\/metrics\/maxmet\/daily\/\d{4}-\d{2}-\d{2}\/\d{4}-\d{2}-\d{2}$/,
   // Zkušebně – Garmin je v Personal API možná nevydá (pak vrátí 404 a aplikace je přeskočí).
   /^\/metrics-service\/metrics\/trainingreadiness\/\d{4}-\d{2}-\d{2}$/,
   /^\/metrics-service\/metrics\/trainingstatus\/aggregated\/\d{4}-\d{2}-\d{2}$/,
