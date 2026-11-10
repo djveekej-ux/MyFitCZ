@@ -19,6 +19,12 @@ const PATHS = [
   /^\/usersummary-service\/usersummary\/daily$/,
   /^\/fitnessage-service\/fitnessage\/v2\/\d{4}-\d{2}-\d{2}$/,
   // VO2max (obecné i cyklistické) za rozsah dnů.
+  // Výkonnost a trénink: vytrvalost, kopce, FTP a laktátový práh od Garminu, poslední aktivity (Training Effect).
+  /^\/metrics-service\/metrics\/endurancescore$/,
+  /^\/metrics-service\/metrics\/hillscore$/,
+  /^\/biometric-service\/biometric\/latestFunctionalThresholdPower\/CYCLING$/,
+  /^\/biometric-service\/biometric\/latestLactateThreshold$/,
+  /^\/activitylist-service\/activities\/search\/activities$/,
   /^\/metrics-service\/metrics\/maxmet\/daily\/\d{4}-\d{2}-\d{2}\/\d{4}-\d{2}-\d{2}$/,
   // Zkušebně – Garmin je v Personal API možná nevydá (pak vrátí 404 a aplikace je přeskočí).
   /^\/metrics-service\/metrics\/trainingreadiness\/\d{4}-\d{2}-\d{2}$/,
