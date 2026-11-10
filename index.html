@@ -380,7 +380,7 @@ nav{gap:2px}nav button{font-size:12.5px;padding:12px 0}.cs{display:grid;grid-tem
   <div class="card" id="kthm"><strong>Vzhled</strong><p class="mute" style="margin:8px 0 0">Automaticky se aplikace řídí nastavením telefonu.</p><div class="chips" id="thm"><button type="button" data-v="auto">Automaticky</button><button type="button" data-v="light">Světlý</button><button type="button" data-v="dark">Tmavý</button></div></div>
   <div class="card" id="kbk"></div>
   <div class="card" id="kxfer"><strong>Přenos nastavení</strong><p class="mute" style="margin:8px 0 0;line-height:1.45">Přeneseš profil, klíče a vzhled na jinou adresu aplikace nebo do nového telefonu. Kód obsahuje tvoje API klíče, posílej ho jen sám sobě a nikomu ho nedávej.</p><div class="chips"><button type="button" id="xf-exp">Exportovat nastavení</button><button type="button" id="xf-imp">Importovat nastavení</button></div><div id="xf-box" hidden><textarea id="xf-t" rows="4" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" class="xft"></textarea><div class="chips" id="xf-act"></div><p class="mute" id="xf-msg" style="margin:8px 0 0" aria-live="polite"></p></div></div>
-  <p class="appver">MyFiTCZ · verze 2.56 · 10. 11. 2026<br>Powered by <b>Poc74 team</b></p>
+  <p class="appver">MyFiTCZ · verze 2.57 · 10. 11. 2026<br>Powered by <b>Poc74 team</b></p>
 </section>
 </main>
 <div id="aem" class="hsh aem" hidden role="dialog" aria-modal="true" aria-labelledby="aem-t"><div class="hsi"><div class="hst"><button type="button" id="aem-x" class="aemx">Zrušit</button><b id="aem-t">Edit</b><button type="button" id="aem-s">Uložit</button></div><div id="aem-c" style="padding-top:6px"></div></div></div>
@@ -688,6 +688,7 @@ function pchkRun(){var R={at:new Date(),L:[],S:[]},G=goalEff(),PH=phaseOf(),fc=0
  var mx=PH.k==='race'?2:3;if(hd.length>mx)wr('Tvrdých dnů je '+hd.length+', na fázi '+PH.n+' doporučuji nejvýš '+mx+'.');else if(!hd.length&&PH.k!=='race')wr('V týdnu chybí tvrdý trénink, fitness nebude růst.');else ok('Tvrdých dnů: '+hd.length+'.');
  if(!lng&&PH.k!=='race'&&PH.k!=='peak')wr('Chybí delší vytrvalostní jízda (90 min a víc).');
  if(miss.length)wr('Vynechané: '+miss.join(', ').toLowerCase()+'. Nedoháním je, plán pokračuje dál.');
+ var gp=window.GLP;if(gp&&gp.N>=7&&gp.G){var gG=gp.G,gap=Math.round(gG.T-gG.pe);if(gap>3){wr('Dlouhodobý cíl „'+GL.name+'“: podle plánu vyjde '+Math.round(gG.pe)+' z '+gG.T+' CTL (chybí '+gap+').');var gu=goalUp(gG);if(gu)R.S.push({key:'goalq:'+gu.v,txt:gu.full?'Aby plán došel k cíli '+gG.T+' CTL, zvedni základ týdne z '+GOAL+' na '+gu.v+' TSS. Fáze z něj dál počítají odlehčení a vrchol.':'K cíli '+gG.T+' CTL by to chtělo ~'+gG.Gq+' TSS týdně, což je skok nad bezpečnou hranici. Navrhuji zvednout základ o 10 % z '+GOAL+' na '+gu.v+' TSS a zbytek dohnat posunem cíle nebo data v Plán a cíl.',ap:function(){GOAL=gu.v;try{renderGoal()}catch(e){}}})}else ok('Dlouhodobý cíl „'+GL.name+'“ je na cestě ('+Math.round(gG.pe)+' z '+gG.T+' CTL).')}
  if(isR('dnes')&&!isRc('dnes'))R.L.push(['ℹ️','Závod je tento týden přepnutý na „'+String(W.dnes.t).replace(/\s+od\s+\d{1,2}:\d{2}$/,'')+'“.']);
  var sv=SGD;SGD=SGA.slice();try{for(var n=0;n<6;n++){var c=buildSug();if(!c||!c.key||R.S.some(function(x){return x.key===c.key}))break;R.S.push(c);SGD.push(c.key)}}catch(e){}SGD=sv;
  PCHK=R;pchkDraw()}
@@ -1310,13 +1311,16 @@ function renderEff(){var el=document.getElementById('eff');if(!el)return;var E=e
   +svg+'<p style="margin:8px 0 0;font-size:13px;line-height:1.45"><b style="color:'+chc+'">'+esc(verdict)+'</b> '+esc(hrTxt)+'</p>'
   +'<p class="mute" style="margin:6px 0 0;font-size:12px;line-height:1.4">V ERG určuje watty plán, takže pokrok poznáš podle tepu: vyšší EF znamená víc wattů na úder srdce. Decoupling ukazuje, o kolik se v druhé půlce jízdy delší než hodina rozjede výkon a tep. Do 5 % je výdrž výborná. Počítají se jízdy aspoň 30 min do IF 0,85, bez závodů.</p>'
   +'<div style="margin-top:8px">'+rows+'</div>'}
+function goalUp(G){if(!(G.Gq>GOAL+5))return null;var sf=Math.round(GOAL*1.1/10)*10;return G.Gq<=GOAL*1.15?{v:G.Gq,full:1}:{v:Math.max(GOAL+10,sf),full:0}}
+function goalGapTxt(g){var G=g.G,gap=Math.round(G.T-G.pe),u=goalUp(G);
+ return 'Týden je v pořádku, jde o dlouhodobý cíl „'+GL.name+'“: za '+g.N+' dní vyjde kondice podle plánu na '+Math.round(G.pe)+' CTL, cíl je '+G.T+' (chybí '+gap+').'+(!u?' Podívej se na Plán a cíl.':u.full?' Pomůže zvednout základ z '+GOAL+' na ~'+u.v+' TSS týdně.':' Na tenhle termín je cíl hodně ambiciózní (chtělo by to ~'+G.Gq+' TSS týdně). Bezpečně zvedni základ o 10 % na '+u.v+' TSS, nebo posuň cíl v Plán a cíl.')}
 function renderVerd(){var el=document.getElementById('verd');if(!el)return;var v=null,st=null,sg=null,m=null,E=null,g=window.GLP;
  try{st=illState()}catch(e){}try{sg=SGC||null}catch(e){}try{m=monoCalc()}catch(e){}try{E=effStats()}catch(e){}
  if(st)v=['var(--z4)','Návrat po nemoci, den '+st.n+' z '+ILLMAX+'. Jen lehké jízdy v Z1–Z2.'];
  else if(sg)v=['var(--acc)','Kouč navrhuje změnu tréninku, mrkni na Návrh kouče.'];
  else if(m&&m.hi&&!m.demo)v=['var(--z5)','Zátěž posledních 7 dní je nad tvým normálem. Další tvrdý trénink zkrať nebo odlož.'];
  else if(rdyS()<45)v=['var(--z4)','Připravenost je nízká ('+rdyS()+'). Dnes spíš lehce.'];
- else if(g&&g.N>=7&&g.G.T-g.G.pe>3)v=['var(--z4)','K cíli podle plánu chybí '+Math.round(g.G.T-g.G.pe)+' CTL. Podívej se na Plán a cíl.'];
+ else if(g&&g.N>=7&&g.G.T-g.G.pe>3)v=['var(--z4)',goalGapTxt(g)];
  else if(E&&E.ch!=null&&E.ch<=-2&&rdOn())v=['var(--z4)','Aerobní efektivita klesá ('+(Math.round(E.ch*10)/10).toString().replace('.',',')+' %). Víc Z2 a odpočinku.'];
  else v=['var(--z2)','Všechno v normě, jeď podle plánu.'];
  el.innerHTML='<div class="card" style="display:flex;gap:10px;align-items:flex-start;padding:12px 14px"><i style="flex:none;width:10px;height:10px;border-radius:50%;margin-top:5px;background:'+v[0]+'"></i><div><span class="mute" style="font-size:11px;font-weight:700;letter-spacing:.06em">VERDIKT KOUČE</span><p style="margin:2px 0 0;font-size:14px;line-height:1.4">'+esc(v[1])+'</p></div></div>'}
