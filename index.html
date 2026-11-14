@@ -1357,14 +1357,31 @@ function monoSug(){var m=monoCalc();if(!m.hi||m.demo)return null;var i,k,d;for(i
  if(i>=7)return null;var cur=d.iv&&TPL[d.iv]?TPL[d.iv].n:d.t,why=m.mono>2?'Monotónnost za 7 dní je '+(Math.round(m.mono*10)/10).toString().replace('.',',')+', dny se málo střídají.':'Strain za 7 dní je '+m.strain+', běžně máš ~'+m.ref+'.';
  var c={id:'mono',k:k,txt:why+' '+dayWord(k)+' „'+cur+'“ navrhuji změnit na lehkou jízdu 45 min v Z2.',ap:function(){d.seg=[[45,60]];d.iv='';d.d='Upraveno koučem: lehká jízda kvůli vysoké monotónnosti/strainu';d.lb=''}};c.key=WKID+':'+k+':mono';return SGD.indexOf(c.key)>=0?null:c}
 /* ===== Efektivita a odolnost ===== */
+/* Decoupling z vlastních stop (čas, výkon, tep): bez prvních 10 min, bez úseků bez šlapání (+15 s po nich). Ukládá se jen výsledek k ID jízdy. */
+var DCK='myfit-dc1',DCC=(function(){try{return JSON.parse(localStorage.getItem(DCK)||'{}')||{}}catch(e){return {}}})(),DCQ=[],DCP={},DCE={},DCB=false;
+function dcCalc(s){var t=s.time||[],w=s.watts||[],h=s.heartrate||[],n=Math.min(w.length,h.length),ok=[],l0=-1e9,i,tt,p,b;if(n<1800)return{s:'bez dat'};
+ for(i=0;i<n;i++){tt=t.length>i?t[i]:i;p=w[i];b=h[i];if(p==null||p<=10){l0=tt;continue}if(tt<600||tt-l0<15||b==null||b<70)continue;ok.push([p,b])}
+ if(ok.length<2400)return{s:'krátká'};
+ var m=ok.length>>1,half=function(a){var P=0,H=0;a.forEach(function(x){P+=x[0];H+=x[1]});return[P/a.length,H/a.length]},A=half(ok.slice(0,m)),B=half(ok.slice(m));
+ if(Math.abs(B[0]-A[0])/A[0]>.1)return{s:'nerovnoměrná'};
+ var q=0,c=0,sm=0;for(i=0;i<ok.length;i++){sm+=ok[i][0];if(i>=30)sm-=ok[i-30][0];if(i>=29){q+=Math.pow(sm/30,4);c++}}
+ if(Math.pow(q/c,.25)/((A[0]+B[0])/2)>1.06)return{s:'nerovnoměrná'};
+ var e1=A[0]/A[1],e2=B[0]/B[1],v=(e1-e2)/e1*100;return v<-5||v>25?{s:'mimo rozsah'}:{v:Math.round(v*10)/10}}
+function dcRun(){if(DCB||!IL.key)return;var id=DCQ.shift();if(id==null)return;DCB=true;
+ fetch('https://intervals.icu/api/v1/activity/'+encodeURIComponent(id)+'/streams.json?types=time,watts,heartrate',{headers:{Authorization:'Basic '+btoa('API_KEY:'+IL.key)}}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+  .then(function(a){var o={};(a||[]).forEach(function(x){if(x&&x.type)o[x.type]=x.data||[]});DCC[id]=dcCalc(o);try{localStorage.setItem(DCK,JSON.stringify(DCC))}catch(e){}})
+  .catch(function(){DCE[id]=1}).then(function(){delete DCP[id];DCB=false;if(!DCQ.length){try{renderEff()}catch(e){}}else dcRun()})}
 function effRides(){var RD=rdOn(),L=[],t=new Date(),i;
  if(RD){ILH.forEach(function(a){if(!isRide(a))return;var mn=(a.moving_time||0)/60,hr=a.average_heartrate||a.icu_average_hr,np=a.icu_weighted_avg_watts||a.icu_average_watts||a.average_watts,IF=a.icu_intensity?a.icu_intensity/100:np&&FTP?np/FTP:0;
-  if(mn<30||!hr||!np||hr<70||IF>.85||actType(a)==='RACE')return;var ef=a.icu_efficiency_factor||np/hr;if(!(ef>.4&&ef<4))return;
+  if(mn<30||!hr||!np||hr<70||IF>.85||actType(a)==='RACE'||/EBike/.test(a.type||''))return;var ef=a.icu_efficiency_factor||np/hr;if(!(ef>.4&&ef<4))return;
   /* decoupling má smysl jen u rovnoměrné jízdy 60+ min: VI = NP/průměr do 1,06 a hodnota v reálném rozsahu (−5 až 25 %) */
-  var ap=a.icu_average_watts||a.average_watts,vi=np&&ap?np/ap:null,rd=a.decoupling!=null&&isFinite(a.decoupling)?+a.decoupling:null,dcs=mn<60?'krátká':rd==null?'bez dat':!vi||vi>1.06?'nerovnoměrná':rd<-5||rd>25?'mimo rozsah':'';
+  var ap=a.icu_average_watts||a.average_watts,vi=np&&ap?np/ap:null,rd=a.decoupling!=null&&isFinite(a.decoupling)?+a.decoupling:null,dcs=mn<60?'krátká':rd==null?'bez dat':!vi||vi>1.06?'nerovnoměrná':rd<-5||rd>25?'mimo rozsah':'',C=a.id!=null&&DCC[a.id];
+  /* vlastní výpočet ze stop má přednost; jízdy 60+ min s VI do 1,15 (sjezdy bez šlapání VI zvedají) se zařadí ke stažení */
+  if(C){rd=C.v!=null?C.v:null;dcs=C.v!=null?'':C.s||'bez dat'}else if(mn>=60&&a.id!=null&&IL.key&&(!vi||vi<=1.15)&&!DCE[a.id]&&!DCP[a.id]){DCP[a.id]=1;DCQ.push(a.id)}
   L.push({d:(a.start_date_local||'').slice(0,10),n:a.name||'Jízda',mn:Math.round(mn),w:Math.round(np),hr:Math.round(hr),ef:ef,dc:dcs?null:rd,dcs:dcs})})}
  else{var S=[[2,62,182,134,3.1],[4,45,176,132,null],[7,75,180,131,4.2],[10,60,185,136,5.0],[13,50,178,135,null],[17,90,180,135,6.1],[20,60,176,133,4.8],[24,45,172,132,null],[28,70,174,134,5.6],[33,60,170,133,6.4],[38,80,172,136,7.2],[44,60,168,134,null],[50,75,170,137,6.9],[57,60,166,135,7.5]];
   S.forEach(function(x){var d=new Date(t.getFullYear(),t.getMonth(),t.getDate()-x[0]);L.push({d:ilD(d),n:'ROUVY – Z2 (ukázka)',mn:x[1],w:x[2],hr:x[3],ef:x[2]/x[3],dc:x[1]>=60?x[4]:null,dcs:x[1]>=60?'':'krátká'})})}
+ if(DCQ.length&&!DCB)setTimeout(dcRun,0);
  return L.sort(function(a,b){return a.d<b.d?-1:1})}
 function effStats(){var L=effRides(),t=new Date(),c1=ilD(new Date(t.getFullYear(),t.getMonth(),t.getDate()-28)),c2=ilD(new Date(t.getFullYear(),t.getMonth(),t.getDate()-56)),av=function(a){return a.length?a.reduce(function(x,y){return x+y},0)/a.length:null};
  var A=L.filter(function(x){return x.d>=c1}),B=L.filter(function(x){return x.d>=c2&&x.d<c1}),e1=av(A.map(function(x){return x.ef})),e0=av(B.map(function(x){return x.ef})),D=L.filter(function(x){return x.dc!=null}).slice(-5),med=function(a){if(a.length<2)return null;a=a.slice().sort(function(x,y){return x-y});var m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2};
@@ -1390,7 +1407,7 @@ function renderEff(){var el=document.getElementById('eff');if(!el)return;var E=e
  el.innerHTML='<div class="row" style="align-items:baseline"><h2 style="margin:0">Efektivita a odolnost</h2><span class="mute" style="font-size:12px">'+(RD?E.L.length+' jízd · 90 dní':'ukázková data')+'</span></div>'
   +'<div style="display:flex;gap:8px;margin-top:12px">'+tile('EF · 28 dní',f2(E.e1),'var(--ink)','W na úder srdce')+tile('Změna',E.ch==null?'–':(E.ch>0?'+':'')+f1(E.ch)+' %',chc,'proti předch. 4 týdnům')+tile('Decoupling',E.dc==null?'–':f1(E.dc)+' %',dcc,dcn)+'</div>'
   +svg+'<p style="margin:8px 0 0;font-size:13px;line-height:1.45"><b style="color:'+chc+'">'+esc(verdict)+'</b> '+esc(hrTxt)+'</p>'
-  +'<p class="mute" style="margin:6px 0 0;font-size:12px;line-height:1.4">V ERG určuje watty plán, takže pokrok poznáš podle tepu: vyšší EF znamená víc wattů na úder srdce. Decoupling ukazuje, o kolik se v druhé půlce jízdy rozjede výkon a tep. Počítá se jen z rovnoměrných jízd 60+ min (VI do 1,06, bez intervalů) jako medián posledních 5, aspoň ze 2 jízd. Do 5 % je výdrž výborná. Počítají se jízdy aspoň 30 min do IF 0,85, bez závodů.</p>'
+  +'<p class="mute" style="margin:6px 0 0;font-size:12px;line-height:1.4">V ERG určuje watty plán, takže pokrok poznáš podle tepu: vyšší EF znamená víc wattů na úder srdce. Decoupling ukazuje, o kolik se v druhé půlce jízdy rozjede výkon a tep. Počítá se ze záznamu výkonu a tepu bez prvních 10 min a bez úseků, kdy nešlapeš, jen u rovnoměrných jízd 60+ min (bez intervalů), jako medián posledních 5, aspoň ze 2 jízd. E-kolo se nepočítá. Do 5 % je výdrž výborná. Počítají se jízdy aspoň 30 min do IF 0,85, bez závodů.</p>'
   +'<div style="margin-top:8px">'+rows+'</div>'}
 function goalUp(G){if(!(G.Gq>GOAL+5))return null;var sf=Math.round(GOAL*1.1/10)*10;return G.Gq<=GOAL*1.15?{v:G.Gq,full:1}:{v:Math.max(GOAL+10,sf),full:0}}
 function goalGapTxt(g){var G=g.G,gap=Math.round(G.T-G.pe),u=goalUp(G);
