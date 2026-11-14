@@ -1357,10 +1357,10 @@ function monoSug(){var m=monoCalc();if(!m.hi||m.demo)return null;var i,k,d;for(i
  if(i>=7)return null;var cur=d.iv&&TPL[d.iv]?TPL[d.iv].n:d.t,why=m.mono>2?'Monotónnost za 7 dní je '+(Math.round(m.mono*10)/10).toString().replace('.',',')+', dny se málo střídají.':'Strain za 7 dní je '+m.strain+', běžně máš ~'+m.ref+'.';
  var c={id:'mono',k:k,txt:why+' '+dayWord(k)+' „'+cur+'“ navrhuji změnit na lehkou jízdu 45 min v Z2.',ap:function(){d.seg=[[45,60]];d.iv='';d.d='Upraveno koučem: lehká jízda kvůli vysoké monotónnosti/strainu';d.lb=''}};c.key=WKID+':'+k+':mono';return SGD.indexOf(c.key)>=0?null:c}
 /* ===== Efektivita a odolnost ===== */
-/* Decoupling z vlastních stop (čas, výkon, tep): bez prvních 10 min, bez úseků bez šlapání (+15 s po nich). Ukládá se jen výsledek k ID jízdy. */
-var DCK='myfit-dc1',DCC=(function(){try{return JSON.parse(localStorage.getItem(DCK)||'{}')||{}}catch(e){return {}}})(),DCQ=[],DCP={},DCE={},DCB=false;
-function dcCalc(s){var t=s.time||[],w=s.watts||[],h=s.heartrate||[],n=Math.min(w.length,h.length),ok=[],l0=-1e9,i,tt,p,b;if(n<1800)return{s:'bez dat'};
- for(i=0;i<n;i++){tt=t.length>i?t[i]:i;p=w[i];b=h[i];if(p==null||p<=10){l0=tt;continue}if(tt<600||tt-l0<15||b==null||b<70)continue;ok.push([p,b])}
+/* Decoupling z vlastních stop (čas, výkon, tep): bez prvních 10 min, bez úseků bez šlapání a po nich stejně dlouho (15–90 s), než se tep srovná. Ukládá se jen výsledek k ID jízdy. */
+var DCK='myfit-dc2',DCC=(function(){try{return JSON.parse(localStorage.getItem(DCK)||'{}')||{}}catch(e){return {}}})(),DCQ=[],DCP={},DCE={},DCB=false;
+function dcCalc(s){var t=s.time||[],w=s.watts||[],h=s.heartrate||[],n=Math.min(w.length,h.length),ok=[],cs=null,ce=0,sk=-1,i,tt,p,b;if(n<1800)return{s:'bez dat'};
+ for(i=0;i<n;i++){tt=t.length>i?t[i]:i;p=w[i];b=h[i];if(p==null||p<=10){if(cs==null)cs=tt;ce=tt;continue}if(cs!=null){sk=ce+Math.min(90,Math.max(15,ce-cs+1));cs=null}if(tt<600||tt<=sk||b==null||b<70)continue;ok.push([p,b])}
  if(ok.length<2400)return{s:'krátká'};
  var m=ok.length>>1,half=function(a){var P=0,H=0;a.forEach(function(x){P+=x[0];H+=x[1]});return[P/a.length,H/a.length]},A=half(ok.slice(0,m)),B=half(ok.slice(m));
  if(Math.abs(B[0]-A[0])/A[0]>.1)return{s:'nerovnoměrná'};
@@ -1407,7 +1407,7 @@ function renderEff(){var el=document.getElementById('eff');if(!el)return;var E=e
  el.innerHTML='<div class="row" style="align-items:baseline"><h2 style="margin:0">Efektivita a odolnost</h2><span class="mute" style="font-size:12px">'+(RD?E.L.length+' jízd · 90 dní':'ukázková data')+'</span></div>'
   +'<div style="display:flex;gap:8px;margin-top:12px">'+tile('EF · 28 dní',f2(E.e1),'var(--ink)','W na úder srdce')+tile('Změna',E.ch==null?'–':(E.ch>0?'+':'')+f1(E.ch)+' %',chc,'proti předch. 4 týdnům')+tile('Decoupling',E.dc==null?'–':f1(E.dc)+' %',dcc,dcn)+'</div>'
   +svg+'<p style="margin:8px 0 0;font-size:13px;line-height:1.45"><b style="color:'+chc+'">'+esc(verdict)+'</b> '+esc(hrTxt)+'</p>'
-  +'<p class="mute" style="margin:6px 0 0;font-size:12px;line-height:1.4">V ERG určuje watty plán, takže pokrok poznáš podle tepu: vyšší EF znamená víc wattů na úder srdce. Decoupling ukazuje, o kolik se v druhé půlce jízdy rozjede výkon a tep. Počítá se ze záznamu výkonu a tepu bez prvních 10 min a bez úseků, kdy nešlapeš, jen u rovnoměrných jízd 60+ min (bez intervalů), jako medián posledních 5, aspoň ze 2 jízd. E-kolo se nepočítá. Do 5 % je výdrž výborná. Počítají se jízdy aspoň 30 min do IF 0,85, bez závodů.</p>'
+  +'<p class="mute" style="margin:6px 0 0;font-size:12px;line-height:1.4">V ERG určuje watty plán, takže pokrok poznáš podle tepu: vyšší EF znamená víc wattů na úder srdce. Decoupling ukazuje, o kolik se v druhé půlce jízdy rozjede výkon a tep. Počítá se ze záznamu výkonu a tepu bez prvních 10 min a bez úseků, kdy nešlapeš (i s dobou, než se po nich srovná tep), jen u rovnoměrných jízd 60+ min (bez intervalů), jako medián posledních 5, aspoň ze 2 jízd. E-kolo se nepočítá. Do 5 % je výdrž výborná. Počítají se jízdy aspoň 30 min do IF 0,85, bez závodů.</p>'
   +'<div style="margin-top:8px">'+rows+'</div>'}
 function goalUp(G){if(!(G.Gq>GOAL+5))return null;var sf=Math.round(GOAL*1.1/10)*10;return G.Gq<=GOAL*1.15?{v:G.Gq,full:1}:{v:Math.max(GOAL+10,sf),full:0}}
 function goalGapTxt(g){var G=g.G,gap=Math.round(G.T-G.pe),u=goalUp(G);
