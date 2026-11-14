@@ -930,7 +930,7 @@ function fitAuto(files,cb){var res=[],n=files.length;
   ok.forEach(function(x){x.nm=raceSlotName(x.f.name);if(x.nm||!x.o.st)return;var t=x.o.st.getHours()*60+x.o.st.getMinutes(),df=Math.abs(t-(+p0[0]*60+(+p0[1])));if(df<best){best=df;rx=x}});
   if(rx&&best>45&&ok.length>1)rx=null;
   res.forEach(function(x){if(!x.o){msg.push(esc(x.f.name)+': nepodařilo se přečíst (je to původní .FIT?)');return}
-   var sl=x.nm?x.nm:x===rx?'race':(rx&&x.o.st)?(x.o.st<rx.o.st?'wu':'cd'):x.o.st?fitSlot(x.o.st):(n===1?'race':null);
+   var sl=x===rx?'race':(rx&&x.o.st)?(x.o.st<rx.o.st?'wu':'cd'):x.nm?x.nm:x.o.st?fitSlot(x.o.st):(n===1?'race':null);
    if(!sl){msg.push(esc(x.f.name)+': chybí čas startu, nahraj ho zvlášť u rozjezdu nebo vyjetí');return}
    fitApply(x.o,tg[sl]);msg.push(nm[sl]+(x.o.st?' '+hm(x.o.st):'')+' ('+Math.round(x.o.t)+' min)')});
   FITMSG='Rozpoznáno: '+msg.join(' · ');cb()}
@@ -1529,10 +1529,11 @@ function ilApply(wl,acts,ath){try{ILDS=ilDayScores(wl)}catch(e){ILDS={}}var n=[]
  (acts||[]).forEach(function(a){if(!a||!isRide(a)||!a.start_date_local)return;var k=DK[a.start_date_local.slice(0,10)];if(!k)return;(by[k]=by[k]||[]).push(a)});
  Object.keys(by).forEach(function(k){var mk=function(a){return{st:new Date(a.start_date_local),t:(a.moving_time||0)/60,km:(a.distance||0)/1000,as:Math.round(a.total_elevation_gain||0),pw:Math.round(a.icu_average_watts||a.average_watts||0),hr:Math.round(a.average_heartrate||0),mh:Math.round(a.max_heartrate||0),np:Math.round(a.icu_weighted_avg_watts||0),tss:Math.round(a.icu_training_load||0)}};
   if(isRc(k)&&W[k].ex){var tg={wu:W[k].ex.wu,race:W[k],cd:W[k].ex.cd},sl={wu:[],race:[],cd:[]},rest=[];
-   by[k].forEach(function(a){var c=raceSlotName(a.name);if(c)sl[c].push(a);else rest.push(a)});
-   if(!sl.race.length&&rest.length){var rc=rest.filter(function(a){return /race|závod|zavod|stage|series|cup|grand prix|gp\b/i.test(a.name||'')});var cand=rc.length?rc:rest;var rb=cand.slice().sort(function(x,y){return (y.icu_training_load||y.moving_time||0)-(x.icu_training_load||x.moving_time||0)})[0];sl.race.push(rb);rest.splice(rest.indexOf(rb),1)}
+   /* Závod = jízda bez názvu rozjetí/vyjetí (přednostně se závodním názvem, jinak nejvyšší zátěž). Ostatní jízdy se řadí podle času vůči startu závodu; název rozhoduje jen tehdy, když závod ještě není dojetý. */
+   var nn=by[k].filter(function(a){return !raceSlotName(a.name)});
+   if(nn.length){var rc=nn.filter(function(a){return /race|závod|zavod|stage|series|cup|challenge|grand prix|gp\b/i.test(a.name||'')});var cand=rc.length?rc:nn;var rb=cand.slice().sort(function(x,y){return (y.icu_training_load||y.moving_time||0)-(x.icu_training_load||x.moving_time||0)})[0];sl.race.push(rb)}
    var r0=sl.race.length?new Date(sl.race[0].start_date_local):null;
-   rest.forEach(function(a){var s=new Date(a.start_date_local);sl[r0?(s<r0?'wu':'cd'):fitSlot(s)].push(a)});
+   by[k].forEach(function(a){if(sl.race.indexOf(a)>=0)return;var s=new Date(a.start_date_local),c=raceSlotName(a.name);sl[r0?(s<r0?'wu':'cd'):(c||fitSlot(s))].push(a)});
    ['wu','race','cd'].forEach(function(x){if(!sl[x].length)return;var o=mergeO(sl[x].map(mk));if(o.t>0){fitApply(o,tg[x]);cnt+=sl[x].length}})}
   else if(W[k].lb==='Závod'&&by[k].length>1){var o=mergeO(by[k].map(mk));if(o.t>0){fitApply(o,W[k]);cnt+=by[k].length}}
   else{var d=W[k],pm=mins(d.seg),thr=pm*.8,big=by[k].sort(function(x,y){return (y.moving_time||0)-(x.moving_time||0)})[0],o=mk(big);
