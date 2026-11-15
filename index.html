@@ -484,6 +484,10 @@ function coachHello(){var nm=RP&&RP.name?' '+RP.name:'',L=[],t=new Date(),yd=new
  else if(yw&&mins(yw.seg))L.push('Včera jsi vynechal plánovaný trénink '+String(yw.t).replace(/\s+od\s+\d{1,2}:\d{2}$/,'')+'. Nedoháníme ho, jedeme dál podle plánu.');
  else if(HIST[ds]&&HIST[ds].tss)L.push('Včera jsi odjel '+(HIST[ds].t||'jízdu')+' ('+HIST[ds].tss+' TSS).');
  else L.push('Včera bylo volno.');
+ /* ostatní aktivity (chůze, běh, posilování…) – jízdy už jsou výše */
+ try{var oth=(ILH||[]).filter(function(a){return (a.start_date_local||'').slice(0,10)===ds&&!isRide(a)});if(oth.length){var G={},O=[];oth.forEach(function(a){var n=actKind(a).n||'Aktivita';if(!G[n]){G[n]={n:n,c:0,km:0,s:0};O.push(G[n])}G[n].c++;G[n].km+=(a.distance||0)/1000;G[n].s+=(a.moving_time||a.elapsed_time||0)});
+  var ot=O.map(function(g){var x=[];if(g.km>=.5)x.push(String(Math.round(g.km*10)/10).replace('.',',')+' km');if(g.s>=60)x.push(fmt(g.s/60));return (g.c>1?g.c+'× ':'')+g.n.toLowerCase()+(x.length?' '+x.join(', '):'')}).join(', ');
+  L[0]=(rides.length?L[0]+' Navíc: ':'Včera: ')+ot+'.'+(!rides.length&&/^Včera bylo volno/.test(L[0])?'':!rides.length?' '+L[0]:'')}}catch(e){}
  var td=W[TK],tm=td&&mins(td.seg),SM=null;try{SM=todaySumLines()}catch(e){}
  var RL='';try{if(!(SM&&SM.ride))RL=recovLine(recovState())}catch(e){}if(RL)L.push(RL);
  if(SM&&SM.L.length){if(!SM.ride){L.push.apply(L,SM.L.slice(0,-1))}else{L.push.apply(L,SM.L);return 'Ahoj'+nm+'!\n'+L[0]+'\n\n'+L.slice(1).join('\n')+'\n\nPtej se na jízdu, regeneraci nebo plán na další dny.'}}
